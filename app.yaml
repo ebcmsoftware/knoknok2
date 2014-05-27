@@ -12,7 +12,7 @@ handlers:
   static_dir: static
 
 - url: /.*
-  script: guestbook6_templates.py
+  script: knoknok.py
 
 skip_files:
 - ^(.*/)(dev).py
