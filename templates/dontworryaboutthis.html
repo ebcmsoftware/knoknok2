@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- title & favicon -->
+  <title>Knoknok: For Roommates</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- fonts and formatting -->
+  <link href='http://fonts.googleapis.com/css?family=Cabin|Telex' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="themes/KKstyle.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
+  <!-- mobile specific tags here -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- scripts galore -->
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  <script src= "KKscript.js"></script>
+</head>
+
+<script>
+  var debug = false; //so i dont have to keep clearing my freaking cookies
+  if (debug) {
+    localStorage.removeItem("userkey");
+  }
+</script>
+
+<body>  
+  <!-- the page for getting the key -->
+  <div data-role= "page" data-theme = "a" id = "get2key">
+       <script>  
+            var key = localStorage.getItem("userkey"); 
+              if(key != "" && key != null) {
+                var hostname = location.hostname;
+                console.log(key);
+                var newplace = "?roomkey="+key+"#KKhome";
+                console.log(hostname);
+                console.log(newplace);
+                console.log("newplace");
+                window.location.assign(newplace);
+              }
+       </script>
+       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
+            <h1>Welcome to Knoknok!</h1>
+            <p>New User?</p>
+            <br>
+            <a href="#makeroom" class="ui-btn">Make a new Room</a>
+            <p>Roomate sent you a key?</p>
+            <br>
+            <a href="#enterkey" class="ui-btn">Enter a Key</a>
+      </div>
+  </div>
+
+  <!-- the page for entering a key -->
+  <div data-role= "page" data-theme = "a" id = "enterkey">
+      <form method="post" action="/#KKhome">
+        <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+          <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
+          <input type="text" name="username" id="username" placeholder="Enter your name...">
+          <input type="tel" name="roomkey" id="roomkey" placeholder="Enter key...">
+          <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
+        </div>
+      </form>
+      
+      <script>
+        function changeLink() {
+            var key = document.getElementById("roomkey").value;
+            //document.getElementById("gobutton").href = "/?roomkey=" + key + "#KKhome";
+            localStorage.setItem("username", document.getElementById("username").value)
+            window.location.assign("/?roomkey=" + key + "#KKhome");
+        }
+      </script>
+  </div>
+
+  <!-- the page for entering initial info -->
+  <div data-role= "page" data-theme = "a" id = "makeroom">
+    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+        <form action="/createroom" method="post">
+          <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
+          <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
+          <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
+          <a href="javascript:;" onclick="navig8();parentNode.submit();" class="ui-btn">Next...</a>
+          <script>
+          function navig8() {
+              localStorage.setItem("username", document.getElementById("enterfirstname").value)
+              localStorage.setItem("roomname", document.getElementById("enterroomname").value)
+              console.log("username is......." + document.getElementById("enterfirstname").value)
+              window.location.assign("/#createroom");
+          }
+          </script>
+        </form>
+    </div>
+  </div>
+
+  <!-- the page for getting your key w/ option to send an sms -->
+  <div data-role= "page" data-theme = "a" id = "createroom">
+    <p>This is your room's key. It's what identifies your room! Give it to your roommate(s), and you'll never (?) need it again.</p>
+    <p id="key">Key : couldn't load key :(</p>
+    <!-- SHITTY-ish script for getting random key -->
+    <script>
+      var str = "152313"
+      document.getElementById("key").innerHTML = "Key: " + str
+      if (str != "" && str != "1") {
+          localStorage.setItem("userkey", str);
+          console.log("Just stored into local: " + localStorage.getItem("userkey"));
+          console.log("Just stored into un: " + localStorage.getItem("username"));
+          console.log("Just stored into rn: " + localStorage.getItem("roomname"));
+      }
+    </script>
+    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+      <a href="#sendkey" class="ui-btn">Send this key</a>
+      <a href="#KKhome" id="toreplace" class="ui-btn">Go to room</a>
+    </div> 
+    <script>
+      var rkey = "152313";
+      document.getElementById("toreplace").href = "/?roomkey=" + rkey + "#KKhome";
+    </script>
+  </div>
+
+  <!-- the page for generating a key the key to the roommate -->
+  <div data-role= "page" data-theme = "a" id = "sendkey">
+    <p id = "keytosend">Key:</p>
+    <script>
+      document.getElementById("keytosend").innerHTML = localStorage.getItem("userkey");
+    </script>
+    <form method="post" action="/sendsms" style ="width: 55%; margin: 0 auto">
+      <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+        <input type="tel" name="sendnum" id="sendnum" placeholder="Roomate's Phone Number... ex. 8646336977">
+        <input type="hidden" name="roomkey" value="key2" id="uniquekey3">
+        <script>
+          function setUKey3() {
+              document.getElementById("uniquekey3").value = localStorage.getItem("userkey");
+          }
+        </script>
+      <a href="javascript:;" onclick="setUKey3();parentNode.submit();" class="ui-btn">Send this key</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- the main page, with status settings -->
+  <div data-role= "page" data-theme = "a" id = "KKhome">
+      <div data-role = "header" data-position = "inline">
+        <h1 style = "width: 70%; margin: 0 auto;">KNOKNOK</h1>
+       <!--  <a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext"> -->
+      </div>
+      <div data-role="main" class="ui-content">
+          <p style = "width: 50%; margin: 0 auto;">This is an app for roommates.</p>
+      </div>
+      <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
+        <p>None</p>
+        <p >ROOM STATUS: Welcome to Knoknok!</p>
+        <p style = "font-size: 80%;">set by: The Knoknok Team, just now</p>
+          <form action="/sign" method="post" action="demoform.asp"> 
+            <input type="hidden" name="status" value="Open">
+            <input type="hidden" name="roomkey" value="nokeyopen" id="key2">
+            <input type="hidden" name="username" value="nousername" id="un2">
+            <script>
+              function setOpenStatus() {
+                  document.getElementById("key2").value = localStorage.getItem("userkey");
+                  document.getElementById("un2").value = localStorage.getItem("username");
+              }
+            </script>
+            <a href="javascript:;" class="ui-btn" onclick="setOpenStatus();parentNode.submit();">Open</a>
+          </form>
+          <form action="/sign" method="post" action="demoform.asp">
+            <input type="hidden" name="status" value="Closed">
+            <input type="hidden" name="roomkey" value="nokeyclosed" id="key3">
+            <input type="hidden" name="username" value="nousername" id="un3">
+            <script>
+              function setClosedStatus() {
+                  document.getElementById("key3").value = localStorage.getItem("userkey");
+                  document.getElementById("un3").value = localStorage.getItem("username");
+              }
+            </script>
+            <a href="javascript:;" class="ui-btn" onclick="setClosedStatus();parentNode.submit();">Closed</a>
+          </form>
+          <a href="#entercustom" class="ui-btn">Custom...</a>
+          <br>
+          <a href="#KKhome" class="ui-btn" onclick=location.reload()>Refresh</a>
+      </div>
+
+      <div data-role="footer" style = "position:fixed; bottom:0px; left:0px">
+        <h3><a href="#deleteroom">Settings</a></h3>
+      </div>
+
+      <div data-role="footer" style = "position:fixed; bottom:0px; right:0px">
+        <h1>(C) 2014 EBCM Apps </h1>
+      </div>
+  </div>
+
+  <!-- for misc errors -->
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "error">
+      <div data-role = "main" class = "ui-content">
+          <div class="ui-field-contain">
+            <p>This room doesn't exist :(</p>
+          </div>
+      </div>
+  </div>
+
+  <!-- the popup for entering custom messages -->
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "entercustom">
+      <div data-role = "main" class = "ui-content">
+          <div class="ui-field-contain">
+            <p>New Custom Status</p>
+            <form action="/sign" method="post" action="demoform.asp">
+                <input type="text" name="status" id="status">
+                <input type="hidden" name="roomkey" value="key" id="key4">
+                <input type="hidden" name="username" value="nousername" id="un4">
+                <a href="javascript:;" onclick="setCustomKey();parentNode.submit();" type="status" class="ui-btn">Set status message</a>
+                <script>
+                  function setCustomKey(){
+                      document.getElementById("key4").value = localStorage.getItem("userkey");
+                      document.getElementById("un4").value = localStorage.getItem("username");
+                  }
+                </script>
+            </form>
+         </div>
+      </div>
+  </div>
+
+  <!--settings for if they want to delete a room -->
+  <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom">
+      <div data-role = "main" class = "ui-content">
+          <div class="ui-field-contain">
+            <p>Delete this room? :(</p>
+            <a href="javascript:;" onclick="deleteRoom();" class="ui-btn">Yes</a>
+            <a href="javascript:;" onclick="goBack();" class="ui-btn">No</a>
+            <script>
+              function deleteRoom(){
+                  localStorage.removeItem("userkey");
+                  window.location.assign("/");
+              }
+              function goBack(){
+                  window.location.assign("#KKhome");
+              }
+            </script>
+          </div>
+      </div>
+  </div>
+
+
+</body>
+
+</html>

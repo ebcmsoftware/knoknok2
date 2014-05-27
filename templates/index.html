@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- title & favicon -->
+  <title>Knoknok: For Roommates</title>
+  <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  <!-- fonts and formatting -->
+  <link href='http://fonts.googleapis.com/css?family=Cabin|Telex' rel='stylesheet' type='text/css'>
+  <link id= "theme" rel="stylesheet" href="themes/KKstyle2.css" />
+  <!-- <link rel="stylesheet" href="themes/KKstyleBW.css" /> -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
+  <!-- mobile specific tags here -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- scripts galore -->
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  <script src= "../static/KKscript.js"></script>
+</head>
+
+<script> var debug=false; clearCookies(debug); </script>
+
+<body>  
+  <script>  redirectWhenCookie(); </script>
+  <div data-role= "page" data-theme = "a"  id = "startscreen" onclick = "startLink()">
+       <h1>Welcome to Knoknok, an app for roommates</h1>
+       <br>
+       <br>
+       <p>click anywhere to begin...</p>
+  </div>
+
+  <!-- the page for getting the key -->
+  <div data-role= "page" data-theme = "a" id = "get2key">
+       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
+            <p>New User?</p>
+            <a href="#makeroom" class="ui-btn">Make a new Room</a>
+            <br>
+            <p>Roomate sent you a key?</p>
+            <a href="#enterkey" class="ui-btn">Enter a Key</a>
+      </div>
+  </div>
+
+  <!-- the page for entering a key -->
+  <div data-role= "page" data-theme = "a" id = "enterkey">
+      <form method="post" action="/#KKhome">
+        <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+          <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
+          <input type="text" name="username" id="username" placeholder="Enter your name...">
+          <input type="tel" name="roomkey" id="roomkey" placeholder="Enter key...">
+          <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
+          <a href="#get2key" class="ui-btn">&lt;- Go Back</a>
+        </div>
+      </form>
+  </div>
+
+  <!-- the page for entering initial info -->
+  <div data-role= "page" data-theme = "a" id = "makeroom">
+    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+        <form action="/createroom" method="post">
+          <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
+          <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
+          <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
+          <a href="javascript:;" onclick="navig8();parentNode.submit();" class="ui-btn">Next...</a>
+        </form>
+    </div>
+  </div>
+
+  <!-- the page for getting your key w/ option to send an sms -->
+  <div data-role= "page" data-theme = "a" id = "createroom">
+    <p>This is your room's key. It's what identifies your room! Give it to your roommate(s), and you'll never (?) need it again.</p>
+    <p id="key">Key : couldn't load key :(</p>
+    <!-- GREAT-ish script for getting random key -->
+    <script> makeKey("{{ roomkey }}"); </script>
+    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+      <a href="#sendkey" class="ui-btn">Send this key</a>
+      <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn">Go to room</a>
+    </div> 
+  </div>
+
+  <!-- the page for generating a key the key to the roommate -->
+  <div data-role= "page" data-theme = "a" id = "sendkey">
+     <p id = "keytosend">Key:</p>
+     <script> displayKeyToSend(); </script>
+     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+      <div id="phonenumbers" class="ui-field-contain">
+          <input type="tel" name="sendnum1" id="sendnum1" placeholder="Roommate's Phone Number... ex. 8646336977">
+      </div>
+      <form method="post" action="/sendsms" style ="width: 55%; margin: 0 auto">
+        <input type="hidden" name="roomkey" value="{{ roomkey }}" id="uniquekey3">
+        <input type="hidden" name="sendnum" value="ERROR!" id="numberlist">
+        <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">Add a new roommate</a>
+        <a href="javascript:;" onclick="setNumberList();parentNode.submit();" class="ui-btn">Send this key</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- the main page, with status settings -->
+  <div data-role= "page" data-theme = "a" id = "KKhome">
+      <div data-role = "header" data-position = "inline">
+        <h1 style = "width: 70%; margin: 0 auto;">KNOKNOK</h1>
+       <!--  <a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext"> -->
+      </div>
+      <div data-role="main" class="ui-content">
+          <p style = "width: 50%; margin: 0 auto;">This is an app for roommates.</p>
+      </div>
+      <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
+        <p>{{ roomname }}</p>
+        <p >ROOM STATUS: {{ status }}</p>
+        <p style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
+          <form action="/sign" method="post" action="demoform.asp"> 
+            <input type="hidden" name="status" value="Open">
+            <input type="hidden" name="roomkey" value="nokeyopen" id="key2">
+            <input type="hidden" name="username" value="nousername" id="un2">
+            <a href="javascript:;" class="ui-btn" onclick="setStatus(2);parentNode.submit();">Open</a>
+          </form>
+          <form action="/sign" method="post" action="demoform.asp">
+            <input type="hidden" name="status" value="Closed">
+            <input type="hidden" name="roomkey" value="nokeyclosed" id="key3">
+            <input type="hidden" name="username" value="nousername" id="un3">
+            <a href="javascript:;" class="ui-btn" onclick="setStatus(3);parentNode.submit();">Closed</a>
+          </form>
+          <a href="#entercustom" class="ui-btn">Custom...</a>
+          <br>
+          <a href="#KKhome" class="ui-btn" onclick=location.reload()>Refresh</a>
+      </div>
+
+      <div data-role="footer" style = "position:fixed; bottom:0px; left:0px">
+        <h3><a href="#settingsmenu" style = "text-decoration:none;">Settings</a></h3>
+      </div>
+
+      <div data-role="footer" style = "position:fixed; bottom:0px; right:0px">
+        <h3><a href="http://www.ebcmsoftware.com" style = "text-decoration:none;">&copy; 2014 EBCM Software</a></h3>
+      </div>
+  </div>
+
+  <!-- the popup for entering custom messages -->
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "entercustom" data-transition="pop">
+      <div data-role = "main" class = "ui-content" style = "margin: 0 auto">
+        <p>New Custom Status</p>
+          <div data-role="controlgroup" style = "margin: 0 auto">
+            <form action="/sign" method="post" action="demoform.asp">  
+              <input type="text" name="status" id="status">
+              <input type="hidden" name="roomkey" value="key" id="key4">
+              <input type="hidden" name="username" value="nousername" id="un4">
+              <a href="javascript:;" onclick="setStatus(4);parentNode.submit();" type="status" class="ui-btn">Set status message</a>
+              <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
+            </form>
+        </div>
+      </div>
+  </div>
+
+  <!-- for misc errors -->
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "error">
+      <div data-role = "main" class = "ui-content">
+          <div class="ui-field-contain">
+            <p>This room doesn't exist :(</p>
+            <a href='/' class='ui-btn'>Go back to home page</a>
+          </div>
+      </div>
+  </div>
+
+  <!-- settings menu -->
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "settingsmenu">
+      <div data-role = "main" class = "ui-content" style="margin: 0 auto">
+        <h1>Settings</h1>
+        <hr>
+        <div data-role="controlgroup" style = "margin: 0 auto">
+          <p>Appearance</p>
+          <a href="#changeusername" class="ui-btn">Change first name</a>
+          <a href="#changeroomname" class="ui-btn">Change room name</a>
+          <a href="#KKhome" onclick = "changeTheme();" class="ui-btn">Change Theme (B & W)</a>
+        </div>
+        <div data-role="controlgroup" style = "margin: 0 auto">
+          <p>Get rid of room</p>
+          <a href="#forgetroom" class="ui-btn">Forget about this room</a>
+          <a href="#deleteroom" class="ui-btn" style="color:red; border: 2px solid #FF0000;">Delete this room</a>
+        </div>
+        <br>
+        <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
+      </div>
+  </div>
+
+  <!-- popup for changing the user name -->
+  <div data-role="page" data-theme="a" data-dialog="true" id= "changeusername" data-transition="pop">
+      <div data-role="main" class="ui-content">
+          <div class="ui-field-contain">
+            <p>Change your first name to what?</p>
+              <input type="text" name="username" id="usernameinput">
+              <a href="javascript:;" onclick="changeUserName();" class="ui-btn">Update username</a>
+              <a href="#settingsmenu" class="ui-btn">&lt;- Go Back</a>
+         </div>
+      </div>
+  </div>
+
+  <!-- popup for changing the room name -->
+  <div data-role="page" data-theme="a" data-dialog="true" id= "changeroomname" data-transition="pop">
+      <div data-role="main" class="ui-content">
+          <div class="ui-field-contain">
+            <p>Change room name to what?</p>
+            <form action="/changeroomname" method="post" action="demoform.asp">
+                <input type="text" name="roomname">
+                <input type="hidden" name="roomkey" value="{{ roomkey }}">
+                <a href="javascript:;" onclick="parentNode.submit();" class="ui-btn">Update room name</a>
+              <a href="#settingsmenu" class="ui-btn">&lt;- Go Back</a>
+            </form>
+         </div>
+      </div>
+  </div>
+
+  <!--if they want to forget about a room -->
+  <div data-role = "page" data-theme = "a" data-dialog="true" id="forgetroom" data-transition="pop">
+      <div data-role = "main" class = "ui-content">
+          <div class="ui-field-contain">
+            <p>Forget about this room? :(</p>
+            <p>The room will still be available to be used by your roommates.</p>
+            <p>(In case you press yes in error, this room's key is {{ roomkey }})</p>
+            <a href="javascript:;" onclick="forgetRoom();window.location.assign('/');" class="ui-btn">Yes</a>
+            <a href="#KKhome" class="ui-btn">No</a>
+          </div>
+      </div>
+  </div>
+
+  <!--if they want to delete a room -->
+  <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom" data-transition="pop">
+      <div data-role = "main" class = "ui-content">
+          <div class="ui-field-contain">
+            <p>Delete this room from our database forever? :(</p>
+            <form action="/deleteroom" method="post" action="demoform.asp">
+                <input type="hidden" name="roomkey" value="{{ roomkey }}">
+                <a href="javascript:;" onclick="forgetRoom();parentNode.submit();" class="ui-btn">Yes, I'm sure</a>
+            </form>
+            <a href="#KKhome" class="ui-btn">No, go back</a>
+          </div>
+      </div>
+  </div>
+
+  
+</body>
+</html>
