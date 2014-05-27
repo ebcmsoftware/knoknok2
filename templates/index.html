@@ -92,8 +92,26 @@
         <input type="hidden" name="sendnum" value="ERROR!" id="numberlist">
         <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">Add a new roommate</a>
         <a href="javascript:;" onclick="setNumberList();parentNode.submit();" class="ui-btn">Send this key</a>
+        <br>
+        <a href="#sendemail" class="ui-btn">Or, send an email</a>
       </form>
     </div>
+  </div>
+
+  <!-- the page for sending the key via email -->
+  <div data-role= "page" data-theme = "a" id = "sendemail">
+    <script> displayKeyToSend(); </script>
+      <form method="post" action="/sendemail" style ="width: 55%; margin: 0 auto">
+        <input type="hidden" name="roomkey" value="{{ roomkey }}">
+        <input type="text" name="emails" value="ERROR!" id="emaillist">
+        <!--
+        <input type="hidden" name="emails" value="ERROR!" id="emaillist">
+        <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">Add a new roommate</a>
+        -->
+        <a href="javascript:;" onclick="/*setEmailList();*/parentNode.submit();" class="ui-btn">Send this key</a>
+        <br>
+        <a href="#sendkey" class="ui-btn">&lt;- Go Back</a>
+      </form>
   </div>
 
   <!-- the main page, with status settings -->
