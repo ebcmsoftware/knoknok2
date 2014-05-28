@@ -81,7 +81,10 @@ class MainPage(webapp.RequestHandler):
 class SendEmail(webapp.RequestHandler):
   def post(self):
     emails = self.request.get('emails').strip()
+    sentby = self.request.get('emailsentby').strip()
+    logging.info("email sent by " + sentby)
     emaillist = emails.split(" ")
+    emaillist = set(emaillist) #remove duplicates
     logging.info(emaillist)
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendEmail: <" + str(roomkey) + ">")
@@ -91,10 +94,10 @@ class SendEmail(webapp.RequestHandler):
                            to=email,
                            subject="Welcome to Knoknok!",
                            body="""
-<name> has invited you to join Knoknok, an app for roommates!
+%s has invited you to join Knoknok, an app for Roommates!
 
-To use it, download the app [here](DL URL here) and enter the key: %s and you're all done!
-""" %roomkey)
+To use it, download the app <DL URL here> and enter the key: %s and you're all set!
+""" %(sentby, roomkey))
     self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
@@ -102,6 +105,7 @@ class SendSMS(webapp.RequestHandler):
   def post(self):
     phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(" ")
+    phone_numberlist = set(phone_numberlist) #remove duplicates
     logging.info(phone_numberlist)
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendSMS: <" + str(roomkey) + ">")

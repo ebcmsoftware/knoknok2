@@ -56,7 +56,8 @@ function changeKeyLink(){
 
 //displays the key from the cookie
 function displayKeyToSend(){
-         document.getElementById("keytosend").innerHTML = localStorage.getItem("userkey");
+         document.getElementById("keytosend").innerHTML = "Key: " + localStorage.getItem("userkey");
+         document.getElementById("keytosendemail").innerHTML = "Key: " + localStorage.getItem("userkey");
 }
 
 //displays the key from cookie

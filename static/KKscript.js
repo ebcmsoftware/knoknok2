@@ -59,6 +59,7 @@ function makeKey(keystr) {
 //displays the key from the cookie
 function displayKeyToSend(){
     $('#keytosend')[0].innerHTML = getKey();
+    //$('#keytosendemail')[0].innerHTML = getKey();
 }
 
 //displays the key from cookie
@@ -71,7 +72,7 @@ var num_phone_numbers = 1;
 function addPhoneInput() {
     num_phone_numbers++;
     var i = num_phone_numbers;
-    $('#phonenumbers').append('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Roommate '+i+'\'s Phone Number...">'); //there's a better thing to do than append. probably.
+    $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Roommate '+i+'\'s Phone Number...">'); //there's a better thing to do than this. probably. charlie knows how to do it.
     console.log(document.getElementById('phonenumbers').innerHTML)
 }
 
@@ -82,6 +83,25 @@ function setNumberList() {
         numberArray += " ";
     }
     document.getElementById("numberlist").value = numberArray;
+}
+
+var num_emails = 1;
+//adds a new phone input slot for sendsms
+function addEmailInput() {
+    num_emails++;
+    var i = num_emails;
+    $('#emailinputs input:last').after('<input type="text" name="email'+i+'" id="email'+i+'" placeholder="Roommate '+i+'\'s Email Address...">'); //there's a better thing to do than this. probably. charlie knows how to do it.
+    console.log(document.getElementById('emailinputs').innerHTML)
+}
+
+function setEmailList() {
+    document.getElementById('emailsentby').value = getUserName();
+    var emailArray = "";
+    for (var i = 1; i < num_emails + 1; i++) {
+        emailArray += $("#email" + i).val();
+        emailArray += " ";
+    }
+    document.getElementById("emaillist").value = emailArray;
 }
 
 //makes the status open
