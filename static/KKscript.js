@@ -151,7 +151,7 @@ function changeTheme(){
      }
      else {
          $('#theme')[0].href = "themes/KKstyle2.css";
-         $('#themebutton')[0].innerHTML = "Change Theme (B & W) clickeed";
+         $('#themebutton')[0].innerHTML = "Change Theme (B & W)";
      }
 }
 
