@@ -110,6 +110,13 @@ function setStatus(num) {
     var username = "#" + "un" + num;
     $(key)[0].value = getKey();
     $(username)[0].value = getUserName();
+    var boxchecked = true;
+    if(num === 3 ){
+        $('#statusbar').css("border-color", "red");
+    }
+    if(num === 4 && boxchecked){
+        //add the status to the buttons
+    }
 }
 
 //deletes the cookie
@@ -135,16 +142,23 @@ function getUserName(){
 function changeTheme(){
     console.log("the theme is:");
     console.log($('#theme')[0].href);
-    // if($('#theme')[0].href === "themes/KKstyle2.css"){
+    var originalTheme = window.location.href.split("?")[0] + "themes/KKstyle2.css";
+    console.log(originalTheme);
+    console.log($('#themebutton')[0].text);
+     if($('#theme')[0].href === originalTheme){
         $('#theme')[0].href = "themes/KKstyleBW.css";
-        $('#themebutton')[0].value = "Change Theme (Blue)";
-    // }
-    // else {
-        // $('#theme')[0].href = "themes/KKstyle2.css";
-        // $('#themebutton')[0].value = "Change Theme (B & W) clickeed";
-    // }
+        $('#themebutton')[0].innerHTML = "Change Theme (Blue)";
+     }
+     else {
+         $('#theme')[0].href = "themes/KKstyle2.css";
+         $('#themebutton')[0].innerHTML = "Change Theme (B & W) clickeed";
+     }
 }
 
 function startLink(){
     window.location.assign("#get2key");
+}
+
+function addStatus(){
+
 }
