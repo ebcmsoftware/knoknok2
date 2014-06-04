@@ -143,7 +143,7 @@ function changeTheme(){
     }
     else {
         $('#theme')[0].href = "themes/KKstyle2.css";
-        $('#themebutton').innerHTML = "Change Theme (B & W) clickeed";
+        $('#themebutton').innerHTML = "Change Theme (B & W) clicked";
     }
 }
 
