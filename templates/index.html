@@ -63,6 +63,7 @@
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
           <a href="javascript:;" onclick="navig8();parentNode.submit();" class="ui-btn">Next...</a>
+          <a href="#get2key" class="ui-btn">&lt;- Go Back</a>
         </form>
     </div>
   </div>
@@ -128,13 +129,11 @@
         <h1 style = "width: 70%; margin: 0 auto;">KNOKNOK</h1>
        <!--  <a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext"> -->
       </div>
-      <div data-role="main" class="ui-content">
-          <p style = "width: 50%; margin: 0 auto;">This is an app for roommates.</p>
-      </div>
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
         <p>{{ roomname }}</p>
         <p >ROOM STATUS: {{ status }}</p>
         <p style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
+        <hr id = "statusbar" style = "border-color: green;">
           <form action="/sign" method="post" action="demoform.asp"> 
             <input type="hidden" name="status" value="Open">
             <input type="hidden" name="roomkey" value="nokeyopen" id="key2">
