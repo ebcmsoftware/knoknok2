@@ -1,6 +1,8 @@
 //clears the cookies for while we're testing
 function clearCookies(debug){
     if (debug) {
+        localStorage.removeItem("roomname");
+        localStorage.removeItem("username");
         localStorage.removeItem("userkey");
     }
 }

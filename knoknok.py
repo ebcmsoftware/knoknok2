@@ -52,15 +52,27 @@ class MainPage(webapp.RequestHandler):
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     if response == []:
+        if roomkey == DEFAULT_ROOMKEY:
+            path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+            self.response.out.write(template.render(path, {}))
+            return
+        room = Room(parent=guestbook_key(roomkey))
+        room.roomkey = roomkey
+        room.alive = False #this happened because they had information in their cache that didn't exist :|
+        room.put()
         logging.info("redirecting to error")
-        self.redirect("/#error")
+#This should only happen in the case that a roommate deletes your room. Or we manage to fully delete their room's datastore entry.
+        self.response.out.write("<script>clearCookies(true);</script>") #1 line 3 programming languages
+        self.redirect("/")
         return
     else:
         room = response[0]
         logging.info(response)
         if room.roomkey != DEFAULT_ROOMKEY and not room.alive:
             logging.info("exited due to deleted room! roomkey " + str(roomkey) + " was deleted")
-            self.redirect("/#error")
+            path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+            self.response.out.write(template.render(path, {}))
+            self.redirect("/error")
             return
     room.put()
     template_values = {}
@@ -76,6 +88,42 @@ class MainPage(webapp.RequestHandler):
         template_values['username'] = 'The Knoknok Team'
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
     self.response.out.write(template.render(path, template_values))
+
+
+class KKError(webapp.RequestHandler):
+  def get(self):
+    #i stole this code from charlie :)))))))))))
+    self.response.out.write("""
+<html>
+<head>
+  <!-- title & favicon -->
+  <title>Knoknok: For Roommates</title>
+  <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  <!-- fonts and formatting -->
+  <link href='http://fonts.googleapis.com/css?family=Cabin|Telex' rel='stylesheet' type='text/css'>
+  <link id= "theme" rel="stylesheet" href="themes/KKstyle2.css" />
+  <!-- <link rel="stylesheet" href="themes/KKstyleBW.css" /> -->
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
+  <!-- mobile specific tags here -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- scripts galore -->
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  <script src= "../static/KKscript.js"></script>
+</head>
+
+<div data-role = "page" data-theme = "a" data-dialog = "true" id= "error">
+<div data-role = "main" class = "ui-content">
+  <div class="ui-field-contain">
+    <p>This room doesn't exist :(</p>
+    <a href='/' onclick="clearCookies(true);" class='ui-btn'>Go back to home page</a>
+  </div>
+</div>
+</div>
+</html>
+    """)
 
 
 class SendEmail(webapp.RequestHandler):
@@ -276,6 +324,7 @@ def pretty_date(time=False):
     return str(day_diff/365) + " years ago"
 
 application = webapp.WSGIApplication([('/', MainPage),
+                                      ('/error', KKError),
                                       ('/sendsms', SendSMS),
                                       ('/sendemail', SendEmail),
                                       ('/changeroomname', ChangeRoomName),
