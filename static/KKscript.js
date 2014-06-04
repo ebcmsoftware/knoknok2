@@ -135,7 +135,16 @@ function getUserName(){
 }
 
 function changeTheme(){
-
+    console.log("the theme is:");
+    console.log($('#theme')[0].href);
+    if($('#theme')[0].href === "themes/KKstyle2.css"){
+        $('#theme')[0].href = "themes/KKstyleBW.css";
+        $('#themebutton').innerHTML = "Change Theme (Blue)";
+    }
+    else {
+        $('#theme')[0].href = "themes/KKstyle2.css";
+        $('#themebutton').innerHTML = "Change Theme (B & W) clickeed";
+    }
 }
 
 function startLink(){
