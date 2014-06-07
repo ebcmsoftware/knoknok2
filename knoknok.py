@@ -75,7 +75,6 @@ class MainPage(webapp.RequestHandler):
             return
     room.put()
     template_values = {}
-    color="#1095ea"
     color="#006eb7"
     if roomkey != DEFAULT_ROOMKEY:
         template_values = {
@@ -246,6 +245,7 @@ class CreateRoom(webapp.RequestHandler):
       'roomkey': room.roomkey,
       'username':room.most_recent_username,
       'roomname':room.roomname,
+      'color':"#006eb7",
       'time':pretty_date(room.time)
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
