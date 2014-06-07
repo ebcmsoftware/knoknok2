@@ -45,7 +45,6 @@ class MainPage(webapp.RequestHandler):
   def get(self):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     username = self.request.get('username', DEFAULT_NAME)
-    logging.info('username='+username)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
     logging.info("Writing to the KKHome... received roomkey " + str(roomkey))
@@ -76,16 +75,23 @@ class MainPage(webapp.RequestHandler):
             return
     room.put()
     template_values = {}
+    color="#1095ea"
+    color="#006eb7"
     if roomkey != DEFAULT_ROOMKEY:
         template_values = {
           'roomkey':room.roomkey,
           'status':room.status,
           'username':room.most_recent_username,
           'roomname':room.roomname,
+          'color':color,
           'time':pretty_date(room.time),
     }
     if room.status == WELCOME_GREETING:
         template_values['username'] = 'The Knoknok Team'
+    elif room.status and room.status.lower() == 'open':
+        template_values['color'] = '#00ff00'
+    elif room.status and room.status.lower() == 'closed':
+        template_values['color'] = '#ff0000'
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
     self.response.out.write(template.render(path, template_values))
 

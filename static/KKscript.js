@@ -41,7 +41,7 @@ function navig8() {
 function formatKeyOutput(keystr) {
     var keyoutput = "";
     for (var i = 0; i < 6; i++) {
-        if (i != 0 && i % 3 == 0) {
+        if (i != 0 && i % 3 === 0) {
             keyoutput += '-';
         }
         keyoutput += keystr[i];
@@ -106,12 +106,95 @@ function setEmailList() {
     document.getElementById("emaillist").value = emailArray;
 }
 
-//makes the status open
+//makes the status something
 function setStatus(num) {
     var key = "#" + "key" + num;
     var username = "#" + "un" + num;
     $(key)[0].value = getKey();
     $(username)[0].value = getUserName();
+}
+
+function destroyButton(i) {
+    var statuslist = localStorage.getItem("statuslist");
+    if (statuslist === null) return;
+    statuslist = JSON.parse(statuslist);
+    statuslist.splice(i, 1);
+    console.log(statuslist);
+    if (statuslist.length > 0) {
+        localStorage.setItem("statuslist", JSON.stringify(statuslist));
+    }
+    else {
+        localStorage.removeItem("statuslist");
+    }
+}
+
+function addExtraButtons() {
+    var statuslist = localStorage.getItem("statuslist");
+    if (statuslist === null) return;
+    statuslist = JSON.parse(statuslist);
+    console.log(statuslist);
+    var form, input, btn;
+    var len = statuslist.length;
+    for (var i=0; i < len; i++) {
+        form = document.createElement("form");
+        form.method = "post";
+        form.action = "/sign";
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "status";
+        input.value = statuslist[i];
+        form.appendChild(input);
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "roomkey";
+        input.value = getKey();
+        form.appendChild(input);
+
+        input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "username";
+        input.value = getUserName();
+        form.appendChild(input);
+
+        btn = document.createElement("a");
+        btn.href="javascript:;";
+        btn.className = "ui-btn";
+        btn.setAttribute("onclick", "parentNode.submit();");
+        btn.innerHTML = statuslist[i];
+
+        close = document.createElement("a");
+        close.href = "";
+        close.setAttribute("onclick", "destroyButton("+i+");window.location.reload();");
+        close.style.color = "red";
+        close.innerHTML = 'x';
+        btn.appendChild(close);
+
+        form.appendChild(btn);
+
+        var div = document.getElementById("KKstatusbuttons");
+        div.appendChild(form);
+    }
+}
+
+    //remembers the custom status in memory
+//  remember to make a page or some way to delete these saved messages.
+function saveText() {
+    savestatus = document.getElementById("status").value;
+    var statuslist = localStorage.getItem("statuslist");
+    if (!statuslist || statuslist === null) {
+        console.log("here?")
+        statuslist = [savestatus];
+    } 
+    else {
+        console.log(statuslist); 
+        statuslist = JSON.parse(statuslist);
+        statuslist.push(savestatus);
+    }
+    console.log(statuslist);
+    localStorage.setItem("statuslist", JSON.stringify(statuslist));
+    addExtraButtons();
 }
 
 //deletes the cookie

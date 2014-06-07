@@ -133,7 +133,8 @@
         <p>{{ roomname }}</p>
         <p >ROOM STATUS: {{ status }}</p>
         <p style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
-        <hr id = "statusbar" style = "border-color: green;">
+        <hr id = "statusbar" style = "border-color: {{ color }};color: {{color}};" noshade>
+         <div id="KKstatusbuttons">
           <form action="/sign" method="post" action="demoform.asp"> 
             <input type="hidden" name="status" value="Open">
             <input type="hidden" name="roomkey" value="nokeyopen" id="key2">
@@ -146,6 +147,8 @@
             <input type="hidden" name="username" value="nousername" id="un3">
             <a href="javascript:;" class="ui-btn" onclick="setStatus(3);parentNode.submit();">Closed</a>
           </form>
+         </div>
+         <script> addExtraButtons(); </script>
           <a href="#entercustom" class="ui-btn">Custom...</a>
           <br>
           <a href="#KKhome" class="ui-btn" onclick=location.reload()>Refresh</a>
@@ -170,6 +173,7 @@
               <input type="hidden" name="roomkey" value="key" id="key4">
               <input type="hidden" name="username" value="nousername" id="un4">
               <a href="javascript:;" onclick="setStatus(4);parentNode.submit();" type="status" class="ui-btn">Set status message</a>
+              <a href="javascript:;" onclick="saveText();" class="ui-btn">Save this status</a>
               <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
             </form>
         </div>
