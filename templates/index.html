@@ -132,7 +132,13 @@
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
         <p>{{ roomname }}</p>
         <p >ROOM STATUS: {{ status }}</p>
-        <p style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
+        <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
+        <script>
+        var s = $('#statusstats')[0].innerHTML;
+        if (s.slice(0,9) == "set by: ,") //aka if username is nothing
+          $('#statusstats')[0].innerHTML = s.slice(0,3) + s.slice(9);
+        else console.log(s);
+        </script>
         <hr id = "statusbar" style = "border-color: {{ color }};color: {{color}};" noshade>
          <div id="KKstatusbuttons">
           <form action="/sign" method="post" action="demoform.asp"> 
@@ -173,7 +179,7 @@
               <input type="hidden" name="roomkey" value="key" id="key4">
               <input type="hidden" name="username" value="nousername" id="un4">
               <a href="javascript:;" onclick="setStatus(4);parentNode.submit();" type="status" class="ui-btn">Set status message</a>
-              <a href="javascript:;" onclick="saveText();" class="ui-btn">Save this status</a>
+              <a href="javascript:;" onclick="saveText();setStatus(4);parentNode.submit();" class="ui-btn">Save this status</a>
               <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
             </form>
         </div>

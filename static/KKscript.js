@@ -161,13 +161,19 @@ function addExtraButtons() {
         btn = document.createElement("a");
         btn.href="javascript:;";
         btn.className = "ui-btn";
-        btn.setAttribute("onclick", "parentNode.submit();");
+        //btn.setAttribute("onclick", "parentNode.submit();");
         btn.innerHTML = statuslist[i];
 
-        close = document.createElement("a");
-        close.href = "";
+        close = document.createElement("span");
+        close.addEventListener('click', function(element){
+          //this.parentNode
+          this.parentNode.removeAttribute('onclick');
+        });
         close.setAttribute("onclick", "destroyButton("+i+");window.location.reload();");
         close.style.color = "red";
+        close.style.cssFloat = "right";
+        close.style.textDecoration = "none";
+        close.style.right = "5px";
         close.innerHTML = 'x';
         btn.appendChild(close);
 
@@ -184,7 +190,6 @@ function saveText() {
     savestatus = document.getElementById("status").value;
     var statuslist = localStorage.getItem("statuslist");
     if (!statuslist || statuslist === null) {
-        console.log("here?")
         statuslist = [savestatus];
     } 
     else {
