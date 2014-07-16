@@ -4,19 +4,19 @@
 <head>
   <!-- title & favicon -->
   <title>Knoknok: For Roommates</title>
-  <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
   <!-- fonts and formatting -->
   <link href='../stylesheets/Cabin_Telex.css' rel='stylesheet' type='text/css'>
   <link id= "theme" rel="stylesheet" href="themes/KKstyle2.css" />
   <!-- <link rel="stylesheet" href="themes/KKstyleBW.css" /> -->
-  <link rel="stylesheet" href="../stylesheets/jquery.mobile.structure-1.4.2.min.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
   <!-- mobile specific tags here -->
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <!-- scripts galore -->
-  <script src="../static/jquery-1.10.2.min.js"></script>
-  <script src="../static/jquery.mobile-1.4.2.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
   <script src= "../static/KKscript.js"></script>
 </head>
 
@@ -162,12 +162,17 @@
           <a href="#KKhome" class="ui-btn" onclick=location.reload()>Refresh</a>
       </div>
 
-      <div data-role="footer" style = "border-right:3px solid black;border-top:3px solid black;position:fixed; float:bottom; bottom:0px; left:0px">
-        <h3><a href="#settingsmenu" style = "text-decoration:none;">Settings</a></h3>
+      <div data-role="footer" class="footer" style = "border-right:3px solid black;border-top:3px solid black;position:fixed; float:bottom; bottom:-7px; left:0px;">
+          <!--
+        <h3><a href="#settingsmenu" style = "text-decoration:none;" >Settings</a></h3>
+        -->
+          <h3><a href="#settingsmenu"><img src="static/images/icon-gear.png"></a></h3>
       </div>
 
-      <div data-role="footer" style = "border-top:3px solid black; border-left:3px solid black;position:fixed; float:bottom; bottom:0px; right:0px">
-        <h3><a href="http://www.ebcmsoftware.com" style = "text-decoration:none;">&copy; 2014 EBCM Software</a></h3>
+      <div data-role="footer" style = "border-top:3px solid black; border-left:3px solid black; height:56px;position:fixed; float:bottom; bottom:0px; right:0px">
+          <h1 style="padding-top:18px">
+              <a href="http://www.ebcmsoftware.com" target="_blank" style = "text-decoration:none;"><!--&copy; 2014 -->EBCM Software</a>
+          </h1>
       </div>
   </div>
 
@@ -180,8 +185,8 @@
               <input type="text" name="status" id="status">
               <input type="hidden" name="roomkey" value="key" id="key4">
               <input type="hidden" name="username" value="nousername" id="un4">
-              <a href="javascript:;" onclick="setStatus(4);parentNode.submit();" type="status" class="ui-btn">Set status message</a>
-              <a href="javascript:;" onclick="saveText();setStatus(4);parentNode.submit();" class="ui-btn">Save this status (just for you, not your roommate(s))</a>
+              <a href="javascript:;" onclick="setStatus(4);parentNode.submit();" type="status" class="ui-btn">Set status</a>
+              <a href="javascript:;" onclick="saveText();setStatus(4);parentNode.submit();" class="ui-btn">Save this status (locally)</a>
               <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
             </form>
         </div>
