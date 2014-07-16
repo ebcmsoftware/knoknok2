@@ -166,7 +166,6 @@ function addExtraButtons() {
 
         close = document.createElement("span");
         close.addEventListener('click', function(element){
-          //this.parentNode
           this.parentNode.removeAttribute('onclick');
         });
         close.setAttribute("onclick", "destroyButton("+i+");window.location.reload();");
