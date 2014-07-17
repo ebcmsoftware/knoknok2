@@ -74,44 +74,87 @@ var num_phone_numbers = 1;
 function addPhoneInput() {
     num_phone_numbers++;
     var i = num_phone_numbers;
-    $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Roommate '+i+'\'s Phone Number...">'); //there's a better thing to do than this. probably. charlie knows how to do it.
+    $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Roommate '+i+'\'s Phone Number...">');
     console.log(document.getElementById('phonenumbers').innerHTML)
 }
 
+var numberArray = "";
 function setNumberList() {
-    var numberArray = "";
+    numberArray = '';
     for (var i = 1; i < num_phone_numbers + 1; i++) {
         numberArray += $("#sendnum" + i).val();
         numberArray += " ";
     }
-    document.getElementById("numberlist").value = numberArray;
+    //document.getElementById("numberlist").value = numberArray;
+}
+
+function sendsms() {
+    setNumberList();
+    var post_params = new Object();
+    post_params['roomkey'] = $('#uniquekey3')[0].value;
+    post_params['sendnum'] = numberArray;
+    $.post('/sendsms', post_params, function(){window.location.assign('#KKhome');});
 }
 
 var num_emails = 1;
-//adds a new phone input slot for sendsms
+//adds a new email input slot for sendemail
 function addEmailInput() {
     num_emails++;
     var i = num_emails;
-    $('#emailinputs input:last').after('<input type="text" name="email'+i+'" id="email'+i+'" placeholder="Roommate '+i+'\'s Email Address...">'); //there's a better thing to do than this. probably. charlie knows how to do it.
-    console.log(document.getElementById('emailinputs').innerHTML)
+    $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Roommate '+i+'\'s Email Address...">');
+    console.log(document.getElementById('emailinputs').innerHTML);
 }
 
+var emailArray = "";
 function setEmailList() {
     document.getElementById('emailsentby').value = getUserName();
-    var emailArray = "";
+    emailArray = "";
     for (var i = 1; i < num_emails + 1; i++) {
         emailArray += $("#email" + i).val();
         emailArray += " ";
     }
-    document.getElementById("emaillist").value = emailArray;
+//document.getElementById("emaillist").value = emailArray;
 }
 
+function sendemail() {
+    setEmailList();
+    var post_params = new Object();
+    post_params['roomkey'] = $('#roomkeyemail')[0].value;
+    post_params['emailsentby'] = $('#emailsentby')[0].value;
+    post_params['emails'] = emailArray;
+    $.post('/sendemail', post_params, function(){window.location.assign('#KKhome');});
+}
+
+/*
+ * TODO: occasional autorefresh of information
+ */
+
 //makes the status something
-function setStatus(num) {
-    var key = "#" + "key" + num;
-    var username = "#" + "un" + num;
-    $(key)[0].value = getKey();
-    $(username)[0].value = getUserName();
+function setStatus(msg) {
+    //if i have time to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
+    var post_params = new Object();
+    var username = getUserName();
+    post_params['roomkey'] = getKey();
+    post_params['username'] = username;
+    post_params['status'] = msg;
+    $.post('/sign', post_params, function() {
+    });
+        $('#statustext')[0].innerHTML = "ROOM STATUS: " + msg;
+        if (username && username != '') 
+            $('#statusstats')[0].innerHTML = 'set by: ' + username + ', just now';
+       else $('#statusstats')[0].innerHTML = 'set by you, just now';
+        if (msg == 'Open') {
+            $('#statusbar')[0].style.borderColor = '#00FF00';
+            $('#statusbar')[0].style.color = '#00FF00';
+        }
+        else if (msg == 'Closed') {
+            $('#statusbar')[0].style.borderColor = '#FF0000';
+            $('#statusbar')[0].style.color = '#FF0000';
+        }
+        else {
+            $('#statusbar')[0].style.borderColor = '#006eb7';
+            $('#statusbar')[0].style.color = '#006eb7';
+        }
 }
 
 function destroyButton(i) {
@@ -126,6 +169,37 @@ function destroyButton(i) {
     else {
         localStorage.removeItem("statuslist");
     }
+    //TODO: CHANGE THIS to just remove the element and not refresh
+    window.location.reload();
+}
+
+function addExtraButton(msg, i) {
+    form = document.createElement("form");
+    form.method = "post";
+    form.action = "/sign";
+
+    btn = document.createElement("a");
+    btn.href="javascript:;";
+    btn.className = "ui-btn";
+    btn.setAttribute("onclick", "setStatus('"+msg+"');");
+    btn.innerHTML = msg;
+
+    close = document.createElement("span");
+    close.addEventListener('click', function(element){
+        this.parentNode.removeAttribute('onclick');
+    });
+    close.setAttribute("onclick", "destroyButton("+i+");");
+    close.style.color = "red";
+    close.style.cssFloat = "right";
+    close.style.textDecoration = "none";
+    close.style.right = "5px";
+    close.innerHTML = 'x';
+    btn.appendChild(close);
+
+    form.appendChild(btn);
+
+    var div = document.getElementById("KKstatusbuttons");
+    div.appendChild(form);
 }
 
 function addExtraButtons() {
@@ -136,50 +210,7 @@ function addExtraButtons() {
     var form, input, btn;
     var len = statuslist.length;
     for (var i=0; i < len; i++) {
-        form = document.createElement("form");
-        form.method = "post";
-        form.action = "/sign";
-
-        input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "status";
-        input.value = statuslist[i];
-        form.appendChild(input);
-
-        input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "roomkey";
-        input.value = getKey();
-        form.appendChild(input);
-
-        input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "username";
-        input.value = getUserName();
-        form.appendChild(input);
-
-        btn = document.createElement("a");
-        btn.href="javascript:;";
-        btn.className = "ui-btn";
-        //btn.setAttribute("onclick", "parentNode.submit();");
-        btn.innerHTML = statuslist[i];
-
-        close = document.createElement("span");
-        close.addEventListener('click', function(element){
-          this.parentNode.removeAttribute('onclick');
-        });
-        close.setAttribute("onclick", "destroyButton("+i+");window.location.reload();");
-        close.style.color = "red";
-        close.style.cssFloat = "right";
-        close.style.textDecoration = "none";
-        close.style.right = "5px";
-        close.innerHTML = 'x';
-        btn.appendChild(close);
-
-        form.appendChild(btn);
-
-        var div = document.getElementById("KKstatusbuttons");
-        div.appendChild(form);
+        addExtraButton(statuslist[i], i);
     }
 }
 
@@ -188,7 +219,7 @@ function addExtraButtons() {
 function saveText() {
     savestatus = document.getElementById("status").value;
     var statuslist = localStorage.getItem("statuslist");
-    if (!statuslist || statuslist === null) {
+    if (!statuslist || statuslist == null) {
         statuslist = [savestatus];
     } 
     else {
@@ -198,7 +229,8 @@ function saveText() {
     }
     console.log(statuslist);
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
-    addExtraButtons();
+    addExtraButton(savestatus, statuslist.length - 1);
+    document.getElementById("status").value = '';
 }
 
 //deletes the cookie

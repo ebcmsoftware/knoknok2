@@ -3,6 +3,7 @@ import os
 import logging
 import random
 import urllib
+import re
 from datetime import datetime
 
 from google.appengine.api import users
@@ -12,8 +13,8 @@ from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
-"""from twilio import twiml
-from twilio.rest import TwilioRestClient"""
+#from twilio import twiml
+#from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -135,9 +136,11 @@ class SendEmail(webapp.RequestHandler):
   def post(self):
     emails = self.request.get('emails').strip()
     sentby = self.request.get('emailsentby').strip()
+    if not sentby or sentby == '':
+        sentby = 'your roommate'
     logging.info("email sent by " + sentby)
     emaillist = emails.split(" ")
-    emaillist = set(emaillist) #remove duplicates
+    emaillist = list(set(emaillist)) #remove duplicates
     logging.info(emaillist)
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendEmail: <" + str(roomkey) + ">")
@@ -151,27 +154,42 @@ class SendEmail(webapp.RequestHandler):
 
 To use it, download the app <DL URL here> and enter the key: %s and you're all set!
 """ %(sentby, roomkey))
-    self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 class SendSMS(webapp.RequestHandler):
   def post(self):
+    logging.info("HERE ")
+    logging.info("HERE ")
+    logging.info("HERE ")
+    logging.info("HERE ")
+    logging.info("HERE ")
+    logging.info("HERE ")
     phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(" ")
-    phone_numberlist = set(phone_numberlist) #remove duplicates
+    phone_numberlist = list(set(phone_numberlist)) #remove duplicates
+    def format_phone(s):
+        s = s.replace('.','').replace('-','').replace('(','').replace(')','').replace(' ','')
+        if len(s) == 10:
+            return s
+        if len(s) == 11:
+            if s[0] == '1' or s[0] == '0':
+                return s[1:]
+        return ''
+    phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendSMS: <" + str(roomkey) + ">")
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
 #TODO: make sure phone number is legit
-    client = TwilioRestClient(account_sid, auth_token)
+    #client = TwilioRestClient(account_sid, auth_token)
     #rv = client.sms.messages.create(to="+1" + str(phone_number),
     #                                from_="+18646432174",
     #                                body="Thanks for using Knoknok! When you download the app, simply enter the key: " + str(roomkey))
     #self.response.write(str(rv)) #this was in the google example code..not sure if necessary
                                   #i seriously don't think it's necessary
-    self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 def keygen(depth=0):
