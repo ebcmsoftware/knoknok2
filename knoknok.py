@@ -96,6 +96,27 @@ class MainPage(webapp.RequestHandler):
     self.response.out.write(template.render(path, template_values))
 
 
+class API(webapp.RequestHandler):
+  def get(self):
+    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
+    if roomkey != DEFAULT_ROOMKEY:
+        roomkey = int(roomkey)
+    logging.info("got roomkey in /sign " + str(roomkey))
+    greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
+    response = greetings_query.fetch(1)
+    if response == []:
+        logging.info("wait waht")
+        room = Room(parent=guestbook_key(roomkey))
+        room.alive = True
+    else:
+        room = response[0]
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+    self.response.headers['Content-Type'] = 'application/json'
+    self.response.out.write(
+'''"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status, room.most_recent_username, room.roomname, pretty_date(room.time))
+)
+
+
 class KKError(webapp.RequestHandler):
   def get(self):
     #i stole this code from charlie :)))))))))))
@@ -351,6 +372,7 @@ application = webapp.WSGIApplication([('/', MainPage),
                                       ('/error', KKError),
                                       ('/sendsms', SendSMS),
                                       ('/sendemail', SendEmail),
+                                      ('/api', API),
                                       ('/changeroomname', ChangeRoomName),
                                       ('/createroom', CreateRoom),
                                       ('/deleteroom', DeleteRoom),

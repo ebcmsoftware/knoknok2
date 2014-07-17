@@ -125,9 +125,30 @@ function sendemail() {
     $.post('/sendemail', post_params, function(){window.location.assign('#KKhome');});
 }
 
-/*
- * TODO: occasional autorefresh of information
- */
+function refresh_info() {
+    var req = new XMLHttpRequest;
+    console.log('updating info');
+    req.open('GET', '/api?roomkey='+getKey());
+    req.send();
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            var info = JSON.parse(req.responseText);
+            if (info['status'] != $('#statustext')[0].innerHTML) {
+                setStatus(info['status']);
+            }
+            if (info['roomname'] != $('#roomname')[0].innerHTML) {
+                $('#roomname')[0].innerHTML = info['roomname'];
+            }
+            if (info['username'] && info['username'] != '') {
+                $('#statusstats')[0].innerHTML = 'set by: ' + info['username'];
+            } else {
+                $('#statusstats')[0].innerHTML = 'set';
+            }
+            $('#statusstats')[0].innerHTML += ' ' + info['time'];
+        }
+    }
+}
+setInterval(refresh_info, 15000);
 
 //makes the status something
 function setStatus(msg) {
@@ -139,7 +160,7 @@ function setStatus(msg) {
     post_params['status'] = msg;
     $.post('/sign', post_params, function() {
     });
-        $('#statustext')[0].innerHTML = "ROOM STATUS: " + msg;
+        $('#statustext')[0].innerHTML = msg;
         if (username && username != '') 
             $('#statusstats')[0].innerHTML = 'set by: ' + username + ', just now';
        else $('#statusstats')[0].innerHTML = 'set by you, just now';

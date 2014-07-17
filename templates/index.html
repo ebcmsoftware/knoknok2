@@ -137,7 +137,7 @@
       </div>
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
         <p id="roomname">{{ roomname }}</p>
-        <div id="statustext">ROOM STATUS: {{status}}</div>
+        <div>ROOM STATUS: <span id="statustext">{{status}}</span></div>
         <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
         <script>
         var s = $('#statusstats')[0].innerHTML;
