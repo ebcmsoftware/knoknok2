@@ -125,6 +125,8 @@ function sendemail() {
     $.post('/sendemail', post_params, function(){window.location.assign('#KKhome');});
 }
 
+var depth = 1;
+var delay = 5000;
 function refresh_info() {
     var req = new XMLHttpRequest;
     console.log('updating info');
@@ -140,15 +142,20 @@ function refresh_info() {
                 $('#roomname')[0].innerHTML = info['roomname'];
             }
             if (info['username'] && info['username'] != '') {
-                $('#statusstats')[0].innerHTML = 'set by: ' + info['username'];
+                $('#statusstats')[0].innerHTML = 'set by: ' + info['username'] + ',';
             } else {
                 $('#statusstats')[0].innerHTML = 'set';
             }
             $('#statusstats')[0].innerHTML += ' ' + info['time'];
         }
     }
+    //slowly make it stop spamming the server if theyre idle
+    if (depth++ % 3 == 0) {
+        clearInterval(interval);
+        interval = setInterval(refresh_info, (depth / 3 + 1) * delay);
+    }
 }
-setInterval(refresh_info, 15000);
+var interval = setInterval(refresh_info, delay);
 
 //makes the status something
 function setStatus(msg) {
@@ -158,24 +165,28 @@ function setStatus(msg) {
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
     post_params['status'] = msg;
-    $.post('/sign', post_params, function() {
-    });
-        $('#statustext')[0].innerHTML = msg;
-        if (username && username != '') 
-            $('#statusstats')[0].innerHTML = 'set by: ' + username + ', just now';
-       else $('#statusstats')[0].innerHTML = 'set by you, just now';
-        if (msg == 'Open') {
-            $('#statusbar')[0].style.borderColor = '#00FF00';
-            $('#statusbar')[0].style.color = '#00FF00';
-        }
-        else if (msg == 'Closed') {
-            $('#statusbar')[0].style.borderColor = '#FF0000';
-            $('#statusbar')[0].style.color = '#FF0000';
-        }
-        else {
-            $('#statusbar')[0].style.borderColor = '#006eb7';
-            $('#statusbar')[0].style.color = '#006eb7';
-        }
+    //we want this to feel immediate
+    $('#statustext')[0].innerHTML = msg;
+    if (username && username != '') 
+        $('#statusstats')[0].innerHTML = 'set by: ' + username + ', just now';
+    else $('#statusstats')[0].innerHTML = 'set by you, just now';
+    if (msg == 'Open') {
+        $('#statusbar')[0].style.borderColor = '#00FF00';
+        $('#statusbar')[0].style.color = '#00FF00';
+    }
+    else if (msg == 'Closed') {
+        $('#statusbar')[0].style.borderColor = '#FF0000';
+        $('#statusbar')[0].style.color = '#FF0000';
+    }
+    else {
+        $('#statusbar')[0].style.borderColor = '#006eb7';
+        $('#statusbar')[0].style.color = '#006eb7';
+    }
+    $.post('/sign', post_params, function() {});
+    //they are active
+    depth = 1;
+    clearInterval(interval);
+    interval = setInterval(refresh_info, delay);
 }
 
 function destroyButton(i) {
@@ -191,11 +202,13 @@ function destroyButton(i) {
         localStorage.removeItem("statuslist");
     }
     //TODO: CHANGE THIS to just remove the element and not refresh
-    window.location.reload();
+    var btn = document.getElementById('newbutton'+i)
+    btn.parentNode.removeChild(btn);
 }
 
 function addExtraButton(msg, i) {
     form = document.createElement("form");
+    form.id = "newbutton" + i;
     form.method = "post";
     form.action = "/sign";
 
@@ -260,10 +273,20 @@ function forgetRoom(){
 }
 
 function changeUserName() {
+    var oldname  = getUserName();
     var username = document.getElementById('usernameinput').value; 
     var key = localStorage.setItem('username', username);
     //maybe have it update the previously updated status? it still shows the older status
-    window.location.assign('?roomkey='+getKey()+'#KKhome');
+    var stats = $('#statusstats')[0].innerHTML;
+    //if they set the most recent status
+    if (stats.split(',')[0] == 'set by: ' + oldname || 
+        (oldname == '' && stats.split(',')[0] == stats)) {//if they didn't set a name
+            setStatus($('#statustext')[0].innerHTML); //reset the status
+    }
+    else console.log(stats);
+    console.log(stats.split(',')[0]);
+    console.log(oldname == '');
+    window.location.assign('#KKhome');
 }
 
 function getKey() {
@@ -304,6 +327,15 @@ function changeTheme(){
      }
 }
 
+function changeroomname() {
+    var post_params = new Object();
+    post_params['roomkey'] = getKey();
+    post_params['roomname'] = $('#newroomname').val();
+    $.post('/changeroomname', post_params, function(){
+        $('#roomname')[0].innerHTML = post_params['roomname'];
+        window.location.assign('#KKhome');
+    });
+}
 
 function startLink(){
     window.location.assign("#get2key");

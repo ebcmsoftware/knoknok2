@@ -113,7 +113,7 @@ class API(webapp.RequestHandler):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(
-'''"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status, room.most_recent_username, room.roomname, pretty_date(room.time))
+'''{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status, room.most_recent_username, room.roomname, pretty_date(room.time))
 )
 
 

@@ -137,7 +137,7 @@
       </div>
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
         <p id="roomname">{{ roomname }}</p>
-        <div>ROOM STATUS: <span id="statustext">{{status}}</span></div>
+        <div>STATUS: <span id="statustext">{{status}}</span></div>
         <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
         <script>
         var s = $('#statusstats')[0].innerHTML;
@@ -237,9 +237,8 @@
           <div class="ui-field-contain">
             <p>Change room name to what?</p>
             <form action="/changeroomname" method="post" action="demoform.asp">
-                <input type="text" name="roomname">
-                <input type="hidden" name="roomkey" value="{{ roomkey }}">
-                <a href="javascript:;" onclick="parentNode.submit();" class="ui-btn">Update room name</a>
+                <input type="text" name="roomname" id="newroomname">
+                <a href="javascript:;" onclick="changeroomname();" class="ui-btn">Update room name</a>
               <a href="#settingsmenu" class="ui-btn">&lt;- Go Back</a>
             </form>
          </div>
