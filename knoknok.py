@@ -153,12 +153,17 @@ class KKError(webapp.RequestHandler):
     """)
 
 
+def well_formatted(address):
+    return (len(address)            >= 5 and
+            len(address.split('@')) == 2 and
+            len(address.split('.')) >= 2)
+
 class SendEmail(webapp.RequestHandler):
   def post(self):
     emails = self.request.get('emails').strip()
     sentby = self.request.get('emailsentby').strip()
     if not sentby or sentby == '':
-        sentby = 'your roommate'
+        sentby = 'Your roommate'
     logging.info("email sent by " + sentby)
     emaillist = emails.split(" ")
     emaillist = list(set(emaillist)) #remove duplicates
@@ -166,16 +171,15 @@ class SendEmail(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendEmail: <" + str(roomkey) + ">")
     for email in emaillist:
-        if email != "": #and email <isn't badly formatted - TODO>
+        if email != "" and well_formatted(email): #and email <isn't badly formatted - TODO>
             mail.send_mail(sender="The Knoknok Team <tuftswhistling@gmail.com>",
                            to=email,
                            subject="Welcome to Knoknok!",
-                           body="""
-%s has invited you to join Knoknok, an app for Roommates!
+                           body=
+"""%s has invited you to join Knoknok, an app for Roommates!
 
-To use it, download the app <DL URL here> and enter the key: %s and you're all set!
+To use it, download the app (iPhone: <url>, Android: <url>) and enter the key: %s, then you're all set!
 """ %(sentby, roomkey))
-    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 class SendSMS(webapp.RequestHandler):
