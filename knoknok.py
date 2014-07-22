@@ -308,6 +308,9 @@ class DeleteRoom(webapp.RequestHandler):
 
 class UpdateStatus(webapp.RequestHandler):
   def post(self):
+    #boolean - whether or not we are just updating the info and not making a new status 
+    update = self.request.get('update', DEFAULT_ROOMKEY) 
+    update = update == '1' #booleanize it
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
@@ -322,7 +325,8 @@ class UpdateStatus(webapp.RequestHandler):
         room = response[0]
     room.most_recent_username = self.request.get('username')
     room.status = self.request.get('status')
-    room.time = datetime.now()
+    if not update:
+        room.time = datetime.now()
     room.put()
     self.redirect('/?roomkey=' + str(room.roomkey)+'#KKhome')
 

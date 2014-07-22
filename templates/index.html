@@ -180,8 +180,8 @@
           <div data-role="controlgroup" style = "margin: 0 auto">
             <form action="/sign" method="post" action="demoform.asp">  
               <input type="text" name="status" id="status">
-              <a href="javascript:;" onclick="setStatus($('#status').val());window.location.assign('#KKhome');" type="status" class="ui-btn">Set status</a>
-              <a href="javascript:;" onclick="saveText();setStatus($('#status').val());window.location.assign('#KKhome');" class="ui-btn">Save this status (locally)</a>
+              <a href="javascript:;" onclick="setStatus($('#status').val());window.location.assign('#KKhome');" class="ui-btn">Set status</a>
+              <a href="javascript:;" onclick="setStatus($('#status').val());saveText();window.location.assign('#KKhome');" class="ui-btn">Save this status (locally)</a>
               <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
             </form>
         </div>

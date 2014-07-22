@@ -125,8 +125,23 @@ function sendemail() {
     $.post('/sendemail', post_params, function(){window.location.assign('#KKhome');});
 }
 
+function setColor(msg) {
+    if (msg == 'Open') {
+        $('#statusbar')[0].style.borderColor = '#00FF00';
+        $('#statusbar')[0].style.color = '#00FF00';
+    }
+    else if (msg == 'Closed') {
+        $('#statusbar')[0].style.borderColor = '#FF0000';
+        $('#statusbar')[0].style.color = '#FF0000';
+    }
+    else {
+        $('#statusbar')[0].style.borderColor = '#006eb7';
+        $('#statusbar')[0].style.color = '#006eb7';
+    }
+}
+
 var depth = 1;
-var delay = 5000;
+var delay = 10000;
 function refresh_info() {
     var req = new XMLHttpRequest;
     console.log('updating info');
@@ -136,7 +151,8 @@ function refresh_info() {
         if (req.readyState == 4) {
             var info = JSON.parse(req.responseText);
             if (info['status'] != $('#statustext')[0].innerHTML) {
-                setStatus(info['status']);
+                $('#statustext')[0].innerHTML = info['status'];
+                setColor(info['status']);
             }
             if (info['roomname'] != $('#roomname')[0].innerHTML) {
                 $('#roomname')[0].innerHTML = info['roomname'];
@@ -158,30 +174,28 @@ function refresh_info() {
 var interval = setInterval(refresh_info, delay);
 
 //makes the status something
-function setStatus(msg) {
+//msg: string to be set at the status
+//update: bool, whether or not to update the time it was set at
+function setStatus(msg, update) {
     //if i have time to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     var post_params = new Object();
     var username = getUserName();
+    if (update) {
+        post_params['update'] = '1';
+    }
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
     post_params['status'] = msg;
     //we want this to feel immediate
     $('#statustext')[0].innerHTML = msg;
-    if (username && username != '') 
-        $('#statusstats')[0].innerHTML = 'set by: ' + username + ', just now';
-    else $('#statusstats')[0].innerHTML = 'set by you, just now';
-    if (msg == 'Open') {
-        $('#statusbar')[0].style.borderColor = '#00FF00';
-        $('#statusbar')[0].style.color = '#00FF00';
+    if (username && username != '')
+        $('#statusstats')[0].innerHTML = 'set by: ' + username;
+    else 
+        $('#statusstats')[0].innerHTML = 'set by you';
+    if (!update) {
+        $('#statusstats')[0].innerHTML += ', just now';
     }
-    else if (msg == 'Closed') {
-        $('#statusbar')[0].style.borderColor = '#FF0000';
-        $('#statusbar')[0].style.color = '#FF0000';
-    }
-    else {
-        $('#statusbar')[0].style.borderColor = '#006eb7';
-        $('#statusbar')[0].style.color = '#006eb7';
-    }
+    setColor(msg);
     $.post('/sign', post_params, function() {});
     //they are active
     depth = 1;
@@ -281,7 +295,7 @@ function changeUserName() {
     //if they set the most recent status
     if (stats.split(',')[0] == 'set by: ' + oldname || 
         (oldname == '' && stats.split(',')[0] == stats)) {//if they didn't set a name
-            setStatus($('#statustext')[0].innerHTML); //reset the status
+            setStatus($('#statustext')[0].innerHTML, true); //reset the status
     }
     else console.log(stats);
     console.log(stats.split(',')[0]);
