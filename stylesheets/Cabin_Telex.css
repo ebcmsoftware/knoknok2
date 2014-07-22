@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'Cabin';
+  font-style: normal;
+  font-weight: 400;
+  /*
+  src: local('Cabin Regular'), local('Cabin-Regular'), url(http://themes.googleusercontent.com/static/fonts/cabin/v5/JEgmtEDzc-IH8jBshQXrYA.woff) format('woff');
+  */
+  src: local('Cabin Regular'), local('Cabin-Regular'), url(one.woff) format('woff');
+}
+@font-face {
+  font-family: 'Telex';
+  font-style: normal;
+  font-weight: 400;
+  /*
+  src: local('Telex-Regular'), url(http://themes.googleusercontent.com/static/fonts/telex/v2/QBUn5F7b-9Ulki7K75J1Bw.woff) format('woff');
+  */
+  src: local('Telex-Regular'), url(two.woff) format('woff');
+}
