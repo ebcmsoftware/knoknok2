@@ -37,10 +37,10 @@
        <h1>Welcome to Knoknok, an app for roommates!</h1>
        <div data-role="controlgroup" style = "width: 55%; margin: 0 auto;">
             <p>New User?</p>
-            <a href="#makeroom" class="ui-btn">Make a new Room</a>
+            <a href="#makeroom" data-transition="slide" class="ui-btn">Make a new Room</a>
             <br>
             <p>Roomate sent you a key?</p>
-            <a href="#enterkey" class="ui-btn">Enter a Key</a>
+            <a href="#enterkey" data-transition="slide" class="ui-btn">Enter a Key</a>
       </div>
   </div>
 
@@ -52,7 +52,7 @@
           <input type="text" name="username" id="username" placeholder="Enter your name...">
           <input type="tel" name="roomkey" id="roomkey" placeholder="Enter key...">
           <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
-          <a href="#get2key" class="ui-btn">&lt;- Go Back</a>
+          <a href="#get2key"  data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
         </div>
       </form>
   </div>
@@ -64,8 +64,8 @@
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
-          <a href="javascript:;" onclick="navig8();parentNode.submit();" class="ui-btn">Next --&gt;</a>
-          <a href="#get2key" class="ui-btn">&lt;- Go Back</a>
+          <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();parentNode.submit();" class="ui-btn">Next --&gt;</a>
+          <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
         </form>
     </div>
   </div>

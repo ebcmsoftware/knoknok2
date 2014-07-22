@@ -166,12 +166,16 @@ function refresh_info() {
         }
     }
     //slowly make it stop spamming the server if theyre idle
+    //idk maybe rething how the scaling works.
+    //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
     if (depth++ % 3 == 0) {
         clearInterval(interval);
         interval = setInterval(refresh_info, (depth / 3 + 1) * delay);
     }
 }
-var interval = setInterval(refresh_info, delay);
+if (getKey())
+    var interval = setInterval(refresh_info, delay);
+else console.log("oh");
 
 //makes the status something
 //msg: string to be set at the status
