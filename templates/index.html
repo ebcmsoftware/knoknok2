@@ -20,7 +20,7 @@
   <script src= "../static/KKscript.js"></script>
 </head>
 
-<script> var debug=true; clearCookies(debug); </script>
+<script> var debug=false; clearCookies(debug); </script>
 
 <body>  
   <script>  redirectWhenCookie(); </script>
@@ -63,6 +63,7 @@
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
           <a href="javascript:;" onclick="navig8();parentNode.submit();" class="ui-btn">Next...</a>
+          <a href="#get2key" class="ui-btn">&lt;- Go Back</a>
         </form>
     </div>
   </div>
@@ -81,8 +82,10 @@
 
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
-     <p id = "keytosend">Key:</p>
+     <p id = "keytosend">Key: {{  roomkey  }}</p>
+     <!-- will probably be needed for good formatting of the roomkey (i.e. 123-456-789)
      <script> displayKeyToSend(); </script>
+     -->
      <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
       <div id="phonenumbers" class="ui-field-contain">
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Roommate's Phone Number... ex. 8646336977">
@@ -92,8 +95,32 @@
         <input type="hidden" name="sendnum" value="ERROR!" id="numberlist">
         <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">Add a new roommate</a>
         <a href="javascript:;" onclick="setNumberList();parentNode.submit();" class="ui-btn">Send this key</a>
+        <br>
+        <a href="#sendemail" class="ui-btn">Or, send an email</a>
       </form>
     </div>
+  </div>
+
+  <!-- the page for sending the key via email -->
+  <div data-role= "page" data-theme = "a" id = "sendemail">
+    <p id = "keytosendemail">Key: {{ roomkey }}</p>
+    <!-- will probably be needed for good formatting of the roomkey (i.e. 123-456-789)
+    <script> displayKeyToSend(); </script>
+    -->
+    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+    <div id="emailinputs" class="ui-field-contain">
+        <input type="text" name="email1" value="" id="email1" placeholder="Roommate's email address...">
+    </div>
+      <form method="post" action="/sendemail" style ="width: 55%; margin: 0 auto">
+        <input type="hidden" name="roomkey" value="{{ roomkey }}">
+        <input type="hidden" name="emailsentby" value="" id="emailsentby">
+        <input type="hidden" name="emails" value="ERROR!!!" id="emaillist">
+        <a href="javascript:;" onclick="addEmailInput();" class="ui-btn">Add a new roommate</a>
+        <a href="javascript:;" onclick="setEmailList();parentNode.submit();" class="ui-btn">Send this key</a>
+        <br>
+        <a href="#sendkey" class="ui-btn">&lt;- Go Back</a>
+      </form>
+      </div>
   </div>
 
   <!-- the main page, with status settings -->
@@ -102,13 +129,11 @@
         <h1 style = "width: 70%; margin: 0 auto;">KNOKNOK</h1>
        <!--  <a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext"> -->
       </div>
-      <div data-role="main" class="ui-content">
-          <p style = "width: 50%; margin: 0 auto;">This is an app for roommates.</p>
-      </div>
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
         <p>{{ roomname }}</p>
         <p >ROOM STATUS: {{ status }}</p>
         <p style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
+        <hr id = "statusbar" style = "border-color: green;">
           <form action="/sign" method="post" action="demoform.asp"> 
             <input type="hidden" name="status" value="Open">
             <input type="hidden" name="roomkey" value="nokeyopen" id="key2">
@@ -170,7 +195,7 @@
           <p>Appearance</p>
           <a href="#changeusername" class="ui-btn">Change first name</a>
           <a href="#changeroomname" class="ui-btn">Change room name</a>
-          <a href="#KKhome" onclick = "changeTheme();" class="ui-btn">Change Theme (B & W)</a>
+          <a href="#KKhome" id = "themebutton" onclick = "changeTheme();" class="ui-btn">Change Theme (B & W)</a>
         </div>
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Get rid of room</p>

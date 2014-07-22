@@ -10,9 +10,10 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
+from google.appengine.api import mail
 
-from twilio import twiml
-from twilio.rest import TwilioRestClient
+"""from twilio import twiml
+from twilio.rest import TwilioRestClient"""
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -77,15 +78,40 @@ class MainPage(webapp.RequestHandler):
     self.response.out.write(template.render(path, template_values))
 
 
+class SendEmail(webapp.RequestHandler):
+  def post(self):
+    emails = self.request.get('emails').strip()
+    sentby = self.request.get('emailsentby').strip()
+    logging.info("email sent by " + sentby)
+    emaillist = emails.split(" ")
+    emaillist = set(emaillist) #remove duplicates
+    logging.info(emaillist)
+    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
+    logging.info("received roomkey via sendEmail: <" + str(roomkey) + ">")
+    for email in emaillist:
+        if email != "": #and email <isn't badly formatted - TODO>
+            mail.send_mail(sender="The Knoknok Team <tuftswhistling@gmail.com>",
+                           to=email,
+                           subject="Welcome to Knoknok!",
+                           body="""
+%s has invited you to join Knoknok, an app for Roommates!
+
+To use it, download the app <DL URL here> and enter the key: %s and you're all set!
+""" %(sentby, roomkey))
+    self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+
+
 class SendSMS(webapp.RequestHandler):
   def post(self):
     phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(" ")
+    phone_numberlist = set(phone_numberlist) #remove duplicates
     logging.info(phone_numberlist)
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
-    logging.info("received roomkey via sendSMS <" + str(roomkey) + ">")
+    logging.info("received roomkey via sendSMS: <" + str(roomkey) + ">")
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
+#TODO: make sure phone number is legit
     client = TwilioRestClient(account_sid, auth_token)
     #rv = client.sms.messages.create(to="+1" + str(phone_number),
     #                                from_="+18646432174",
@@ -251,6 +277,7 @@ def pretty_date(time=False):
 
 application = webapp.WSGIApplication([('/', MainPage),
                                       ('/sendsms', SendSMS),
+                                      ('/sendemail', SendEmail),
                                       ('/changeroomname', ChangeRoomName),
                                       ('/createroom', CreateRoom),
                                       ('/deleteroom', DeleteRoom),
