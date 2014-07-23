@@ -75,22 +75,16 @@ class MainPage(webapp.RequestHandler):
             return
     room.put()
     template_values = {}
-    color="#006eb7"
     if roomkey != DEFAULT_ROOMKEY:
         template_values = {
           'roomkey':room.roomkey,
           'status':room.status,
           'username':room.most_recent_username,
           'roomname':room.roomname,
-          'color':color,
           'time':pretty_date(room.time),
     }
     if room.status == WELCOME_GREETING:
         template_values['username'] = 'The Knoknok Team'
-    elif room.status and room.status.lower() == 'open':
-        template_values['color'] = '#00ff00'
-    elif room.status and room.status.lower() == 'closed':
-        template_values['color'] = '#ff0000'
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
     self.response.out.write(template.render(path, template_values))
 
@@ -100,13 +94,10 @@ class API(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
-    logging.info("got roomkey in /sign " + str(roomkey))
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     if response == []:
-        logging.info("wait waht")
-        room = Room(parent=guestbook_key(roomkey))
-        room.alive = True
+        logging.error("wait waht")
     else:
         room = response[0]
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -289,7 +280,6 @@ class CreateRoom(webapp.RequestHandler):
       'roomkey': room.roomkey,
       'username':room.most_recent_username,
       'roomname':room.roomname,
-      'color':"#006eb7",
       'time':'just now'
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')

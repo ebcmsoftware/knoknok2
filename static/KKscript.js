@@ -1,3 +1,9 @@
+//19BFA1 is a color (KK terms)
+//#000000 is not!
+String.prototype.isColor = function() {
+    return /[0-9A-F]{6}$/i.test(this);
+}
+
 //clears the cookies for while we're testing
 function clearCookies(debug){
     if (debug) {
@@ -137,8 +143,8 @@ function setColor(msg) {
     var color = '#006eb7';
     var split_msg = msg.split('#');
     // if it's a valid color
-    if (/[0-9A-F]{6}$/i.test(msg[split_msg.length - 1])) {
-        color = msg[split_msg.length - 1];
+    if (split_msg[split_msg.length - 1].isColor()) {
+        color = '#' + split_msg[split_msg.length - 1];
     }
     else if (msg == 'Open') {
         color = '#00FF00';
@@ -193,7 +199,7 @@ function localRefresh(msg, username, time, roomname) {
     setColor(msg);
     var split_msg = msg.split('#');
     // if it's a valid color, hide the color.
-    if (/[0-9A-F]{6}$/i.test(msg[split_msg.length - 1])) {
+    if (split_msg[split_msg.length - 1].isColor()) {
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
     $('#statustext')[0].innerHTML = msg;
@@ -205,7 +211,7 @@ function localRefresh(msg, username, time, roomname) {
     if (time)
         $('#statusstats')[0].innerHTML += time;
     if (roomname) {
-        $('roomname')[0].innerHTML = roomname;
+        $('#roomname')[0].innerHTML = roomname;
     }
 }
 
@@ -227,10 +233,8 @@ function setStatus(msg, update) {
     post_params['username'] = username;
     post_params['status'] = msg;
     $.post('/sign', post_params, function() {});
-    //they are active
-    depth = 1;
-    clearInterval(interval);
-    interval = setInterval(refresh_info, delay);
+    //they are active -> refresh frequently
+    reset_interval(delay);
 }
 
 function destroyButton(i) {
@@ -260,6 +264,11 @@ function addExtraButton(msg, i) {
     btn.href="javascript:;";
     btn.className = "ui-btn";
     btn.setAttribute("onclick", "setStatus('"+msg+"');");
+    var split_msg = msg.split('#');
+    if (split_msg[split_msg.length - 1].isColor()) {
+        btn.style.color = '#' + split_msg[split_msg.length - 1];
+        msg = msg.substring(0, msg.lastIndexOf("#"));
+    }
     btn.innerHTML = msg;
 
     close = document.createElement("span");
@@ -337,7 +346,7 @@ function getKey() {
     return localStorage.getItem("userkey");
 }
 
-function getUserName(){
+function getUserName() {
     return localStorage.getItem("username");
 }
 

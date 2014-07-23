@@ -94,7 +94,7 @@
     <!-- GREAT-ish script for getting random key -->
     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
       <a href="#sendkey" data-transition="slide" class="ui-btn">Send this key -&gt;</a>
-      <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn">Go to room</a>
+      <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn"  data-transition="pop">Go to room</a>
     </div> 
   </div>
 
@@ -161,7 +161,7 @@
           $('#statusstats')[0].innerHTML = s.slice(0,3) + s.slice(9);
         else console.log(s);
         </script>
-        <hr id = "statusbar" style = "border-color: {{ color }};color: {{color}};" noshade>
+        <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
          <div id="KKstatusbuttons">
           <form action="/sign" method="post" action="demoform.asp"> 
             <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');">Open</a>
@@ -220,8 +220,8 @@
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Appearance</p>
           <span class="ui-btn" style='background-color:yellow'>(make a button here to send the key to more ppl)</span>
-          <a href="#changeusername" class="ui-btn">Change name</a>
-          <a href="#changeroomname" class="ui-btn">Change room name</a>
+          <a href="#changeusername" class="ui-btn" onclick="(function(){$('#usernameinput')[0].value = getUserName();})()">Change name</a>
+          <a href="#changeroomname" class="ui-btn" onclick="(function(){$('#newroomname')[0].value = $('#roomname')[0].innerHTML;})()">Change room name</a>
           <a href="#KKhome" id = "themebutton" onclick = "changeTheme();" class="ui-btn">Change Theme (B & W)</a>
         </div>
         <div data-role="controlgroup" style = "margin: 0 auto">
@@ -286,6 +286,20 @@
           </div>
       </div>
   </div>
+
+  <input type="hidden" id="st" value="{{status}}">
+  <input type="hidden" id="un" value="{{username}}">
+  <input type="hidden" id="ti" value="{{time}}">
+  <input type="hidden" id="rn" value="{{roomname}}">
+
+  <script>
+localRefresh(
+    $('#st')[0].value,
+    $('#un')[0].value,
+    $('#ti')[0].value,
+    $('#rn')[0].value
+    );
+  </script>
 
 </body>
 </html>
