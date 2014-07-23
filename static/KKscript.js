@@ -12,11 +12,7 @@ function redirectWhenCookie() {
     var key = getKey(); 
     if(key != "" && key != null && key != "undefined" && key != "None") {
         var hostname = location.hostname;
-        console.log(key);
         var newplace = "?roomkey=" + key + "#KKhome";
-        console.log(hostname);
-        console.log(newplace);
-        console.log("newplace");
         window.location.assign(newplace);
     }
 }
@@ -34,7 +30,6 @@ function changeLink() {
 function navig8() {
     localStorage.setItem("username", $('#enterfirstname')[0].value);
     localStorage.setItem("roomname", $('#enterroomname')[0].value);
-    console.log("username is......." + $('#enterfirstname')[0].value);
     window.location.assign("/#createroom");
 }
 
