@@ -40,7 +40,10 @@
             <a href="#makeroom" data-transition="slide" class="ui-btn">Make a new Room</a>
             <br>
             <p>Roomate sent you a key?</p>
+            <!--
             <a href="#enterkey" data-transition="slide" class="ui-btn">Enter a Key</a>
+            -->
+            <a href="javascript:;" data-transition="slide" class="ui-btn" onclick="window.location.search='?roomkey=123456#KKhome'">Enter a Key</a>
       </div>
   </div>
 
@@ -48,7 +51,9 @@
   <div data-role= "page" data-theme = "a" id = "enterkey">
       <form method="post" action="/#KKhome">
         <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+            <!-- why? -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
+            <!--      -->
           <input type="text" name="username" id="username" placeholder="Enter your name...">
           <input type="tel" name="roomkey" id="roomkey" placeholder="Enter key...">
           <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
@@ -61,10 +66,11 @@
   <div data-role= "page" data-theme = "a" id = "makeroom">
     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
         <form action="/createroom" method="post">
+            <!-- do we need this. -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
-          <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();parentNode.submit();" class="ui-btn">Next -&gt;</a>
+          <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();//parentNode.submit();" class="ui-btn">Next -&gt;</a>
           <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
         </form>
     </div>
@@ -72,20 +78,20 @@
 
   <!-- the key loading page -->
   <div data-role = "page" data-theme = "a" id= "keyload">
-     <div style = "width: 205px; height: 425px">
-        <div id = "topbox" style = "background-color: orange"></div>
-        <div id = "bottombox"></div>
-        <img src="static/images/keyload.gif" style = "z-index: 2">
-        </div>
+      <center>
+      <div style = "vertical-align:middle;margin: 0 auto;width: 205px; height: 425px">
+          <div id = "topbox" style = "background-color: orange"></div>
+          <div id = "bottombox"></div>
+              <img src="static/images/key.png" style = "z-index: 2">
+      </div>
+  </center>
   </div>
 
   <!-- the page for getting your key w/ option to send an sms -->
   <div data-role= "page" data-theme = "a" id = "createroom">
     <p>This is your room's key. It's what identifies your room! Give it to your roommate(s), and you'll never need it again.</p>
     <p id="key">Key : couldn't load key :(</p>
-    <img src="static/images/keyload.gif">
     <!-- GREAT-ish script for getting random key -->
-    <script> makeKey("{{ roomkey }}"); </script>
     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
       <a href="#sendkey" data-transition="slide" class="ui-btn">Send this key -&gt;</a>
       <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn">Go to room</a>
@@ -94,13 +100,10 @@
 
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
-     <p id = "keytosend">Key: {{  roomkey  }}</p>
-     <!-- will probably be needed for good formatting of the roomkey (i.e. 123-456-789)
-     <script> displayKeyToSend(); </script>
-     -->
+     <p id = "keytosendsms">Key: {{  roomkey  }}</p>
      <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
       <div id="phonenumbers" class="ui-field-contain">
-          <input type="tel" name="sendnum1" id="sendnum1" placeholder="Roommate's Cell Number... ex. 8646336977">
+          <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
       <div id="annoyingpopup" data-role="popup" style="padding:30px;">Text message(s) sent!</div>
       <form method="post" action="/sendsms" style ="margin: 0 auto">
@@ -112,8 +115,7 @@
         -->
         <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
         <br>
-        <a href="#sendemail" data-transition="slide" class="ui-btn">Or, send an email</a>
-        <br>
+        <a href="#sendemail" data-transition="slide" class="ui-btn">Or, send an email -&gt;</a>
         <a href="#createroom" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
       </form>
     </div>
@@ -122,12 +124,10 @@
   <!-- the page for sending the key via email -->
   <div data-role= "page" data-theme = "a" id = "sendemail">
     <p id = "keytosendemail">Key: {{ roomkey }}</p>
-    <!-- will probably be needed for good formatting of the roomkey (i.e. 123-456-789)
-    <script> displayKeyToSend(); </script>
-    -->
+    <script> makeKey("{{ roomkey }}"); </script>
     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
     <div id="emailinputs" class="ui-field-contain">
-        <input type="email" name="email1" value="" id="email1" placeholder="Roommate's email address...">
+        <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
     </div>
       <div id="annoyingpopup2" data-role="popup" style="padding:30px;">Email(s) sent!</div>
       <form method="post" action="/sendemail" style ="margin: 0 auto">
@@ -146,7 +146,7 @@
   </div>
 
   <!-- the main page, with status settings -->
-  <div data-role= "page" data-theme = "a" id = "KKhome">
+  <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header" data-position = "inline">
         <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
         <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu">Settings</a></h1>
@@ -219,6 +219,7 @@
         <hr>
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Appearance</p>
+          <span class="ui-btn" style='background-color:yellow'>(make a button here to send the key to more ppl)</span>
           <a href="#changeusername" class="ui-btn">Change name</a>
           <a href="#changeroomname" class="ui-btn">Change room name</a>
           <a href="#KKhome" id = "themebutton" onclick = "changeTheme();" class="ui-btn">Change Theme (B & W)</a>

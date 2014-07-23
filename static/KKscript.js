@@ -11,9 +11,9 @@ function clearCookies(debug){
 function redirectWhenCookie() {
     var key = getKey(); 
     if(key != "" && key != null && key != "undefined" && key != "None") {
-        var hostname = location.hostname;
         var newplace = "?roomkey=" + key + "#KKhome";
-        window.location.assign(newplace);
+        console.log('redirecting to ' + newplace)
+        window.href = newplace;
     }
 }
 
@@ -22,16 +22,26 @@ function changeLink() {
     var key = $('#roomkey')[0].value;
     //document.getElementById("gobutton").href = "/?roomkey=" + key + "#KKhome";
     localStorage.setItem("username", $('#username')[0].value);
-    window.location.assign("/?roomkey=" + key + "#KKhome");
+    window.location.href = "/?roomkey=" + key + "#KKhome";
 }
 
-//stores username and roomname then naviages us to createroom?
-//is this useful?!
 function navig8() {
     localStorage.setItem("username", $('#enterfirstname')[0].value);
     localStorage.setItem("roomname", $('#enterroomname')[0].value);
     window.location.assign("#keyload");
     //#window.location.assign("#createroom");
+    post_params = new Object();
+    post_params['enterroomname'] = localStorage['roomname'];
+    $.post('/createroom', post_params, function(data) {
+        if (data != "" && data != "1") {
+            localStorage['userkey'] = Number(data);
+        }
+        console.log(data);
+        setTimeout(function() {
+            var path = '?roomkey=' + data + '#createroom';
+            window.location.href = path;
+        },2500);
+    });
 }
 
 function formatKeyOutput(keystr) {
@@ -45,13 +55,11 @@ function formatKeyOutput(keystr) {
     return keyoutput
 }
 
-//makes the key? I don't get this
 function makeKey(keystr) {
     var keyoutput = formatKeyOutput(keystr);
     $('#key')[0].innerHTML = "Key: " + keyoutput;
-    if (keystr != "" && keystr != "1") {
-        localStorage.setItem("userkey", keystr);
-    }
+    $('#keytosendsms')[0].innerHTML = "Key: " + keyoutput;
+    $('#keytosendemail')[0].innerHTML = "Key: " + keyoutput;
 }
 
 //displays the key from the cookie
@@ -70,8 +78,7 @@ var num_phone_numbers = 1;
 function addPhoneInput() {
     num_phone_numbers++;
     var i = num_phone_numbers;
-    $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Roommate '+i+'\'s Phone Number...">');
-    console.log(document.getElementById('phonenumbers').innerHTML)
+    $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Cell Number...">');
 }
 
 var numberArray = "";
@@ -100,8 +107,7 @@ var num_emails = 1;
 function addEmailInput() {
     num_emails++;
     var i = num_emails;
-    $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Roommate '+i+'\'s Email Address...">');
-    console.log(document.getElementById('emailinputs').innerHTML);
+    $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Email Address...">');
 }
 
 var emailArray = "";
@@ -128,22 +134,24 @@ function sendemail() {
 }
 
 function setColor(msg) {
-    if (msg == 'Open') {
-        $('#statusbar')[0].style.borderColor = '#00FF00';
-        $('#statusbar')[0].style.color = '#00FF00';
+    var color = '#006eb7';
+    var split_msg = msg.split('#');
+    // if it's a valid color
+    if (/[0-9A-F]{6}$/i.test(msg[split_msg.length - 1])) {
+        color = msg[split_msg.length - 1];
+    }
+    else if (msg == 'Open') {
+        color = '#00FF00';
     }
     else if (msg == 'Closed') {
-        $('#statusbar')[0].style.borderColor = '#FF0000';
-        $('#statusbar')[0].style.color = '#FF0000';
+        color = '#FF0000';
     }
-    else {
-        $('#statusbar')[0].style.borderColor = '#006eb7';
-        $('#statusbar')[0].style.color = '#006eb7';
-    }
+    $('#statusbar')[0].style.borderColor = color;
+    $('#statusbar')[0].style.color = color;
 }
 
 var depth = 1;
-var delay = 10000;
+var delay = 5500;
 
 function reset_interval(dly) {
     depth = 1;
@@ -160,13 +168,7 @@ function refresh_info() {
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             var info = JSON.parse(req.responseText);
-            if (info['status'] != $('#statustext')[0].innerHTML) {
-                $('#statustext')[0].innerHTML = info['status'];
-                setColor(info['status']);
-            }
-            if (info['roomname'] != $('#roomname')[0].innerHTML) {
-                $('#roomname')[0].innerHTML = info['roomname'];
-            }
+            localRefresh(info['status'], info['username'], info['time'], info['roomname']);
             if (info['username'] && info['username'] != '') {
                 $('#statusstats')[0].innerHTML = 'set by: ' + info['username'] + ',';
             } else {
@@ -186,29 +188,44 @@ if (getKey())
     var interval = setInterval(refresh_info, delay);
 else console.log("oh");
 
+//just updates the status locally, doesn't send/get any info from the server
+function localRefresh(msg, username, time, roomname) {
+    setColor(msg);
+    var split_msg = msg.split('#');
+    // if it's a valid color, hide the color.
+    if (/[0-9A-F]{6}$/i.test(msg[split_msg.length - 1])) {
+        msg = msg.substring(0, msg.lastIndexOf("#"));
+    }
+    $('#statustext')[0].innerHTML = msg;
+    if (username && username != '') {
+        $('#statusstats')[0].innerHTML = 'set by: ' + username + ', '
+    } else {
+        $('#statusstats')[0].innerHTML = 'set ';
+    }
+    if (time)
+        $('#statusstats')[0].innerHTML += time;
+    if (roomname) {
+        $('roomname')[0].innerHTML = roomname;
+    }
+}
+
 //makes the status something
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
-    //if i have time to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
+    //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
+    //we want this to feel immediate
     var post_params = new Object();
     var username = getUserName();
     if (update) {
         post_params['update'] = '1';
+        localRefresh(msg, username);
     }
+    else
+        localRefresh(msg, username, 'just now');
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
     post_params['status'] = msg;
-    //we want this to feel immediate
-    $('#statustext')[0].innerHTML = msg;
-    if (username && username != '')
-        $('#statusstats')[0].innerHTML = 'set by: ' + username;
-    else 
-        $('#statusstats')[0].innerHTML = 'set by you';
-    if (!update) {
-        $('#statusstats')[0].innerHTML += ', just now';
-    }
-    setColor(msg);
     $.post('/sign', post_params, function() {});
     //they are active
     depth = 1;

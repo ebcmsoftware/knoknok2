@@ -45,7 +45,6 @@ default_room.put()
 class MainPage(webapp.RequestHandler):
   def get(self):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
-    username = self.request.get('username', DEFAULT_NAME)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
     logging.info("Writing to the KKHome... received roomkey " + str(roomkey))
@@ -179,6 +178,9 @@ class SendEmail(webapp.RequestHandler):
 """%s has invited you to join Knoknok, an app for Roommates!
 
 To use it, download the app (iPhone: <url>, Android: <url>) and enter the key: %s, then you're all set!
+
+Happy Knoknoking!
+The Knoknok Team
 """ %(sentby, roomkey))
 
 
@@ -227,18 +229,18 @@ def keygen(depth=0):
   response = Room.query_book(ancestor_key=guestbook_key(roomkey)).fetch(1) 
   if response != []:
       if room.alive:
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
           return keygen(depth=depth+1) #rng failed, gogo retry
       else:
           return roomkey
@@ -270,7 +272,6 @@ class CreateRoom(webapp.RequestHandler):
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     roomname = self.request.get('enterroomname', DEFAULT_NAME)
-    username = self.request.get('enterfirstname', DEFAULT_NAME)
     if response == []:
         room = Room(parent=guestbook_key(roomkey))
         room.alive = True
@@ -289,11 +290,12 @@ class CreateRoom(webapp.RequestHandler):
       'username':room.most_recent_username,
       'roomname':room.roomname,
       'color':"#006eb7",
-      'time':pretty_date(room.time)
+      'time':'just now'
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
-    self.response.out.write(template.render(path, template_values))
-    self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
+    self.response.out.write(str(room.roomkey))
+    #self.response.out.write(template.render(path, template_values))
+    #self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
 
 
 class DeleteRoom(webapp.RequestHandler):
@@ -354,7 +356,7 @@ def pretty_date(time=False):
     if day_diff < 0:
         return ''
     if day_diff == 0:
-        if second_diff < 2:
+        if second_diff < 5:
             return "just now"
         if second_diff < 60:
             return str(second_diff) + " seconds ago"
