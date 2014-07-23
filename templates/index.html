@@ -119,13 +119,13 @@
     <div id="emailinputs" class="ui-field-contain">
         <input type="email" name="email1" value="" id="email1" placeholder="Roommate's email address...">
     </div>
-      <div id="annoyingpopup" data-role="popup" style="padding:30px;">Email(s) sent!</div>
+      <div id="annoyingpopup2" data-role="popup" style="padding:30px;">Email(s) sent!</div>
       <form method="post" action="/sendemail" style ="margin: 0 auto">
         <input type="hidden" name="roomkey" value="{{ roomkey }}" id="roomkeyemail">
         <input type="hidden" name="emailsentby" value="" id="emailsentby">
         <input type="hidden" name="emails" value="ERROR!!!" id="emaillist">
         <a href="javascript:;" onclick="addEmailInput();" class="ui-btn">+Roommate</a>
-        <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
+        <a href="#annoyingpopup2" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
         <!--
         <a href="javascript:;" onclick="sendemail();" class="ui-btn">Send!</a>
         -->
