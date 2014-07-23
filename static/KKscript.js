@@ -93,7 +93,10 @@ function sendsms() {
     var post_params = new Object();
     post_params['roomkey'] = $('#uniquekey3')[0].value;
     post_params['sendnum'] = numberArray;
-    $.post('/sendsms', post_params, function(){window.location.assign('#KKhome');});
+    $.post('/sendsms', post_params, function(){
+        $.mobile.changePage('#KKhome', { transition:"pop" });
+        //window.location.assign('#KKhome');
+    });
 }
 
 var num_emails = 1;
@@ -122,7 +125,10 @@ function sendemail() {
     post_params['roomkey'] = $('#roomkeyemail')[0].value;
     post_params['emailsentby'] = $('#emailsentby')[0].value;
     post_params['emails'] = emailArray;
-    $.post('/sendemail', post_params, function(){window.location.assign('#KKhome');});
+    $.post('/sendemail', post_params, function(){
+        $.mobile.changePage('#KKhome', { transition:"pop" });
+        //window.location.assign('#KKhome');
+    });
 }
 
 function setColor(msg) {
@@ -142,6 +148,14 @@ function setColor(msg) {
 
 var depth = 1;
 var delay = 10000;
+
+function reset_interval(dly) {
+    depth = 1;
+    clearInterval(interval);
+    if (getKey())
+        interval = setInterval(refresh_info, dly);
+}
+
 function refresh_info() {
     var req = new XMLHttpRequest;
     console.log('updating info');
@@ -169,8 +183,7 @@ function refresh_info() {
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
     if (depth++ % 3 == 0) {
-        clearInterval(interval);
-        interval = setInterval(refresh_info, (depth / 3 + 1) * delay);
+        reset_interval((depth/3 + 1) * delay);
     }
 }
 if (getKey())
