@@ -71,10 +71,20 @@
     </div>
   </div>
 
+  <!-- the key loading page -->
+  <div data-role = "page" data-theme = "a" id= "keyload">
+     <div style = "width: 205px; height: 425px">
+        <div id = "topbox" style = "background-color: orange"></div>
+        <div id = "bottombox"></div>
+        <img src="static/images/keyload.gif" style = "z-index: 2">
+        </div>
+  </div>
+
   <!-- the page for getting your key w/ option to send an sms -->
   <div data-role= "page" data-theme = "a" id = "createroom">
     <p>This is your room's key. It's what identifies your room! Give it to your roommate(s), and you'll never need it again.</p>
     <p id="key">Key : couldn't load key :(</p>
+    <img src="static/images/keyload.gif">
     <!-- GREAT-ish script for getting random key -->
     <script> makeKey("{{ roomkey }}"); </script>
     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
@@ -139,8 +149,8 @@
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme = "a" id = "KKhome">
       <div data-role = "header" data-position = "inline">
-        <h1 style = "width: 70%; margin: 0 auto;">KNOKNOK</h1>
-       <!--  <a href="#" class="ui-btn ui-corner-all ui-icon-gear ui-btn-icon-notext"> -->
+        <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
+        <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu">Settings</a></h1>
       </div>
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
         <p id="roomname">{{ roomname }}</p>
@@ -167,9 +177,7 @@
       </div>
 
       <div data-role="footer" class="footer"  onclick="window.location.assign('#settingsmenu');" style = "border-right:3px solid black;border-top:3px solid black;position:fixed; float:bottom; bottom:-7px; left:0px;">
-          <!--
-        <h3><a href="#settingsmenu" style = "text-decoration:none;" >Settings</a></h3>
-        -->
+
           <h3><a href="#settingsmenu"><img src="static/images/icon-gear-white.png"></a></h3>
       </div>
 
@@ -279,6 +287,5 @@
       </div>
   </div>
 
-  
 </body>
 </html>
