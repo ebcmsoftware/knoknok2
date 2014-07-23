@@ -30,7 +30,8 @@ function changeLink() {
 function navig8() {
     localStorage.setItem("username", $('#enterfirstname')[0].value);
     localStorage.setItem("roomname", $('#enterroomname')[0].value);
-    window.location.assign("/#createroom");
+    window.location.assign("#keyload");
+    //#window.location.assign("#createroom");
 }
 
 function formatKeyOutput(keystr) {
