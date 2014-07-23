@@ -64,7 +64,7 @@
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
-          <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();parentNode.submit();" class="ui-btn">Next --&gt;</a>
+          <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();parentNode.submit();" class="ui-btn">Next -&gt;</a>
           <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
         </form>
     </div>
@@ -77,7 +77,7 @@
     <!-- GREAT-ish script for getting random key -->
     <script> makeKey("{{ roomkey }}"); </script>
     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
-      <a href="#sendkey" class="ui-btn">Send this key</a>
+      <a href="#sendkey" data-transition="slide" class="ui-btn">Send this key -&gt;</a>
       <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn">Go to room</a>
     </div> 
   </div>
@@ -96,13 +96,15 @@
       <form method="post" action="/sendsms" style ="margin: 0 auto">
         <input type="hidden" name="roomkey" value="{{ roomkey }}" id="uniquekey3">
         <input type="hidden" name="sendnum" value="ERROR!" id="numberlist">
-        <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">Add a new roommate</a>
+        <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">+Roommate</a>
         <!--
         <a href="javascript:;" onclick="setNumberList();parentNode.submit();" class="ui-btn">Send this key</a>
         -->
-        <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send this key</a>
+        <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
         <br>
-        <a href="#sendemail" class="ui-btn">Or, send an email</a>
+        <a href="#sendemail" data-transition="slide" class="ui-btn">Or, send an email</a>
+        <br>
+        <a href="#createroom" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
       </form>
     </div>
   </div>
@@ -117,14 +119,18 @@
     <div id="emailinputs" class="ui-field-contain">
         <input type="email" name="email1" value="" id="email1" placeholder="Roommate's email address...">
     </div>
+      <div id="annoyingpopup" data-role="popup" style="padding:30px;">Email(s) sent!</div>
       <form method="post" action="/sendemail" style ="margin: 0 auto">
         <input type="hidden" name="roomkey" value="{{ roomkey }}" id="roomkeyemail">
         <input type="hidden" name="emailsentby" value="" id="emailsentby">
         <input type="hidden" name="emails" value="ERROR!!!" id="emaillist">
-        <a href="javascript:;" onclick="addEmailInput();" class="ui-btn">Add a new roommate</a>
-        <a href="javascript:;" onclick="sendemail();" class="ui-btn">Send this key</a>
+        <a href="javascript:;" onclick="addEmailInput();" class="ui-btn">+Roommate</a>
+        <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
+        <!--
+        <a href="javascript:;" onclick="sendemail();" class="ui-btn">Send!</a>
+        -->
         <br>
-        <a href="#sendkey" class="ui-btn">&lt;- Go Back</a>
+        <a href="#sendkey" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
       </form>
       </div>
   </div>
