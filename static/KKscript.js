@@ -100,11 +100,11 @@ function setNumberList() {
 function sendsms() {
     setNumberList();
     var post_params = new Object();
+    post_params['username'] = getUserName();
     post_params['roomkey'] = $('#uniquekey3')[0].value;
     post_params['sendnum'] = numberArray;
     $.post('/sendsms', post_params, function(){
         $.mobile.changePage('#KKhome', { transition:"pop" });
-        //window.location.assign('#KKhome');
     });
 }
 

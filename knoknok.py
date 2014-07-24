@@ -13,8 +13,8 @@ from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
-#from twilio import twiml
-#from twilio.rest import TwilioRestClient
+from twilio import twiml
+from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -143,7 +143,7 @@ class KKError(webapp.RequestHandler):
     """)
 
 
-def well_formatted(address):
+def well_formatted_email(address):
     return (len(address)            >= 5 and
             len(address.split('@')) == 2 and
             len(address.split('.')) >= 2)
@@ -161,7 +161,7 @@ class SendEmail(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendEmail: <" + str(roomkey) + ">")
     for email in emaillist:
-        if email != "" and well_formatted(email): #and email <isn't badly formatted - TODO>
+        if email != "" and well_formatted_email(email):
             mail.send_mail(sender="The Knoknok Team <tuftswhistling@gmail.com>",
                            to=email,
                            subject="Welcome to Knoknok!",
@@ -175,18 +175,29 @@ The Knoknok Team
 """ %(sentby, roomkey))
 
 
+def well_formatted_number(number):
+    l = len(number)
+    return (l == 10 or 
+            l == 11 and number[0] == 1)
+
+def formatKeyOutput(keystr):
+    keyoutput = ''
+    for i in range(len(keystr)):
+        if i != 0 and i % 3 == 0:
+            keyoutput += '-'
+        keyoutput += keystr[i]
+    return keyoutput
+
 class SendSMS(webapp.RequestHandler):
   def post(self):
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
     phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(" ")
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
+        try:
+          int(s)
+        except ValueError:
+          return ''
         s = s.replace('.','').replace('-','').replace('(','').replace(')','').replace(' ','')
         if len(s) == 10:
             return s
@@ -194,20 +205,25 @@ class SendSMS(webapp.RequestHandler):
             if s[0] == '1' or s[0] == '0':
                 return s[1:]
         return ''
+    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
+    username = self.request.get('username', DEFAULT_ROOMKEY)
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
-    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
-    logging.info("received roomkey via sendSMS: <" + str(roomkey) + ">")
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-#TODO: make sure phone number is legit
-    #client = TwilioRestClient(account_sid, auth_token)
-    #rv = client.sms.messages.create(to="+1" + str(phone_number),
-    #                                from_="+18646432174",
-    #                                body="Thanks for using Knoknok! When you download the app, simply enter the key: " + str(roomkey))
-    #self.response.write(str(rv)) #this was in the google example code..not sure if necessary
-                                  #i seriously don't think it's necessary
-    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+    client = TwilioRestClient(account_sid, auth_token)
+    if username and username != '':
+        body = username
+    else:
+        body = 'Your roommate'
+    body += " invited you to join Knoknok! It's free! Download the app, then just enter the key: " + formatKeyOutput(roomkey) 
+    for phone_number in phone_numberlist:
+        if phone_number != '':
+            rv = client.sms.messages.create(to="+1" + str(phone_number),
+                                    from_="+18646432174",
+                                    body=body)
+    self.response.write(str(rv))
+    self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 def keygen(depth=0):
