@@ -13,8 +13,8 @@ from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
-#from twilio import twiml
-#from twilio.rest import TwilioRestClient
+from twilio import twiml
+from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
