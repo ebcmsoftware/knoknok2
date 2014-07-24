@@ -8,6 +8,15 @@ handlers:
 - url: /themes
   static_dir: templates/themes
 
+- url: /twilio
+  static_dir: twilio
+
+- url: /httplib2
+  static_dir: httplib2
+
+- url: /venv
+  static_dir: venv
+
 - url: /static
   static_dir: static
 
