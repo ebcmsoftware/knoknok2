@@ -1,7 +1,7 @@
 //19BFA1 is a color (KK terms)
 //#000000 is not!
 String.prototype.isColor = function() {
-    return /[0-9A-F]{6}$/i.test(this);
+    return /^[0-9A-F]{6}$/i.test(this);
 }
 
 //clears the cookies for while we're testing
@@ -145,6 +145,7 @@ function setColor(msg) {
     // if it's a valid color
     if (split_msg[split_msg.length - 1].isColor()) {
         color = '#' + split_msg[split_msg.length - 1];
+        console.log(color);
     }
     else if (msg == 'Open') {
         color = '#00FF00';
@@ -241,8 +242,8 @@ function destroyButton(i) {
     var statuslist = localStorage.getItem("statuslist");
     if (statuslist === null) return;
     statuslist = JSON.parse(statuslist);
+    var currButton = $('#KKstatusbuttons')[0].firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling;
     statuslist.splice(i, 1);
-    console.log(statuslist);
     if (statuslist.length > 0) {
         localStorage.setItem("statuslist", JSON.stringify(statuslist));
     }
@@ -250,8 +251,13 @@ function destroyButton(i) {
         localStorage.removeItem("statuslist");
     }
     //TODO: CHANGE THIS to just remove the element and not refresh
-    var btn = document.getElementById('newbutton'+i)
-    btn.parentNode.removeChild(btn);
+    var nextButton;
+    while (currButton) {
+      nextButton = currButton.nextSibling;
+      currButton.parentNode.removeChild(currButton);
+      currButton = nextButton;
+    }
+    addExtraButtons();
 }
 
 function addExtraButton(msg, i) {
@@ -310,11 +316,9 @@ function saveText() {
         statuslist = [savestatus];
     } 
     else {
-        console.log(statuslist); 
         statuslist = JSON.parse(statuslist);
         statuslist.push(savestatus);
     }
-    console.log(statuslist);
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
     addExtraButton(savestatus, statuslist.length - 1);
     document.getElementById("status").value = '';
