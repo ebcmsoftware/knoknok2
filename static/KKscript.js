@@ -145,7 +145,6 @@ function setColor(msg) {
     // if it's a valid color
     if (split_msg[split_msg.length - 1].isColor()) {
         color = '#' + split_msg[split_msg.length - 1];
-        console.log(color);
     }
     else if (msg == 'Open') {
         color = '#00FF00';
@@ -161,7 +160,6 @@ var depth = 1;
 var delay = 5500;
 
 function reset_interval(dly) {
-    depth = 1;
     clearInterval(interval);
     if (getKey())
         interval = setInterval(refresh_info, dly);
@@ -169,7 +167,7 @@ function reset_interval(dly) {
 
 function refresh_info() {
     var req = new XMLHttpRequest;
-    console.log('updating info');
+    console.log('updating info with delay: ' + (depth/3 + 1) * delay / 1000 + 's');
     req.open('GET', '/api?roomkey='+getKey());
     req.send();
     req.onreadystatechange = function() {
@@ -235,6 +233,7 @@ function setStatus(msg, update) {
     post_params['status'] = msg;
     $.post('/sign', post_params, function() {});
     //they are active -> refresh frequently
+    depth = 1;
     reset_interval(delay);
 }
 
