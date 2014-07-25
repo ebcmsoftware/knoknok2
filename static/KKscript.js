@@ -1,4 +1,4 @@
-//19BFA1 is a color (KK terms)
+//19BFA1 is a color (for this function - it's based on looking at the output of split('#'))
 //#000000 is not!
 String.prototype.isColor = function() {
     return /^[0-9A-F]{6}$/i.test(this);
@@ -16,16 +16,16 @@ function clearCookies(debug){
 //redirects to KKhome when there is a key in localStorage
 function redirectWhenCookie() {
     var key = getKey(); 
-    if(key != "" && key != null && key != "undefined" && key != "None") {
+    if(key != "" && key != null && key != "undefined" && key != "None" && window.location.href.indexOf("#createroom") == -1) {
         var newplace = "?roomkey=" + key + "#KKhome";
         console.log('redirecting to ' + newplace)
-        window.href = newplace;
+        window.location.href = newplace;
     }
 }
 
 //Changes the link to KKhome using the key in localStorage
 function changeLink() {
-    var key = $('#roomkey')[0].value;
+    var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
     //document.getElementById("gobutton").href = "/?roomkey=" + key + "#KKhome";
     localStorage.setItem("username", $('#username')[0].value);
     window.location.href = "/?roomkey=" + key + "#KKhome";
