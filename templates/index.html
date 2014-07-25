@@ -91,8 +91,19 @@
         <form action="/createroom" method="post">
             <!-- do we need this. -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
+            <!--                  -->
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
+          <script>
+            document.getElementById("enterroomname").addEventListener("keydown", function(e) {
+                if (!e) { var e = window.event; }
+                if (e.keyCode == 13) { navig8(); }
+            }, false);
+            document.getElementById("enterfirstname").addEventListener("keydown", function(e) {
+                if (!e) { var e = window.event; }
+                if (e.keyCode == 13) { navig8(); }
+            }, false);
+          </script>
           <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();" class="ui-btn">Next -&gt;</a>
           <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
         </form>

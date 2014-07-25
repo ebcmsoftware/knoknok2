@@ -249,7 +249,6 @@ function destroyButton(i) {
     else {
         localStorage.removeItem("statuslist");
     }
-    //TODO: CHANGE THIS to just remove the element and not refresh
     var nextButton;
     while (currButton) {
       nextButton = currButton.nextSibling;
