@@ -24,13 +24,6 @@
 
 <body>  
   <script>  redirectWhenCookie(); </script>
-  <!--
-  <div data-role= "page" data-theme = "a"  id = "startscreen" onclick = "startLink()">
-       <br>
-       <br>
-       <p>click anywhere to begin...</p>
-  </div>
-  -->
 
   <!-- the page for getting the key -->
   <div data-role= "page" data-theme = "a" id = "get2key">
@@ -42,47 +35,6 @@
             <p>Roomate sent you a key?</p>
             <a href="#enterkey" data-transition="slide" class="ui-btn">Enter a Key</a>
       </div>
-  </div>
-
-  <!-- the page for entering a key -->
-  <div data-role= "page" data-theme = "a" id = "enterkey">
-      <form method="post" action="/#KKhome">
-        <span class="ui-field-contain" style = "width: 55%; margin: 0 auto;">
-            <!-- why? -->
-            <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
-            <!--      -->
-            <input type="text" name="username" id="username" placeholder="Enter your name...">
-            <div style = "width: 40%; clear:both;">
-                <span style="">
-                <input type="tel" name="roomkey" id="roomkey0" placeholder="Enter key...">
-                </span>
-                <span style="">
-                    -
-                </span>
-                <span style="">
-                <input type="tel" name="roomkey" id="roomkey1" placeholder="Enter key...">
-                </span>
-                <script>
-                //initializing the enterkey textboxes.
-                $("#roomkey0").keyup(function () {
-                    console.log($(this).val().length);
-                    if($(this).val().length == 3) {
-                        $('#roomkey1').focus();
-                    }
-                });
-                $("#roomkey1").keyup(function () {
-                    console.log($(this).val().length);
-                    if($(this).val().length == 3) {
-                        changeLink();
-                    }
-                });
-                </script>
-                <br>
-            </div>
-            <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
-            <a href="#get2key"  data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
-        </span>
-      </form>
   </div>
 
   <!-- the page for entering initial info -->
@@ -108,6 +60,48 @@
           <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
         </form>
     </div>
+  </div>
+
+  <!-- the page for entering a key -->
+  <div data-role= "page" data-theme = "a" id = "enterkey">
+      <form method="post" action="/#KKhome">
+        <span class="ui-field-contain" style = "width: 55%; margin: 0 auto;">
+            <!-- why? -->
+            <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
+            <!--      -->
+            <input type="text" name="username" id="username" placeholder="Enter your name...">
+            <div style = "">
+                <!-- CHARLES FIX THSI SHIT -->
+                <span style="">
+                    <input type="tel" name="roomkey" id="roomkey0" placeholder="123" style="width: 40%;text-align:right;">
+                </span>
+                <span style="display:inline;">-</span>
+                <span style="width: 40%;">
+                    <input type="tel" name="roomkey" id="roomkey1" placeholder="456" style="width: 40%;text-align:left;">
+                </span>
+                <script>
+                //initializing the enterkey textboxes.
+                $("#roomkey0").keyup(function () {
+                    console.log($(this).val().length);
+                    if($(this).val().length == 3) {
+                        $('#roomkey1').focus();
+                    }
+                });
+/* Maybe. This auto submits when they key is fully entered.
+                $("#roomkey1").keyup(function () {
+                    console.log($(this).val().length);
+                    if($(this).val().length == 3) {
+                        changeLink();
+                    }
+                });
+*/
+                </script>
+                <br>
+            </div>
+            <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
+            <a href="#get2key"  data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
+        </span>
+      </form>
   </div>
 
   <!-- the key loading page -->
@@ -144,9 +138,6 @@
         <input type="hidden" name="roomkey" value="{{ roomkey }}" id="uniquekey3">
         <input type="hidden" name="sendnum" value="ERROR!" id="numberlist">
         <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">+Roommate</a>
-        <!--
-        <a href="javascript:;" onclick="setNumberList();parentNode.submit();" class="ui-btn">Send this key</a>
-        -->
         <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
         <br>
         <a href="#sendemail" data-transition="slide" class="ui-btn">Or, send an email -&gt;</a>
@@ -170,9 +161,6 @@
         <input type="hidden" name="emails" value="ERROR!!!" id="emaillist">
         <a href="javascript:;" onclick="addEmailInput();" class="ui-btn">+Roommate</a>
         <a href="#annoyingpopup2" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
-        <!--
-        <a href="javascript:;" onclick="sendemail();" class="ui-btn">Send!</a>
-        -->
         <br>
         <a href="#sendkey" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
       </form>
@@ -182,47 +170,42 @@
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header" data-position = "inline">
-        <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
-        <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu">Settings</a></h1>
+          <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
+          <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu" data-transition="pop">Settings</a></h1>
       </div>
       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
-        <p id="roomname">{{ roomname }}</p>
-        <div>STATUS: <span id="statustext">{{status}}</span></div>
-        <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
-        <script>
-        var s = $('#statusstats')[0].innerHTML;
-        if (s.slice(0,9) == "set by: ,") //aka if username is nothing
-          $('#statusstats')[0].innerHTML = s.slice(0,3) + s.slice(9);
-        else console.log(s);
-        </script>
-        <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
-         <div id="KKstatusbuttons">
-          <form action="/sign" method="post" action="demoform.asp"> 
-            <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');">Open</a>
-          </form>
-          <form action="/sign" method="post" action="demoform.asp">
-            <a href="javascript:;" class="ui-btn" onclick="setStatus('Closed');">Closed</a>
-          </form>
-         </div>
-         <script> addExtraButtons(); </script>
-          <a href="#entercustom" class="ui-btn">Custom...</a>
+          <p id="roomname">{{ roomname }}</p>
+          <div>STATUS: <span id="statustext">{{status}}</span></div>
+          <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
+          <script>
+            var s = $('#statusstats')[0].innerHTML;
+            if (s.slice(0,9) == "set by: ,") //aka if username is nothing
+            $('#statusstats')[0].innerHTML = s.slice(0,3) + s.slice(9);
+            else console.log(s);
+          </script>
+          <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
+          <div id="KKstatusbuttons">
+              <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');">Open</a>
+              <a href="javascript:;" class="ui-btn" onclick="setStatus('Closed');">Closed</a>
+          </div>
+          <script> addExtraButtons(); </script>
+          <br>
+          <a href="#entercustom" data-transition="pop" class="ui-btn">Custom...</a>
           <br>
       </div>
-
+          <!-- SLATED FOR REMOVAL
       <div data-role="footer" class="footer"  onclick="window.location.assign('#settingsmenu');" style = "border-right:3px solid black;border-top:3px solid black;position:fixed; float:bottom; bottom:-7px; left:0px;">
-
           <h3><a href="#settingsmenu"><img src="static/images/icon-gear-white.png"></a></h3>
       </div>
-
       <div data-role="footer" style = "border-top:3px solid black; border-left:3px solid black; height:56px;position:fixed; float:bottom; bottom:0px; right:0px">
           <h1 style="padding-top:18px">
-              <a href="http://www.ebcmsoftware.com" target="_blank" style = "text-decoration:none;"><!--&copy; 2014 -->EBCM Software</a>
+              <a href="http://www.ebcmsoftware.com" target="_blank" style = "text-decoration:none;">&copy; 2014 EBCM Software</a>
           </h1>
-      </div>
+      </div> -->
   </div>
 
   <!-- the popup for entering custom messages -->
-  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "entercustom" data-transition="pop">
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "entercustom">
       <div data-role = "main" class = "ui-content" style = "margin: 0 auto">
         <p>New Custom Status</p>
           <div data-role="controlgroup" style = "margin: 0 auto">
@@ -230,7 +213,7 @@
               <input type="text" name="status" id="status">
               <a href="javascript:;" onclick="setStatus($('#status').val());window.location.assign('#KKhome');" class="ui-btn">Set status</a>
               <a href="javascript:;" onclick="setStatus($('#status').val());saveText();window.location.assign('#KKhome');" class="ui-btn">Save this status (locally)</a>
-              <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
+              <a href="#KKhome" class="ui-btn" data-transition="pop" data-direction="reverse">&lt;- Go Back</a>
             </form>
         </div>
       </div>
@@ -254,22 +237,22 @@
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Appearance</p>
           <span class="ui-btn" style='background-color:yellow'>(make a button here to send the key to more ppl)</span>
-          <a href="#changeusername" class="ui-btn" onclick="(function(){$('#usernameinput')[0].value = getUserName();})()">Change name</a>
-          <a href="#changeroomname" class="ui-btn" onclick="(function(){$('#newroomname')[0].value = $('#roomname')[0].innerHTML;})()">Change room name</a>
+          <a href="#changeusername" class="ui-btn" data-transition="pop" onclick="(function(){$('#usernameinput')[0].value = getUserName();})()">Change name</a>
+          <a href="#changeroomname" class="ui-btn" data-transition="pop" onclick="(function(){$('#newroomname')[0].value = $('#roomname')[0].innerHTML;})()">Change room name</a>
           <a href="#KKhome" id = "themebutton" onclick = "changeTheme();" class="ui-btn">Change Theme (B & W)</a>
         </div>
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Get rid of room</p>
-          <a href="#forgetroom" class="ui-btn">Forget about this room</a>
-          <a href="#deleteroom" class="ui-btn" style="color:red; border: 2px solid #FF0000;">Delete this room</a>
+          <a href="#forgetroom" class="ui-btn" data-transition="pop">Forget about this room</a>
+          <a href="#deleteroom" class="ui-btn" data-transition="pop" style="color:red; border: 2px solid #FF0000;">Delete this room</a>
         </div>
         <br>
-        <a href="#KKhome" class="ui-btn">&lt;- Go Back</a>
+        <a href="#KKhome" class="ui-btn" data-direction="reverse" data-transition="pop">&lt;- Go Back</a>
       </div>
   </div>
 
   <!-- popup for changing the user name -->
-  <div data-role="page" data-theme="a" data-dialog="true" id= "changeusername" data-transition="pop">
+  <div data-role="page" data-theme="a" data-dialog="true" id= "changeusername">
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
             <p>Change your name to what?</p>
@@ -281,7 +264,7 @@
   </div>
 
   <!-- popup for changing the room name -->
-  <div data-role="page" data-theme="a" data-dialog="true" id= "changeroomname" data-transition="pop">
+  <div data-role="page" data-theme="a" data-dialog="true" id= "changeroomname">
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
             <p>Change room name to what?</p>
@@ -295,12 +278,12 @@
   </div>
 
   <!--if they want to forget about a room -->
-  <div data-role = "page" data-theme = "a" data-dialog="true" id="forgetroom" data-transition="pop">
+  <div data-role = "page" data-theme = "a" data-dialog="true" id="forgetroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
             <p>Forget about this room? :(</p>
             <p>The room will still be available to be used by your roommates.</p>
-            <p>(In case you press yes in error, this room's key is {{ roomkey }})</p>
+            <p>(In case you press yes in error, this room's key is <span id="forget_key_display">{{ roomkey }}</span>)</p>
             <a href="javascript:;" onclick="forgetRoom();window.location.assign('/');" class="ui-btn">Yes</a>
             <a href="#KKhome" class="ui-btn">No</a>
           </div>
@@ -308,7 +291,7 @@
   </div>
 
   <!--if they want to delete a room -->
-  <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom" data-transition="pop">
+  <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
             <p>Delete this room from our database forever? :(</p>

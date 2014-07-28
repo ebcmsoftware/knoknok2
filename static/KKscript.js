@@ -203,12 +203,15 @@ function localRefresh(msg, username, time, roomname) {
     }
     $('#statustext')[0].innerHTML = msg;
     if (username && username != '') {
-        $('#statusstats')[0].innerHTML = 'set by: ' + username + ', '
+        $('#statusstats')[0].innerHTML = 'set by: ' + username
     } else {
-        $('#statusstats')[0].innerHTML = 'set ';
+        $('#statusstats')[0].innerHTML = '<br>'
     }
-    if (time)
-        $('#statusstats')[0].innerHTML += time;
+    if (time) {
+        if (username && username != '') $('#statusstats')[0].innerHTML += ',';
+        else $('#statusstats')[0].innerHTML = 'set';
+        $('#statusstats')[0].innerHTML += ' ' + time;
+    }
     if (roomname) {
         $('#roomname')[0].innerHTML = roomname;
     }
@@ -259,10 +262,12 @@ function destroyButton(i) {
 }
 
 function addExtraButton(msg, i) {
+    /*
     form = document.createElement("form");
     form.id = "newbutton" + i;
     form.method = "post";
     form.action = "/sign";
+    */
 
     btn = document.createElement("a");
     btn.href="javascript:;";
@@ -287,10 +292,11 @@ function addExtraButton(msg, i) {
     close.innerHTML = 'x';
     btn.appendChild(close);
 
-    form.appendChild(btn);
+    //form.appendChild(btn);
 
     var div = document.getElementById("KKstatusbuttons");
-    div.appendChild(form);
+    //div.appendChild(form);
+    div.appendChild(btn);
 }
 
 function addExtraButtons() {
@@ -339,8 +345,6 @@ function changeUserName() {
             setStatus($('#statustext')[0].innerHTML, true); //reset the status
     }
     else console.log(stats);
-    console.log(stats.split(',')[0]);
-    console.log(oldname == '');
     window.location.assign('#KKhome');
 }
 
