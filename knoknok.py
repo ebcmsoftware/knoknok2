@@ -45,7 +45,6 @@ default_room.put()
 class MainPage(webapp.RequestHandler):
   def get(self):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
-    username = self.request.get('username', DEFAULT_NAME)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
     logging.info("Writing to the KKHome... received roomkey " + str(roomkey))
@@ -76,22 +75,16 @@ class MainPage(webapp.RequestHandler):
             return
     room.put()
     template_values = {}
-    color="#006eb7"
     if roomkey != DEFAULT_ROOMKEY:
         template_values = {
           'roomkey':room.roomkey,
           'status':room.status,
           'username':room.most_recent_username,
           'roomname':room.roomname,
-          'color':color,
           'time':pretty_date(room.time),
     }
     if room.status == WELCOME_GREETING:
         template_values['username'] = 'The Knoknok Team'
-    elif room.status and room.status.lower() == 'open':
-        template_values['color'] = '#00ff00'
-    elif room.status and room.status.lower() == 'closed':
-        template_values['color'] = '#ff0000'
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
     self.response.out.write(template.render(path, template_values))
 
@@ -101,13 +94,10 @@ class API(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
-    logging.info("got roomkey in /sign " + str(roomkey))
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     if response == []:
-        logging.info("wait waht")
-        room = Room(parent=guestbook_key(roomkey))
-        room.alive = True
+        logging.error("wait waht")
     else:
         room = response[0]
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -153,7 +143,7 @@ class KKError(webapp.RequestHandler):
     """)
 
 
-def well_formatted(address):
+def well_formatted_email(address):
     return (len(address)            >= 5 and
             len(address.split('@')) == 2 and
             len(address.split('.')) >= 2)
@@ -171,7 +161,7 @@ class SendEmail(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     logging.info("received roomkey via sendEmail: <" + str(roomkey) + ">")
     for email in emaillist:
-        if email != "" and well_formatted(email): #and email <isn't badly formatted - TODO>
+        if email != "" and well_formatted_email(email):
             mail.send_mail(sender="The Knoknok Team <tuftswhistling@gmail.com>",
                            to=email,
                            subject="Welcome to Knoknok!",
@@ -179,21 +169,35 @@ class SendEmail(webapp.RequestHandler):
 """%s has invited you to join Knoknok, an app for Roommates!
 
 To use it, download the app (iPhone: <url>, Android: <url>) and enter the key: %s, then you're all set!
+
+Happy Knoknoking!
+The Knoknok Team
 """ %(sentby, roomkey))
 
 
+def well_formatted_number(number):
+    l = len(number)
+    return (l == 10 or 
+            l == 11 and number[0] == 1)
+
+def formatKeyOutput(keystr):
+    keyoutput = ''
+    for i in range(len(keystr)):
+        if i != 0 and i % 3 == 0:
+            keyoutput += '-'
+        keyoutput += keystr[i]
+    return keyoutput
+
 class SendSMS(webapp.RequestHandler):
   def post(self):
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
-    logging.info("HERE ")
     phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(" ")
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
+        try:
+          int(s)
+        except ValueError:
+          return ''
         s = s.replace('.','').replace('-','').replace('(','').replace(')','').replace(' ','')
         if len(s) == 10:
             return s
@@ -201,20 +205,26 @@ class SendSMS(webapp.RequestHandler):
             if s[0] == '1' or s[0] == '0':
                 return s[1:]
         return ''
+    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
+    username = self.request.get('username', DEFAULT_ROOMKEY)
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
-    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
-    logging.info("received roomkey via sendSMS: <" + str(roomkey) + ">")
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-#TODO: make sure phone number is legit
+    client = None #XXX
     #client = TwilioRestClient(account_sid, auth_token)
-    #rv = client.sms.messages.create(to="+1" + str(phone_number),
-    #                                from_="+18646432174",
-    #                                body="Thanks for using Knoknok! When you download the app, simply enter the key: " + str(roomkey))
-    #self.response.write(str(rv)) #this was in the google example code..not sure if necessary
-                                  #i seriously don't think it's necessary
-    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+    if username and username != '':
+        body = username
+    else:
+        body = 'Your roommate'
+    body += " invited you to join Knoknok! It's free! Download the app, then just enter the key: " + formatKeyOutput(roomkey) 
+    for phone_number in phone_numberlist:
+        if phone_number != '':
+            rv = client.sms.messages.create(to="+1" + str(phone_number),
+                                    from_="+18646432174",
+                                    body=body)
+    self.response.write(str(rv))
+    self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 def keygen(depth=0):
@@ -227,18 +237,18 @@ def keygen(depth=0):
   response = Room.query_book(ancestor_key=guestbook_key(roomkey)).fetch(1) 
   if response != []:
       if room.alive:
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info("WOAH JUST HIT A COLLISION")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
-          logging.info(str(roomkey) + " ALREADY EXISTS")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug("WOAH JUST HIT A COLLISION")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
+          logging.debug(str(roomkey) + " ALREADY EXISTS")
           return keygen(depth=depth+1) #rng failed, gogo retry
       else:
           return roomkey
@@ -270,7 +280,6 @@ class CreateRoom(webapp.RequestHandler):
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     roomname = self.request.get('enterroomname', DEFAULT_NAME)
-    username = self.request.get('enterfirstname', DEFAULT_NAME)
     if response == []:
         room = Room(parent=guestbook_key(roomkey))
         room.alive = True
@@ -288,12 +297,12 @@ class CreateRoom(webapp.RequestHandler):
       'roomkey': room.roomkey,
       'username':room.most_recent_username,
       'roomname':room.roomname,
-      'color':"#006eb7",
-      'time':pretty_date(room.time)
+      'time':'just now'
     }
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
-    self.response.out.write(template.render(path, template_values))
-    self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
+    self.response.out.write(str(room.roomkey))
+    #self.response.out.write(template.render(path, template_values))
+    #self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
 
 
 class DeleteRoom(webapp.RequestHandler):
@@ -354,7 +363,7 @@ def pretty_date(time=False):
     if day_diff < 0:
         return ''
     if day_diff == 0:
-        if second_diff < 2:
+        if second_diff < 5:
             return "just now"
         if second_diff < 60:
             return str(second_diff) + " seconds ago"
