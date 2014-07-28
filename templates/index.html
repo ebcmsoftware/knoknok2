@@ -38,7 +38,7 @@
 
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
-    <div class="ui-field-contain" class = "centeredapparea">
+    <div class="ui-field-contain centeredapparea">
         <form action="/createroom" method="post">
             <!-- do we need this. -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
@@ -119,7 +119,7 @@
 
   <!-- the key loading page -->
   <div data-role = "page" data-theme = "a" id= "keyload">
-      <div style = class = "centeredapparea">
+      <div class = "centeredapparea">
           <div id = "topbox" style = "background-color: orange"></div>
           <div id = "bottombox"></div>
               <img src="static/images/key.png" style = "z-index: 2">
@@ -131,7 +131,7 @@
     <p>This is your room's key. It's what identifies your room! Give it to your roommate(s), and you'll never need it again.</p>
     <p id="key">Key : couldn't load key :(</p>
     <!-- GREAT-ish script for getting random key -->
-    <div class="ui-field-contain" class = "centeredapparea">
+    <div class="ui-field-contain centeredapparea">
       <a href="#sendkey" data-transition="slide" class="ui-btn">Send this key -&gt;</a>
       <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn"  data-transition="pop">Go to room</a>
     </div> 
@@ -140,7 +140,7 @@
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
      <p id = "keytosendsms">Key: {{  roomkey  }}</p>
-     <div class="ui-field-contain" class = "centeredapparea">
+     <div class="ui-field-contain centeredapparea">
       <div id="phonenumbers" class="ui-field-contain">
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
@@ -161,7 +161,7 @@
   <div data-role= "page" data-theme = "a" id = "sendemail">
     <p id = "keytosendemail">Key: {{ roomkey }}</p>
     <script> makeKey("{{ roomkey }}"); </script>
-    <div class="ui-field-contain" class = "centeredapparea">
+    <div class="ui-field-contain centeredapparea">
     <div id="emailinputs" class="ui-field-contain">
         <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
     </div>
