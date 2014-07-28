@@ -78,10 +78,22 @@
                 <script>
                 //initializing the enterkey textboxes.
                 $("#roomkey0").keyup(function () {
-                    console.log($(this).val().length);
+                    //console.log($(this).val().length);
                     if($(this).val().length == 3) {
                         $('#roomkey1').focus();
                     }
+                });
+                $("#roomkey0").on('paste', function () {
+                        var elt = this;
+                        setTimeout(function() {
+                            var k = $(elt).val();
+                            if (k.length >= 3)
+                                $("#roomkey0")[0].value = k.substring(0,3);
+                            if (k.length == 7)
+                                $("#roomkey1")[0].value = k.substring(4,7);
+                            else if (k.length == 6)
+                                $("#roomkey1")[0].value = k.substring(3,6); 
+                        }, 10);
                 });
 /* Maybe. This auto submits when they key is fully entered.
                 $("#roomkey1").keyup(function () {
