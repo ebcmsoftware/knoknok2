@@ -580,3 +580,8 @@ button[disabled],
 	outline-width: 1px;
 	outline-style: auto;
 }
+
+.centeredapparea {
+  width: 60%; 
+  margin: 0 auto;
+}

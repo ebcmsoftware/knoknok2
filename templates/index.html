@@ -27,7 +27,7 @@
   <!-- the page for getting the key -->
   <div data-role= "page" data-theme = "a" id = "get2key">
        <h1>Welcome to Knoknok, an app for roommates!</h1>
-       <div data-role="controlgroup" style = "width: 60%; margin: 0 auto;">
+       <div class = "centeredapparea">
             <p>New User?</p>
             <a href="#makeroom" data-transition="slide" class="ui-btn">Make a new Room</a>
             <br>
@@ -38,7 +38,7 @@
 
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
-    <div class="ui-field-contain" style = "width: 60%; margin: 0 auto">
+    <div class="ui-field-contain" class = "centeredapparea">
         <form action="/createroom" method="post">
             <!-- do we need this. -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
@@ -64,7 +64,7 @@
   <!-- the page for entering a key -->
   <div data-role= "page" data-theme = "a" id = "enterkey">
       <form method="post" action="/#KKhome">
-        <div class="ui-field-contain" style = "width: 60%; margin: 0 auto;">
+        <div class="ui-field-contain centeredapparea">
             <!-- why? -->
             <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
             <!--      -->
@@ -119,13 +119,11 @@
 
   <!-- the key loading page -->
   <div data-role = "page" data-theme = "a" id= "keyload">
-      <center>
-      <div style = "vertical-align:middle;margin: 0 auto;width: 205px; height: 425px">
+      <div style = class = "centeredapparea">
           <div id = "topbox" style = "background-color: orange"></div>
           <div id = "bottombox"></div>
               <img src="static/images/key.png" style = "z-index: 2">
       </div>
-  </center>
   </div>
 
   <!-- the page for getting your key w/ option to send an sms -->
@@ -133,7 +131,7 @@
     <p>This is your room's key. It's what identifies your room! Give it to your roommate(s), and you'll never need it again.</p>
     <p id="key">Key : couldn't load key :(</p>
     <!-- GREAT-ish script for getting random key -->
-    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+    <div class="ui-field-contain" class = "centeredapparea">
       <a href="#sendkey" data-transition="slide" class="ui-btn">Send this key -&gt;</a>
       <a href="?roomkey={{ roomkey }}#KKhome" class="ui-btn"  data-transition="pop">Go to room</a>
     </div> 
@@ -142,7 +140,7 @@
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
      <p id = "keytosendsms">Key: {{  roomkey  }}</p>
-     <div class="ui-field-contain" style = "width: 60%; margin: 0 auto">
+     <div class="ui-field-contain" class = "centeredapparea">
       <div id="phonenumbers" class="ui-field-contain">
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
@@ -163,7 +161,7 @@
   <div data-role= "page" data-theme = "a" id = "sendemail">
     <p id = "keytosendemail">Key: {{ roomkey }}</p>
     <script> makeKey("{{ roomkey }}"); </script>
-    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+    <div class="ui-field-contain" class = "centeredapparea">
     <div id="emailinputs" class="ui-field-contain">
         <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
     </div>
@@ -186,7 +184,7 @@
           <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
           <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu" data-transition="pop">Settings</a></h1>
       </div>
-      <div data-role="controlgroup" style = "width: 55%; margin: 0 auto">
+      <div data-role="controlgroup" class = "centeredapparea">
           <p id="roomname">{{ roomname }}</p>
           <div>STATUS: <span id="statustext">{{status}}</span></div>
           <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
