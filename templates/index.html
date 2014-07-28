@@ -28,7 +28,7 @@
   <!-- the page for getting the key -->
   <div data-role= "page" data-theme = "a" id = "get2key">
        <h1>Welcome to Knoknok, an app for roommates!</h1>
-       <div data-role="controlgroup" style = "width: 55%; margin: 0 auto;">
+       <div data-role="controlgroup" style = "width: 60%; margin: 0 auto;">
             <p>New User?</p>
             <a href="#makeroom" data-transition="slide" class="ui-btn">Make a new Room</a>
             <br>
@@ -39,7 +39,7 @@
 
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
-    <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+    <div class="ui-field-contain" style = "width: 60%; margin: 0 auto">
         <form action="/createroom" method="post">
             <!-- do we need this. -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
@@ -65,20 +65,17 @@
   <!-- the page for entering a key -->
   <div data-role= "page" data-theme = "a" id = "enterkey">
       <form method="post" action="/#KKhome">
-        <span class="ui-field-contain" style = "width: 55%; margin: 0 auto;">
+        <div class="ui-field-contain" style = "width: 60%; margin: 0 auto;">
             <!-- why? -->
             <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
             <!--      -->
             <input type="text" name="username" id="username" placeholder="Enter your name...">
-            <div style = "">
+            <div>
+            <div id = "keynums" style = "width: 50%; float: left">
                 <!-- CHARLES FIX THSI SHIT -->
-                <span style="">
-                    <input type="tel" name="roomkey" id="roomkey0" placeholder="123" style="width: 40%;text-align:right;">
-                </span>
-                <span style="display:inline;">-</span>
-                <span style="width: 40%;">
-                    <input type="tel" name="roomkey" id="roomkey1" placeholder="456" style="width: 40%;text-align:left;">
-                </span>
+                <div style="width: 40%;float:left;"><input type="tel" name="roomkey" id="roomkey0" placeholder="123" ></div>
+                <span>_</span>
+                <div style="width: 40%;float:right;"><input type="tel" name="roomkey" id="roomkey1" placeholder="456"></div>
                 <script>
                 //initializing the enterkey textboxes.
                 $("#roomkey0").keyup(function () {
@@ -97,10 +94,15 @@
 */
                 </script>
                 <br>
+              
             </div>
+              <a class="ui-btn" style = "float: right">Paste Key?</a>
+            </div>
+          <div style = "clear: both">
             <a href="javascript:;" onclick="changeLink()" id="gobutton" class="ui-btn">Go to Knoknok!</a>
             <a href="#get2key"  data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
-        </span>
+          </div>
+        </div>
       </form>
   </div>
 
@@ -129,7 +131,7 @@
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
      <p id = "keytosendsms">Key: {{  roomkey  }}</p>
-     <div class="ui-field-contain" style = "width: 55%; margin: 0 auto">
+     <div class="ui-field-contain" style = "width: 60%; margin: 0 auto">
       <div id="phonenumbers" class="ui-field-contain">
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
