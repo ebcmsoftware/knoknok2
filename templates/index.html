@@ -17,6 +17,8 @@
   <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
   <script src= "../static/KKscript.js"></script>
+  <script src= "../static/fastbutton.js"></script>
+  <script src= "../static/jQFastButtons.js"></script>
 </head>
 
 <script> var debug=false; clearCookies(debug); </script>
@@ -29,10 +31,15 @@
        <h1>Welcome to Knoknok, an app for roommates!</h1>
        <div class = "centeredapparea">
             <p>New User?</p>
+            <!--
             <a href="#makeroom" data-transition="slide" class="ui-btn">Make a new Room</a>
+            -->
+            <a href="javascript:;" data-transition="slide" id="makeroombutton" class="ui-btn">Make a new Room</a>
+            <script>$('#makeroombutton').fastClick(function(e) {window.location.assign('#makeroom');});</script>
             <br>
             <p>Roomate sent you a key?</p>
             <a href="#enterkey" data-transition="slide" class="ui-btn">Enter a Key</a>
+            <script>$('#makeroombutton').fastClick(function(e) {window.location.assign('#makeroom');});</script>
       </div>
   </div>
 
@@ -56,7 +63,12 @@
             }, false);
           </script>
           <a href="javascript:;" data-direction="reverse" data-transition="slide" onclick="navig8();" class="ui-btn">Next -&gt;</a>
+          <!--
           <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
+          <a href="#get2key" data-direction="reverse" data-transition="slide" id="g2kbbutton" class="ui-btn">&lt;- Go Back</a>
+          -->
+          <a href="javascript:;" data-direction="reverse" data-transition="slide" id="g2kbbutton" class="ui-btn">&lt;- Go Back</a>
+          <script>$('#g2kbbutton').fastClick(function(e) {window.location.assign('#get2key');});</script>
         </form>
     </div>
   </div>
