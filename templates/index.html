@@ -38,7 +38,7 @@
 
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
-    <div class="ui-field-contain centeredapparea">
+    <div class="centeredapparea">
         <form action="/createroom" method="post">
             <!-- do we need this. -->
           <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
@@ -64,10 +64,7 @@
   <!-- the page for entering a key -->
   <div data-role= "page" data-theme = "a" id = "enterkey">
       <form method="post" action="/#KKhome">
-        <div class="ui-field-contain centeredapparea">
-            <!-- why? -->
-            <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number...">
-            <!--      -->
+        <div class="centeredapparea">
             <input type="text" name="username" id="username" placeholder="Enter your name...">
             <div>
             <div id = "keynums" style = "width: 50%; float: left">
@@ -140,7 +137,7 @@
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
      <p id = "keytosendsms">Key: {{  roomkey  }}</p>
-     <div class="ui-field-contain centeredapparea">
+     <div class="centeredapparea">
       <div id="phonenumbers" class="ui-field-contain">
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
@@ -182,9 +179,9 @@
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header" data-position = "inline">
           <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
-          <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu" data-transition="pop">Settings</a></h1>
+          <h1 style = "margin-right: 15px; float: right"><a href="#settingsmenu" data-transition="pop" style = "text-decoration: none">Settings</a></h1>
       </div>
-      <div data-role="controlgroup" class = "centeredapparea">
+      <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
           <p id="roomname">{{ roomname }}</p>
           <div>STATUS: <span id="statustext">{{status}}</span></div>
           <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>

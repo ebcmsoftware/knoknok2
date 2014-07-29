@@ -582,6 +582,6 @@ button[disabled],
 }
 
 .centeredapparea {
-  width: 60%; 
-  margin: 0 auto;
+  width: 60% !important; 
+  margin: 0 auto !important;
 }
