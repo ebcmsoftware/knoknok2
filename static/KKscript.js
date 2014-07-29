@@ -46,7 +46,7 @@ function navig8() {
         setTimeout(function() {
             var path = '?roomkey=' + data + '#createroom';
             window.location.href = path;
-        },2500);
+        },3500);
     });
 }
 
