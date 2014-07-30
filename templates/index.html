@@ -218,13 +218,15 @@ $('#emailtosendkey').fastClick(function(e) {$.mobile.changePage('#sendkey', {tra
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header" data-position = "inline">
           <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
+      </div>
+      <div data-role = "header" data-position = "inline">
           <h1 style = "margin-right: 15px; float: right">
               <a href="javascript:;" id="settingsbutton" style="text-decoration: none">Settings</a>
+          </h1>
+      </div>
       <script>
 $('#settingsbutton').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {transition:'pop',reverse:false});});
       </script>
-          </h1>
-      </div>
       <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
           <p id="roomname">{{ roomname }}</p>
           <div>STATUS: <span id="statustext">{{status}}</span></div>
