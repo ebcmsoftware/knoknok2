@@ -33,13 +33,11 @@
             <p>New User?</p>
             <a href="javascript:;" id="makeroombutton" class="ui-btn">Make a new Room</a>
             <script>
-$('#makeroombutton').fastClick(function(e) {$.mobile.changePage('#makeroom', {transition:'slide',reverse:false});});
             </script>
             <br>
             <p>Roomate sent you a key?</p>
             <a href="javascript:;" id="enterkeybutton" class="ui-btn" >Enter a Key</a>
             <script>
-$('#enterkeybutton').fastClick(function(e) {$.mobile.changePage('#enterkey', {transition:'slide',reverse:false});});
             </script>
       </div>
   </div>
@@ -65,9 +63,8 @@ $('#enterkeybutton').fastClick(function(e) {$.mobile.changePage('#enterkey', {tr
           </script>
           <a href="javascript:;" onclick="navig8();" class="ui-btn" id="keygenbtn">Next -&gt;</a>
             <script>
-$('#keygenbtn').fastClick(function(e) {navig8();});
             </script>
-          <!--
+          <!-- SLATED FOR REMOVAL
             <script>$('#enterkeybutton').fastClick(function(e) {window.location.assign('#enterkey');});</script>
           <a href="#get2key" data-direction="reverse" data-transition="slide" class="ui-btn">&lt;- Go Back</a>
           <a href="#get2key" data-direction="reverse" data-transition="slide" id="g2kbbutton" class="ui-btn">&lt;- Go Back</a>
@@ -75,7 +72,6 @@ $('#keygenbtn').fastClick(function(e) {navig8();});
           -->
           <a href="javascript:;" id="makeroomtog2k" class="ui-btn">&lt;- Go Back</a>
             <script>
-$('#makeroomtog2k').fastClick(function(e) {$.mobile.changePage('#get2key', {transition:'slide',reverse:true});});
             </script>
         </form>
     </div>
@@ -127,13 +123,11 @@ $('#makeroomtog2k').fastClick(function(e) {$.mobile.changePage('#get2key', {tran
               <a class="ui-btn" style = "float: right">Paste Key?</a>
             </div>
           <div style = "clear: both">
-            <a href="javascript:;" id="gobutton" class="ui-btn">Go to Knoknok!</a>
+            <a href="javascript:;" id="enterkeytokkhome" class="ui-btn">Go to Knoknok!</a>
             <script>
-$('#gobutton').fastClick(function(e) {changeLink();});
             </script>
             <a href="#get2key" id="enterkeytog2k" class="ui-btn">&lt;- Go Back</a>
             <script>
-$('#enterkeytog2k').fastClick(function(e) {$.mobile.changePage('#get2key', {transition:'slide',reverse:true});});
             </script>
           </div>
         </div>
@@ -158,11 +152,9 @@ $('#enterkeytog2k').fastClick(function(e) {$.mobile.changePage('#get2key', {tran
     <div class="ui-field-contain centeredapparea">
       <a href="javascript:;" id="sendthiskey" class="ui-btn">Send this key -&gt;</a>
       <script>
-$('#sendthiskey').fastClick(function(e) {$.mobile.changePage('#sendkey', {transition:'slide',reverse:false});});
       </script>
       <a href="javascript:;" class="ui-btn" id="createroomtoroom">Go to room</a>
       <script>
-$('#createroomtoroom').fastClick(function(e) {$.mobile.changePage('?roomkey={{ roomkey }}#KKhome', {transition:'pop',reverse:false});});
       </script>
     </div> 
   </div>
@@ -202,13 +194,11 @@ $('#createroomtoroom').fastClick(function(e) {$.mobile.changePage('?roomkey={{ r
         <input type="hidden" name="emails" value="ERROR!!!" id="emaillist">
         <a href="javascript:;" onclick="addEmailInput();" class="ui-btn" id="addroommateemail">+Roommate</a>
       <script>
-$('#addroommateemail').fastClick(addEmailInput);
       </script>
         <a href="#annoyingpopup2" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
         <br>
         <a href="javascript:;" id="emailtosendkey" class="ui-btn">&lt;- Go Back</a>
       <script>
-$('#emailtosendkey').fastClick(function(e) {$.mobile.changePage('#sendkey', {transition:'slide',reverse:true});});
       </script>
       </form>
       </div>
@@ -225,7 +215,6 @@ $('#emailtosendkey').fastClick(function(e) {$.mobile.changePage('#sendkey', {tra
           </h1>
       </div>
       <script>
-$('#settingsbutton').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {transition:'pop',reverse:false});});
       </script>
       <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
           <p id="roomname">{{ roomname }}</p>
@@ -246,7 +235,6 @@ $('#settingsbutton').fastClick(function(e) {$.mobile.changePage('#settingsmenu',
           <br>
           <a href="javascript:;" id="opencustom" class="ui-btn">Custom...</a>
       <script>
-$('#opencustom').fastClick(function(e) {$.mobile.changePage('#entercustom', {transition:'pop',reverse:false});});
       </script>
           <br>
         </div>
@@ -272,15 +260,12 @@ $('#opencustom').fastClick(function(e) {$.mobile.changePage('#entercustom', {tra
               <input type="text" name="status" id="status">
               <a href="javascript:;" id="setnosave" class="ui-btn">Set status</a>
       <script>
-$('#setnosave').fastClick(function(e) {setStatus($('#status').val());$.mobile.changePage('#KKhome', {transition:'pop',reverse:true});});
       </script>
               <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
       <script>
-$('#setsave').fastClick(function(e) {setStatus($('#status').val());saveText();$.mobile.changePage('#KKhome', {transition:'pop',reverse:true});});
       </script>
               <a href="javascript:;" class="ui-btn" id="customback">&lt;- Go Back</a>
       <script>
-$('#customback').fastClick(function(e) {$.mobile.changePage('#KKhome', {transition:'pop',reverse:true});});
       </script>
             </form>
         </div>
@@ -294,7 +279,6 @@ $('#customback').fastClick(function(e) {$.mobile.changePage('#KKhome', {transiti
             <p>An error occurred - this room doesn't exist :(</p>
             <a href='javascript:;' id="errorbtn" class='ui-btn'>Go back to home page</a>
       <script>
-$('#errorbtn').fastClick(function(e) {$.mobile.changePage('/', {transition:'slide',reverse:true});});
       </script>
             
           </div>
@@ -311,28 +295,23 @@ $('#errorbtn').fastClick(function(e) {$.mobile.changePage('/', {transition:'slid
           <span class="ui-btn" style='background-color:yellow'>(make a button here to send the key to more ppl)</span>
           <a href="javascript:;" class="ui-btn" id="changeunbtn">Change name</a>
       <script>
-$('#changeunbtn').fastClick(function(e) {$('#usernameinput')[0].value = getUserName();$.mobile.changePage('#changeusername', {transition:'slide',reverse:false});});
       </script>
           <a href="javascript:;" class="ui-btn" id="changernbtn">Change room name</a>
       <script>
-$('#changernbtn').fastClick(function(e) {$('#newroomname')[0].value = $('#roomname')[0].innerHTML;$.mobile.changePage('#changeroomname', {transition:'slide',reverse:false});});
       </script>
         </div>
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Get rid of room</p>
           <a href="javascript:;" class="ui-btn" id="forgetroombtn">Forget about this room</a>
       <script>
-$('#forgetroombtn').fastClick(function(e) {$.mobile.changePage('#forgetroom', {transition:'slide',reverse:false});});
       </script>
           <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
       <script>
-$('#deleteroombtn').fastClick(function(e) {$.mobile.changePage('#deleteroom', {transition:'slide',reverse:false});});
       </script>
         </div>
         <br>
         <a href="javascript:;" class="ui-btn" id="settingsback">&lt;- Go Back</a>
       <script>
-$('#settingsback').fastClick(function(e) {$.mobile.changePage('#KKhome', {transition:'pop',reverse:true});});
       </script>
       </div>
   </div>
@@ -345,11 +324,9 @@ $('#settingsback').fastClick(function(e) {$.mobile.changePage('#KKhome', {transi
               <input type="text" name="username" id="usernameinput">
               <a href="javascript:;" id="changeusernamebtn" class="ui-btn">Update username</a>
       <script>
-$('#changeusernamebtn').fastClick(changeUserName);
       </script>
               <a href="javascript:;" id="changeunback" class="ui-btn">&lt;- Go Back</a>
       <script>
-$('#changeunback').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {transition:'slide',reverse:true});});
       </script>
          </div>
       </div>
@@ -364,11 +341,9 @@ $('#changeunback').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {
                 <input type="text" name="roomname" id="newroomname">
                 <a href="javascript:;" id="changeroomnamebtn" class="ui-btn">Update room name</a>
       <script>
-$('#changeroomnamebtn').fastClick(changeroomname);
       </script>
                 <a href="javascript:;" id="changernback" class="ui-btn">&lt;- Go Back</a>
       <script>
-$('#changernback').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {transition:'slide',reverse:true});});
       </script>
             </form>
          </div>
@@ -382,10 +357,9 @@ $('#changernback').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {
             <p>Forget about this room? :(</p>
             <p>The room will still be available to be used by your roommates.</p>
             <p>(In case you press yes in error, this room's key is <span id="forget_key_display">{{ roomkey }}</span>)</p>
-            <a href="javascript:;" onclick="forgetRoom();window.location.assign('/');" class="ui-btn">Yes</a>
+            <a href="javascript:;" onclick="forgetRoom();$.mobile.changePage('/', { transition : 'pop', reverse : true});" class="ui-btn">Yes</a>
             <a href="javascript:;" id="forgetroomback" class="ui-btn">No</a>
       <script>
-$('#forgetroomback').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {transition:'slide',reverse:true});});
       </script>
           </div>
       </div>
@@ -400,13 +374,9 @@ $('#forgetroomback').fastClick(function(e) {$.mobile.changePage('#settingsmenu',
                 <input type="hidden" name="roomkey" value="{{ roomkey }}">
                 <a href="javascript:;" id="deleteroomconfirm" class="ui-btn">Yes</a>
       <script>
-$('#deleteroomconfirm').fastClick(function(e) {forgetRoom();parentNode.submit();});
       </script>
             </form>
             <a href="javascript:;" id="deleteroomback" class="ui-btn">No</a>
-      <script>
-$('#deleteroomback').fastClick(function(e) {$.mobile.changePage('#settingsmenu', {transition:'slide',reverse:true});});
-      </script>
           </div>
       </div>
   </div>
@@ -424,6 +394,8 @@ localRefresh(
     $('#rn')[0].value
     );
   </script>
+
+  <script src="static/assignbuttons.js"></script>
 
 </body>
 </html>

@@ -26,7 +26,10 @@ function redirectWhenCookie() {
 //Changes the link to KKhome using the key in localStorage
 function changeLink() {
     var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
-    //document.getElementById("gobutton").href = "/?roomkey=" + key + "#KKhome";
+    if (key == undefined || (key.length != 6 && true/*key.length != 9)*/)) {
+        alert('That doesn\'t look like a real key! Please try again.');
+        return;
+    }
     localStorage.setItem("username", $('#username')[0].value);
     window.location.href = "/?roomkey=" + key + "#KKhome";
 }
@@ -34,8 +37,7 @@ function changeLink() {
 function navig8() {
     localStorage.setItem("username", $('#enterfirstname')[0].value);
     localStorage.setItem("roomname", $('#enterroomname')[0].value);
-    window.location.assign("#keyload");
-    //#window.location.assign("#createroom");
+    $.mobile.changePage('#keyload', {transition : 'slide'});
     post_params = new Object();
     post_params['enterroomname'] = localStorage['roomname'];
     $.post('/createroom', post_params, function(data) {
@@ -45,7 +47,7 @@ function navig8() {
         console.log(data);
         setTimeout(function() {
             var path = '?roomkey=' + data + '#createroom';
-            window.location.href = path;
+            $.mobile.changePage(path, {transition : 'slide'});
         },3500);
     });
 }
