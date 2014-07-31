@@ -55,6 +55,14 @@ go('settingsback', 'KKhome', 'pop', true);
 
 go('changeunback', 'settingsmenu', 'slide', true);
 
+go('showkeysms','sendkey', 'pop')
+
+go('showkeyemail','sendemail', 'pop')
+
+go('showkeybtn','showkeyscreen', 'pop')
+
+go('showkeyback','settingsmenu', 'pop', true)
+
 $('#changeusernamebtn').fastClick(changeUserName);
 
 $('#changeroomnamebtn').fastClick(changeroomname);

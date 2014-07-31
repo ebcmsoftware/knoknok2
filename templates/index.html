@@ -34,7 +34,7 @@
             <a href="javascript:;" id="makeroombutton" class="ui-btn">Make a new Room</a>
             
             <br>
-            <p>Roomate sent you a key?</p>
+            <p>Roommate sent you a key?</p>
             <a href="javascript:;" id="enterkeybutton" class="ui-btn" >Enter a Key</a>
             
       </div>
@@ -81,7 +81,6 @@
                 <script>
                 //initializing the enterkey textboxes.
                 $("#roomkey0").keyup(function () {
-                    //console.log($(this).val().length);
                     if($(this).val().length == 3) {
                         $('#roomkey1').focus();
                     }
@@ -258,9 +257,7 @@
         <hr>
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>General</p>
-          <span class="ui-btn" style='background-color:yellow'>(make a button here to send the key to more ppl)</span>
-
-<a href="#showkeyscreen" class="ui-btn" data-transition="pop" onclick="showkey()">Show Key</a>
+          <a href="javascript:;" class="ui-btn" id="showkeybtn">Show Key</a>
           <a href="javascript:;" class="ui-btn" id="changeunbtn">Change name</a>
       
           <a href="javascript:;" class="ui-btn" id="changernbtn">Change room name</a>
@@ -282,9 +279,15 @@
   <div data-role="page" data-theme="a" data-dialog="true" id= "showkeyscreen">
     <p>This is your key.</p>
     <p id = "showkey"></p>
-    <a href="#settingsmenu" class="ui-btn">&lt;- Go Back</a>
+    <a href="javascript:;" class="ui-btn" id="showkeysms">Text it to another roommate</a>
+    <a href="javascript:;" class="ui-btn" id="showkeyemail">Email it to another roommate</a>
+    <a href="javascript:;" class="ui-btn" id="showkeyback">&lt;- Go Back</a>
   </div>
 
+  <script>
+if (getKey())
+    $('#showkey')[0].innerHTML = formatKeyOutput(getKey());
+  </script>
 
 
 
