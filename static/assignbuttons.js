@@ -21,9 +21,15 @@ go('sendthiskey', 'sendkey', 'slide');
 
 $('#createroomtoroom').fastClick(function(e) {$.mobile.changePage('?roomkey='+getKey()+'#KKhome', { transition : 'pop', reverse : false});});
 
+$('#addroommatephone').fastClick(addPhoneInput);
+
 $('#addroommateemail').fastClick(addEmailInput);
 
+go('smstoemail', 'sendemail', 'slide', false);
+
 go('emailtosendkey', 'sendkey', 'slide', true);
+
+go('smstocreateroom', 'createroom', 'slide', true);
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
