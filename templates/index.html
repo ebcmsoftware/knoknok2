@@ -246,8 +246,9 @@
         <h1>Settings</h1>
         <hr>
         <div data-role="controlgroup" style = "margin: 0 auto">
-          <p>Appearance</p>
+          <p>General</p>
           <span class="ui-btn" style='background-color:yellow'>(make a button here to send the key to more ppl)</span>
+          <a href="#showkeyscreen" class="ui-btn" data-transition="pop" onclick="showkey()">Show Key</a>
           <a href="#changeusername" class="ui-btn" data-transition="pop" onclick="(function(){$('#usernameinput')[0].value = getUserName();})()">Change name</a>
           <a href="#changeroomname" class="ui-btn" data-transition="pop" onclick="(function(){$('#newroomname')[0].value = $('#roomname')[0].innerHTML;})()">Change room name</a>
         
@@ -261,6 +262,15 @@
         <a href="#KKhome" class="ui-btn" data-direction="reverse" data-transition="pop">&lt;- Go Back</a>
       </div>
   </div>
+
+  <div data-role="page" data-theme="a" data-dialog="true" id= "showkeyscreen">
+    <p>This is your key.</p>
+    <p id = "showkey"></p>
+    <a href="#settingsmenu" class="ui-btn">&lt;- Go Back</a>
+  </div>
+
+
+
 
   <!-- popup for changing the user name -->
   <div data-role="page" data-theme="a" data-dialog="true" id= "changeusername">

@@ -399,3 +399,10 @@ function changeroomname() {
 function startLink(){
     window.location.assign("#get2key");
 }
+
+function showkey(){
+    var showit = getKey();
+    console.log("the " + showit);
+    console.log("fuck this");
+    $('#showkey')[0].innerHTML = showit;
+}
