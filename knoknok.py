@@ -191,7 +191,7 @@ def formatKeyOutput(keystr):
 class SendSMS(webapp.RequestHandler):
   def post(self):
     phone_number = self.request.get('sendnum').strip()
-    phone_numberlist = phone_number.split(" ")
+    phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
         try:
@@ -209,6 +209,7 @@ class SendSMS(webapp.RequestHandler):
     username = self.request.get('username', DEFAULT_ROOMKEY)
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
+    '''
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
     client = None #XXX
@@ -224,6 +225,7 @@ class SendSMS(webapp.RequestHandler):
                                     from_="+18646432174",
                                     body=body)
     self.response.write(str(rv))
+    '''
     self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 

@@ -44,10 +44,11 @@ function navig8() {
         if (data != "" && data != "1") {
             localStorage['userkey'] = Number(data);
         }
-        console.log(data);
         setTimeout(function() {
             var path = '?roomkey=' + data + '#createroom';
-            $.mobile.changePage(path, {transition : 'slide'});
+            console.log(path);
+            window.location.href = path;
+//$.mobile.changePage(path, {transition : 'slide'});
         },3500);
     });
 }
@@ -58,7 +59,8 @@ function formatKeyOutput(keystr) {
         if (i != 0 && i % 3 === 0) {
             keyoutput += '-';
         }
-        keyoutput += keystr[i];
+        if (keystr)
+            keyoutput += keystr[i];
     }
     return keyoutput
 }
@@ -76,11 +78,6 @@ function displayKeyToSend(){
     //$('#keytosendemail')[0].innerHTML = getKey();
 }
 
-//displays the key from cookie
-function setUKey3() {
-    $('#uniquekey3')[0].value = getKey();
-}
-
 var num_phone_numbers = 1;
 //adds a new phone input slot for sendsms
 function addPhoneInput() {
@@ -96,14 +93,13 @@ function setNumberList() {
         numberArray += $("#sendnum" + i).val();
         numberArray += " ";
     }
-    //document.getElementById("numberlist").value = numberArray;
 }
 
 function sendsms() {
     setNumberList();
     var post_params = new Object();
     post_params['username'] = getUserName();
-    post_params['roomkey'] = $('#uniquekey3')[0].value;
+    post_params['roomkey'] = getKey();
     post_params['sendnum'] = numberArray;
     $.post('/sendsms', post_params, function(){
         $.mobile.changePage('#KKhome', { transition:"pop" });
@@ -193,7 +189,7 @@ function refresh_info() {
 }
 if (getKey())
     var interval = setInterval(refresh_info, delay);
-else console.log("oh");
+else console.log("No roomkey loaded yet.");
 
 //just updates the status locally, doesn't send/get any info from the server
 function localRefresh(msg, username, time, roomname) {

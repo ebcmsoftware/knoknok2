@@ -54,14 +54,14 @@
           <script>
             document.getElementById("enterroomname").addEventListener("keydown", function(e) {
                 if (!e) { var e = window.event; }
-                if (e.keyCode == 13) { navig8(); }
+                if (e.keyCode == 13) { navig8();console.log("YOU PRESSED ENTER"); }
             }, false);
             document.getElementById("enterfirstname").addEventListener("keydown", function(e) {
                 if (!e) { var e = window.event; }
-                if (e.keyCode == 13) { navig8(); }
+                if (e.keyCode == 13) { navig8();console.log("YOU PRESSED ENTER"); }
             }, false);
           </script>
-          <a href="javascript:;" onclick="navig8();" class="ui-btn" id="keygenbtn">Next -&gt;</a>
+          <a href="javascript:;" class="ui-btn" id="keygenbtn">Next -&gt;</a>
             <script>
             </script>
           <!-- SLATED FOR REMOVAL
@@ -161,15 +161,13 @@
 
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
-     <p id = "keytosendsms">Key: {{  roomkey  }}</p>
+     <p id = "keytosendsms">Key: </p>
      <div class="centeredapparea">
       <div id="phonenumbers" class="ui-field-contain">
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
       <div id="annoyingpopup" data-role="popup" style="padding:30px;">Text message(s) sent!</div>
       <form method="post" action="/sendsms" style ="margin: 0 auto">
-        <input type="hidden" name="roomkey" value="{{ roomkey }}" id="uniquekey3">
-        <input type="hidden" name="sendnum" value="ERROR!" id="numberlist">
         <a href="javascript:;" onclick="addPhoneInput();" class="ui-btn">+Roommate</a>
         <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
         <br>
@@ -181,8 +179,7 @@
 
   <!-- the page for sending the key via email -->
   <div data-role= "page" data-theme = "a" id = "sendemail">
-    <p id = "keytosendemail">Key: {{ roomkey }}</p>
-    <script> makeKey("{{ roomkey }}"); </script>
+    <p id = "keytosendemail">Key:</p>
     <div class="ui-field-contain centeredapparea">
     <div id="emailinputs" class="ui-field-contain">
         <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
@@ -393,6 +390,7 @@ localRefresh(
     $('#ti')[0].value,
     $('#rn')[0].value
     );
+makeKey(getKey());
   </script>
 
   <script src="static/assignbuttons.js"></script>
