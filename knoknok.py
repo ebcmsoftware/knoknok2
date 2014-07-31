@@ -18,7 +18,7 @@ from google.appengine.api import mail
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
-WELCOME_GREETING = 'Welcome to Knoknok!'
+WELCOME_GREETING = 'Welcome to Knoknok!#FFFFFF'
 
 
 class Room(ndb.Model):

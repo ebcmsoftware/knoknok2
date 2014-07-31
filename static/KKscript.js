@@ -116,7 +116,6 @@ function addEmailInput() {
 
 var emailArray = "";
 function setEmailList() {
-    document.getElementById('emailsentby').value = getUserName();
     emailArray = "";
     for (var i = 1; i < num_emails + 1; i++) {
         emailArray += $("#email" + i).val();
@@ -128,8 +127,8 @@ function setEmailList() {
 function sendemail() {
     setEmailList();
     var post_params = new Object();
-    post_params['roomkey'] = $('#roomkeyemail')[0].value;
-    post_params['emailsentby'] = $('#emailsentby')[0].value;
+    post_params['roomkey'] = getKey();
+    post_params['emailsentby'] = getUserName();
     post_params['emails'] = emailArray;
     $.post('/sendemail', post_params, function(){
         $.mobile.changePage('#KKhome', { transition:"pop" });

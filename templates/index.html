@@ -123,11 +123,17 @@
 
   <!-- the key loading page -->
   <div data-role = "page" data-theme = "a" id= "keyload">
-      <div class = "centeredapparea">
-          <div id = "topbox" style = "background-color: orange"></div>
-          <div id = "bottombox"></div>
-              <h1>your key is being generated...</h1>
-              <img src="static/images/key.png">
+      <div style="width: 60% !important; margin: 0 auto !important;">
+          <!--
+          <div id = "topbox" style = "background-color: orange;vertical-align:middle;">&nbsp;</div>
+          -->
+          <div id = "bottombox">
+              <img src="static/images/key2.png" style = "background-color: orange;">
+              <!--
+              <img src="static/images/keyloadtransparent.gif" style="float:left;">
+              -->
+              <h1>Your key is being generated...</h1>
+          </div>
       </div>
   </div>
 
@@ -152,13 +158,11 @@
           <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
       </div>
       <div id="annoyingpopup" data-role="popup" style="padding:30px;">Text message(s) sent!</div>
-      <form method="post" action="/sendsms" style ="margin: 0 auto">
         <a href="javascript:;" id="addroommatephone" class="ui-btn">+Roommate</a>
         <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
         <br>
         <a href="javascript:;" id="smstoemail" class="ui-btn">Or, send an email -&gt;</a>
         <a href="javascript:;" id="smstocreateroom" class="ui-btn">&lt;- Go Back</a>
-      </form>
     </div>
   </div>
 
@@ -170,17 +174,10 @@
         <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
     </div>
       <div id="annoyingpopup2" data-role="popup" style="padding:30px;">Email(s) sent!</div>
-      <form method="post" action="/sendemail" style ="margin: 0 auto">
-        <input type="hidden" name="roomkey" value="{{ roomkey }}" id="roomkeyemail">
-        <input type="hidden" name="emailsentby" value="" id="emailsentby">
-        <input type="hidden" name="emails" value="ERROR!!!" id="emaillist">
         <a href="javascript:;" class="ui-btn" id="addroommateemail">+Roommate</a>
-      
         <a href="#annoyingpopup2" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
         <br>
         <a href="javascript:;" id="emailtosendkey" class="ui-btn">&lt;- Go Back</a>
-      
-      </form>
       </div>
   </div>
 
