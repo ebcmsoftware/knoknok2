@@ -123,7 +123,7 @@
 
   <!-- the key loading page -->
   <div data-role = "page" data-theme = "a" id= "keyload">
-      <div style="width: 60% !important; margin: 0 auto !important;">
+      <div class = "centeredapparea">
           <!--
           <div id = "topbox" style = "background-color: orange;vertical-align:middle;">&nbsp;</div>
           -->
@@ -183,13 +183,10 @@
 
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme = "a" id="KKhome">
-      <div data-role = "header" data-position = "inline">
-          <h1 style = "margin-left: 15px; float: left"> KNOKNOK </h1>
-      </div>
-      <div data-role = "header" data-position = "inline">
-          <h1 style = "margin-right: 15px; float: right">
-              <a href="javascript:;" id="settingsbutton" style="text-decoration: none">Settings</a>
-          </h1>
+      <div data-role = "header">
+          <a href = ""  class = "toplinks"> KNOKNOK </a>
+          <span class="ui-title" ></span>
+          <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
       
       <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
@@ -274,11 +271,13 @@
   </div>
 
   <div data-role="page" data-theme="a" data-dialog="true" id= "showkeyscreen">
+    <div data-role="main" class="ui-content">
     <p>This is your key.</p>
     <p id = "showkey"></p>
     <a href="javascript:;" class="ui-btn" id="showkeysms">Text it to another roommate</a>
     <a href="javascript:;" class="ui-btn" id="showkeyemail">Email it to another roommate</a>
     <a href="javascript:;" class="ui-btn" id="showkeyback">&lt;- Go Back</a>
+    </div>
   </div>
 
   <script>
@@ -327,7 +326,6 @@ if (getKey())
             <p>(In case you press yes in error, this room's key is <span id="forget_key_display">{{ roomkey }}</span>)</p>
             <a href="javascript:;" onclick="forgetRoom();$.mobile.changePage('/', { transition : 'pop', reverse : true});" class="ui-btn">Yes</a>
             <a href="javascript:;" id="forgetroomback" class="ui-btn">No</a>
-      
           </div>
       </div>
   </div>
