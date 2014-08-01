@@ -264,13 +264,6 @@ function destroyButton(i) {
 }
 
 function addExtraButton(msg, i) {
-    /*
-    form = document.createElement("form");
-    form.id = "newbutton" + i;
-    form.method = "post";
-    form.action = "/sign";
-    */
-
     btn = document.createElement("a");
     btn.href="javascript:;";
     btn.className = "ui-btn";
@@ -281,7 +274,6 @@ function addExtraButton(msg, i) {
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
     btn.innerHTML = msg;
-
     close = document.createElement("span");
     close.addEventListener('click', function(element){
         this.parentNode.removeAttribute('onclick');
@@ -293,11 +285,7 @@ function addExtraButton(msg, i) {
     close.style.right = "5px";
     close.innerHTML = 'x';
     btn.appendChild(close);
-
-    //form.appendChild(btn);
-
     var div = document.getElementById("KKstatusbuttons");
-    //div.appendChild(form);
     div.appendChild(btn);
 }
 
@@ -306,7 +294,7 @@ function addExtraButtons() {
     if (statuslist === null) return;
     statuslist = JSON.parse(statuslist);
     console.log(statuslist);
-    var form, input, btn;
+    var input, btn;
     var len = statuslist.length;
     for (var i=0; i < len; i++) {
         addExtraButton(statuslist[i], i);
