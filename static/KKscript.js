@@ -188,8 +188,11 @@ function refresh_info() {
         reset_interval((depth/3 + 1) * delay);
     }
 }
-if (getKey())
+if (getKey()) {
+    refresh_info();
+    depth = 1;
     var interval = setInterval(refresh_info, delay);
+}
 else console.log("No roomkey loaded yet.");
 
 //just updates the status locally, doesn't send/get any info from the server

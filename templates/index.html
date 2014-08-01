@@ -345,16 +345,6 @@ if (getKey())
   </div>
 
   <script>
-var req = new XMLHttpRequest;
-req.open('GET', '/api?roomkey='+getKey());
-req.send();
-req.onreadystatechange = function() {
-    if (req.readyState == 4) {
-        var info = JSON.parse(req.responseText);
-        localRefresh(info['status'], info['username'], info['time'], info['roomname']);
-    }
-}
-
 makeKey(getKey());
   </script>
 
