@@ -32,11 +32,9 @@
        <div class = "centeredapparea">
             <p>New User?</p>
             <a href="javascript:;" id="makeroombutton" class="ui-btn">Make a new Room</a>
-            
             <br>
             <p>Roommate sent you a key?</p>
             <a href="javascript:;" id="enterkeybutton" class="ui-btn" >Enter a Key</a>
-            
       </div>
   </div>
 
@@ -60,9 +58,7 @@
             }, false);
           </script>
           <a href="javascript:;" class="ui-btn" id="keygenbtn">Next -&gt;</a>
-            
           <a href="javascript:;" id="makeroomtog2k" class="ui-btn">&lt;- Go Back</a>
-            
         </form>
     </div>
   </div>
@@ -107,15 +103,12 @@
 */
                 </script>
                 <br>
-              
             </div>
               <a class="ui-btn" style = "float: right">Paste Key?</a>
             </div>
           <div style = "clear: both">
             <a href="javascript:;" id="enterkeytokkhome" class="ui-btn">Go to Knoknok!</a>
-            
             <a href="javascript:;" id="enterkeytog2k" class="ui-btn">&lt;- Go Back</a>
-            
           </div>
         </div>
       </form>
@@ -144,9 +137,7 @@
     <!-- GREAT-ish script for getting random key -->
     <div class="ui-field-contain centeredapparea">
       <a href="javascript:;" id="sendthiskey" class="ui-btn">Send this key -&gt;</a>
-      
       <a href="javascript:;" class="ui-btn" id="createroomtoroom">Go to room</a>
-      
     </div> 
   </div>
 
@@ -188,7 +179,6 @@
           <span class="ui-title" ></span>
           <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
-      
       <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
           <p id="roomname">{{ roomname }}</p>
           <div>STATUS: <span id="statustext">{{status}}</span></div>
@@ -207,11 +197,9 @@
           <script> addExtraButtons(); </script>
           <br>
           <a href="javascript:;" id="opencustom" class="ui-btn">Custom...</a>
-      
           <br>
         </div>
       </div>
-
   </div>
 
   <!-- the popup for entering custom messages -->
@@ -222,11 +210,8 @@
             <form action="/sign" method="post" action="demoform.asp">  
               <input type="text" name="status" id="status">
               <a href="javascript:;" id="setnosave" class="ui-btn">Set status</a>
-      
               <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
-      
               <a href="javascript:;" class="ui-btn" id="customback">&lt;- Go Back</a>
-      
             </form>
         </div>
       </div>
@@ -238,8 +223,6 @@
           <div class="ui-field-contain">
             <p>An error occurred - this room doesn't exist :(</p>
             <a href='javascript:;' id="errorbtn" class='ui-btn'>Go back to home page</a>
-      
-            
           </div>
       </div>
   </div>
@@ -253,20 +236,15 @@
           <p>General</p>
           <a href="javascript:;" class="ui-btn" id="showkeybtn">Show Key</a>
           <a href="javascript:;" class="ui-btn" id="changeunbtn">Change name</a>
-      
           <a href="javascript:;" class="ui-btn" id="changernbtn">Change room name</a>
-      
         </div>
         <div data-role="controlgroup" style = "margin: 0 auto">
           <p>Get rid of room</p>
           <a href="javascript:;" class="ui-btn" id="forgetroombtn">Forget about this room</a>
-      
           <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
-      
         </div>
         <br>
         <a href="javascript:;" class="ui-btn" id="settingsback">&lt;- Go Back</a>
-      
       </div>
   </div>
 
@@ -280,13 +258,6 @@
     </div>
   </div>
 
-  <script>
-if (getKey())
-    $('#showkey')[0].innerHTML = formatKeyOutput(getKey());
-  </script>
-
-
-
   <!-- popup for changing the user name -->
   <div data-role="page" data-theme="a" data-dialog="true" id= "changeusername">
       <div data-role="main" class="ui-content">
@@ -294,9 +265,7 @@ if (getKey())
             <p>Change your name to what?</p>
               <input type="text" name="username" id="usernameinput">
               <a href="javascript:;" id="changeusernamebtn" class="ui-btn">Update username</a>
-      
               <a href="javascript:;" id="changeunback" class="ui-btn">&lt;- Go Back</a>
-      
          </div>
       </div>
   </div>
@@ -309,9 +278,7 @@ if (getKey())
             <form action="/changeroomname" method="post" action="demoform.asp">
                 <input type="text" name="roomname" id="newroomname">
                 <a href="javascript:;" id="changeroomnamebtn" class="ui-btn">Update room name</a>
-      
                 <a href="javascript:;" id="changernback" class="ui-btn">&lt;- Go Back</a>
-      
             </form>
          </div>
       </div>
@@ -344,11 +311,13 @@ if (getKey())
       </div>
   </div>
 
-  <script>
+<script>
 makeKey(getKey());
-  </script>
+if (getKey())
+    $('#showkey')[0].innerHTML = formatKeyOutput(getKey());
+</script>
 
-  <script src="static/assignbuttons.js"></script>
+<script src="static/assignbuttons.js"></script>
 
-  </body>
-  </html>
+</body>
+</html>
