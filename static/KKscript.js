@@ -171,12 +171,14 @@ function refresh_info() {
         if (req.readyState == 4) {
             var info = JSON.parse(req.responseText);
             localRefresh(info['status'], info['username'], info['time'], info['roomname']);
+            /* SLATED FOR REMOVAL
             if (info['username'] && info['username'] != '') {
                 $('#statusstats')[0].innerHTML = 'set by: ' + info['username'] + ',';
             } else {
                 $('#statusstats')[0].innerHTML = 'set';
             }
             $('#statusstats')[0].innerHTML += ' ' + info['time'];
+            */
         }
     }
     //slowly make it stop spamming the server if theyre idle

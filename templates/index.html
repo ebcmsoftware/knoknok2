@@ -340,29 +340,27 @@ if (getKey())
             <form action="/deleteroom" method="post" action="demoform.asp">
                 <input type="hidden" name="roomkey" value="{{ roomkey }}">
                 <a href="javascript:;" id="deleteroomconfirm" class="ui-btn">Yes</a>
-      
             </form>
             <a href="javascript:;" id="deleteroomback" class="ui-btn">No</a>
           </div>
       </div>
   </div>
 
-  <input type="hidden" id="st" value="{{status}}">
-  <input type="hidden" id="un" value="{{username}}">
-  <input type="hidden" id="ti" value="{{time}}">
-  <input type="hidden" id="rn" value="{{roomname}}">
-
   <script>
-localRefresh(
-    $('#st')[0].value,
-    $('#un')[0].value,
-    $('#ti')[0].value,
-    $('#rn')[0].value
-    );
+var req = new XMLHttpRequest;
+req.open('GET', '/api?roomkey='+getKey());
+req.send();
+req.onreadystatechange = function() {
+    if (req.readyState == 4) {
+        var info = JSON.parse(req.responseText);
+        localRefresh(info['status'], info['username'], info['time'], info['roomname']);
+    }
+}
+
 makeKey(getKey());
   </script>
 
   <script src="static/assignbuttons.js"></script>
 
-</body>
-</html>
+  </body>
+  </html>
