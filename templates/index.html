@@ -7,7 +7,7 @@
   <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
   <!-- fonts and formatting -->
   <link href='../stylesheets/Cabin_Telex.css' rel='stylesheet' type='text/css'>
-  <link id= "theme" rel="stylesheet" href="themes/KKstyle2.css"/>
+  <link id="theme" rel="stylesheet" href="themes/KKstyle2.css"/>
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
   <!-- mobile specific tags here -->
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
@@ -43,9 +43,6 @@ redirectWhenCookie();
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
       <div class="centeredapparea">
-          <!-- do we need this. -->
-          <input type="tel" name="usernum" id="usernum" placeholder="Enter your phone number">
-          <!--                  -->
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Enter the room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Enter your first name">
           <a href="javascript:;" class="ui-btn" id="keygenbtn">Next -&gt;</a>
@@ -74,7 +71,7 @@ redirectWhenCookie();
   </div>
 
   <!-- the key loading page -->
-  <div data-role = "page" data-theme = "a" id= "keyload">
+  <div data-role = "page" data-theme = "a" id="keyload">
       <div class = "centeredapparea">
           <!--
           <div id = "topbox" style = "background-color: orange;vertical-align:middle;">&nbsp;</div>
@@ -139,21 +136,17 @@ redirectWhenCookie();
           <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
       <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
-          <p id="roomname">{{ roomname }}</p>
-          <div>STATUS: <span id="statustext">{{status}}</span></div>
-          <p id="statusstats" style = "font-size: 80%;">set by: {{username}}, {{time}}</p>
-          <script>
-var s = $('#statusstats')[0].innerHTML;
-if (s.slice(0,9) == "set by: ,") //aka if username is nothing
-$('#statusstats')[0].innerHTML = s.slice(0,3) + s.slice(9);
-else console.log(s);
-          </script>
+          <p id="roomname">roomname</p>
+          <div>STATUS: <span id="statustext">status</span></div>
+          <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="KKstatusbuttons">
               <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');">Open</a>
               <a href="javascript:;" class="ui-btn" onclick="setStatus('Closed');">Closed</a>
           </div>
+          <!-- SLATED FOR REMOVAL
           <script> addExtraButtons(); </script>
+          -->
           <br>
           <a href="javascript:;" id="opencustom" class="ui-btn">Custom...</a>
           <br>
@@ -161,7 +154,7 @@ else console.log(s);
   </div>
 
   <!-- the popup for entering custom messages -->
-  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "entercustom">
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id="entercustom">
       <div data-role = "main" class = "ui-content" style = "margin: 0 auto">
           <p>New Custom Status</p>
           <div data-role="controlgroup" style = "margin: 0 auto">
@@ -174,7 +167,7 @@ else console.log(s);
   </div>
 
   <!-- for misc errors -->
-  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "error">
+  <div data-role = "page" data-theme = "a" data-dialog = "true" id="error">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
               <p>An error occurred - this room doesn't exist :(</p>
@@ -184,17 +177,17 @@ else console.log(s);
   </div>
 
   <!-- settings menu -->
-  <div data-role = "page" data-theme = "a" data-dialog = "true" id= "settingsmenu">
-      <div data-role = "main" class = "ui-content" style="margin: 0 auto">
+  <div data-role="page" data-theme="a" data-dialog="true" id="settingsmenu">
+      <div data-role="main" class="ui-content" style="margin: 0 auto">
           <h1>Settings</h1>
           <hr>
-          <div data-role="controlgroup" style = "margin: 0 auto">
+          <div data-role="controlgroup" style="margin: 0 auto">
               <p>General</p>
               <a href="javascript:;" class="ui-btn" id="showkeybtn">Show Key</a>
               <a href="javascript:;" class="ui-btn" id="changeunbtn">Change name</a>
               <a href="javascript:;" class="ui-btn" id="changernbtn">Change room name</a>
           </div>
-          <div data-role="controlgroup" style = "margin: 0 auto">
+          <div data-role="controlgroup" style="margin: 0 auto">
               <p>Get rid of room</p>
               <a href="javascript:;" class="ui-btn" id="forgetroombtn">Forget about this room</a>
               <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
@@ -204,10 +197,10 @@ else console.log(s);
       </div>
   </div>
 
-  <div data-role="page" data-theme="a" data-dialog="true" id= "showkeyscreen">
+  <div data-role="page" data-theme="a" data-dialog="true" id="showkeyscreen">
       <div data-role="main" class="ui-content">
           <p>This is your key.</p>
-          <p id = "showkey"></p>
+          <p id="showkey"></p>
           <a href="javascript:;" class="ui-btn" id="showkeysms">Text it to another roommate</a>
           <a href="javascript:;" class="ui-btn" id="showkeyemail">Email it to another roommate</a>
           <a href="javascript:;" class="ui-btn" id="showkeyback">&lt;- Go Back</a>
@@ -215,7 +208,7 @@ else console.log(s);
   </div>
 
   <!-- popup for changing the user name -->
-  <div data-role="page" data-theme="a" data-dialog="true" id= "changeusername">
+  <div data-role="page" data-theme="a" data-dialog="true" id="changeusername">
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
               <p>Change your name to what?</p>
@@ -227,7 +220,7 @@ else console.log(s);
   </div>
 
   <!-- popup for changing the room name -->
-  <div data-role="page" data-theme="a" data-dialog="true" id= "changeroomname">
+  <div data-role="page" data-theme="a" data-dialog="true" id="changeroomname">
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
               <p>Change room name to what?</p>
@@ -244,8 +237,8 @@ else console.log(s);
           <div class="ui-field-contain">
               <p>Forget about this room? :(</p>
               <p>The room will still be available to be used by your roommates.</p>
-              <p>(In case you press yes in error, this room's key is <span id="forget_key_display">{{ roomkey }}</span>)</p>
-              <a href="javascript:;" onclick="forgetRoom();$.mobile.changePage('/', { transition : 'pop', reverse : true});" class="ui-btn">Yes</a>
+              <p>(In case you press yes in error, this room's key is <span id="forget_key_display">-error-</span>)</p>
+              <a href="javascript:;" id="forgetroomconfirm" class="ui-btn">Yes</a>
               <a href="javascript:;" id="forgetroomback" class="ui-btn">No</a>
           </div>
       </div>
@@ -255,57 +248,14 @@ else console.log(s);
   <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
-              <p>Delete this room from our database forever? :(</p>
-              <input type="hidden" name="roomkey" value="{{ roomkey }}">
+              <p>Delete your room from our database forever? :(</p>
               <a href="javascript:;" id="deleteroomconfirm" class="ui-btn">Yes</a>
               <a href="javascript:;" id="deleteroomback" class="ui-btn">No</a>
           </div>
       </div>
   </div>
 
-<script>
-makeKey(getKey());
-if (getKey())
-$('#showkey')[0].innerHTML = formatKeyOutput(getKey());
-//enter keys for setup
-document.getElementById("enterroomname").addEventListener("keydown", function(e) {
-        if (!e) { var e = window.event; }
-        if (e.keyCode == 13) { navig8();console.log("YOU PRESSED ENTER"); }
-}, false);
-document.getElementById("enterfirstname").addEventListener("keydown", function(e) {
-        if (!e) { var e = window.event; }
-        if (e.keyCode == 13) { navig8();console.log("YOU PRESSED ENTER"); }
-}, false);
-//initializing the enterkey textboxes.
-$("#roomkey0").keyup(function () {
-    if($(this).val().length == 3) {
-        $('#roomkey1').focus();
-    }
-});
-var pastef = function() {
-    var elt = this;
-    setTimeout(function() {
-        var k = $(elt).val();
-        if (k.length >= 3)
-            $("#roomkey0")[0].value = k.substring(0,3);
-        if (k.length == 7)
-            $("#roomkey1")[0].value = k.substring(4,7);
-        else if (k.length == 6)
-            $("#roomkey1")[0].value = k.substring(3,6); 
-    }, 10);
-}
-$("#roomkey0").on('paste', pastef);
-$("#roomkey1").on('paste', pastef);
-/* Maybe. This auto submits when they key is fully entered.
-   $("#roomkey1").keyup(function () {
-   console.log($(this).val().length);
-   if($(this).val().length == 3) {
-   changeLink();
-   }
-   });
- */
-</script>
-
+<script src="../static/setup.js"></script>
 <script src="../static/assignbuttons.js"></script>
 
 </body>

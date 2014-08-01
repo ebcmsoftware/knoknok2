@@ -20,6 +20,14 @@ function redirectWhenCookie() {
         var newplace = "?roomkey=" + key + "#KKhome";
         console.log('redirecting to ' + newplace)
         window.location.href = newplace;
+    } else {
+        var anchor = window.location.href.split('#');
+        console.log(anchor);
+        if (anchor && anchor.length == 2) {
+            var newplace = '#' + anchor[1];
+            console.log(newplace);
+            window.location.href = newplace;
+        }
     }
 }
 
@@ -40,7 +48,8 @@ function navig8() {
     $.mobile.changePage('#keyload', {transition : 'slide'});
     post_params = new Object();
     post_params['enterroomname'] = localStorage['roomname'];
-    $.post('/createroom', post_params, function(data) {
+    //$.post('/createroom', post_params, function(data) {
+    $.post('http://ebcmdev.appspot.com/createroom', post_params, function(data) {
         if (data != "" && data != "1") {
             localStorage['userkey'] = Number(data);
         }
@@ -54,6 +63,7 @@ function navig8() {
 }
 
 function formatKeyOutput(keystr) {
+    keystr = keystr || getKey();
     var keyoutput = "";
     for (var i = 0; i < 6; i++) {
         if (i != 0 && i % 3 === 0) {
@@ -66,7 +76,7 @@ function formatKeyOutput(keystr) {
 }
 
 function makeKey(keystr) {
-    var keyoutput = formatKeyOutput(keystr);
+    var keyoutput = formatKeyOutput();
     $('#key')[0].innerHTML = "Key: " + keyoutput;
     $('#keytosendsms')[0].innerHTML = "Key: " + keyoutput;
     $('#keytosendemail')[0].innerHTML = "Key: " + keyoutput;
@@ -101,7 +111,7 @@ function sendsms() {
     post_params['username'] = getUserName();
     post_params['roomkey'] = getKey();
     post_params['sendnum'] = numberArray;
-    $.post('/sendsms', post_params, function(){
+    $.post('http://ebcmdev.appspot.com/sendsms', post_params, function(){
         $.mobile.changePage('#KKhome', { transition:"pop" });
     });
 }
@@ -130,7 +140,7 @@ function sendemail() {
     post_params['roomkey'] = getKey();
     post_params['emailsentby'] = getUserName();
     post_params['emails'] = emailArray;
-    $.post('/sendemail', post_params, function(){
+    $.post('http://ebcmdev.appspot.com/sendemail', post_params, function(){
         $.mobile.changePage('#KKhome', { transition:"pop" });
         //window.location.assign('#KKhome');
     });
@@ -165,7 +175,7 @@ function reset_interval(dly) {
 function refresh_info() {
     var req = new XMLHttpRequest;
     console.log('updating info with delay: ' + (depth/3 + 1) * delay / 1000 + 's');
-    req.open('GET', '/api?roomkey='+getKey());
+    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
     req.send();
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
@@ -236,7 +246,7 @@ function setStatus(msg, update) {
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
     post_params['status'] = msg;
-    $.post('/sign', post_params, function() {});
+    $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     //they are active -> refresh frequently
     depth = 1;
     reset_interval(delay);
@@ -334,8 +344,7 @@ function changeUserName() {
         (oldname == '' && stats.split(',')[0] == stats)) {//if they didn't set a name
             setStatus($('#statustext')[0].innerHTML, true); //reset the status
     }
-    else console.log(stats);
-    window.location.assign('#KKhome');
+    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 }
 
 function getKey() {
@@ -346,7 +355,7 @@ function getUserName() {
     return localStorage.getItem("username");
 }
 
-/*
+/* SLATED FOR REMOVAL
 function changeTheme(){
     console.log("the theme is:");
     console.log($('#theme')[0].href);
@@ -380,12 +389,15 @@ function changeroomname() {
     var post_params = new Object();
     post_params['roomkey'] = getKey();
     post_params['roomname'] = $('#newroomname').val();
-    $.post('/changeroomname', post_params, function(){
-        $('#roomname')[0].innerHTML = post_params['roomname'];
-        window.location.assign('#KKhome');
+    $('#roomname')[0].innerHTML = post_params['roomname'];
+    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
+    $.post('http://ebcmdev.appspot.com/changeroomname', post_params, function(){
     });
 }
 
+/* SLATED FOR REMOVAL
 function startLink(){
     window.location.assign("#get2key");
 }
+*/
+

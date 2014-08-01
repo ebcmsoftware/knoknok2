@@ -44,6 +44,7 @@ default_room.put()
 
 class MainPage(webapp.RequestHandler):
   def get(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
@@ -91,6 +92,7 @@ class MainPage(webapp.RequestHandler):
 
 class API(webapp.RequestHandler):
   def get(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
@@ -100,7 +102,6 @@ class API(webapp.RequestHandler):
         logging.error("wait waht")
     else:
         room = response[0]
-    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(
 '''{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status, room.most_recent_username, room.roomname, pretty_date(room.time))
@@ -110,6 +111,7 @@ class API(webapp.RequestHandler):
 class KKError(webapp.RequestHandler):
   def get(self):
     #i stole this code from charlie :)))))))))))
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     self.response.out.write("""
 <html>
 <head>
@@ -150,6 +152,7 @@ def well_formatted_email(address):
 
 class SendEmail(webapp.RequestHandler):
   def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     emails = self.request.get('emails').strip()
     sentby = self.request.get('emailsentby').strip()
     if not sentby or sentby == '':
@@ -190,6 +193,7 @@ def formatKeyOutput(keystr):
 
 class SendSMS(webapp.RequestHandler):
   def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
@@ -260,6 +264,7 @@ def keygen(depth=0):
 
 class ChangeRoomName(webapp.RequestHandler):
   def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
@@ -277,7 +282,13 @@ class ChangeRoomName(webapp.RequestHandler):
 
 
 class CreateRoom(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+    
   def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = keygen()
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
@@ -308,7 +319,13 @@ class CreateRoom(webapp.RequestHandler):
 
 
 class DeleteRoom(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+    
   def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
@@ -323,6 +340,7 @@ class DeleteRoom(webapp.RequestHandler):
 
 class UpdateStatus(webapp.RequestHandler):
   def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     #boolean - whether or not we are just updating the info and not making a new status 
     update = self.request.get('update', DEFAULT_ROOMKEY) 
     update = update == '1' #booleanize it

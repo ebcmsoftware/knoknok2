@@ -86,11 +86,15 @@ $('#changeroomnamebtn').fastClick(changeroomname);
 
 go('changernback', 'settingsmenu', 'slide', true);
 
+$('#forgetroomconfirm').fastClick(function(e) {
+    forgetRoom();
+    $.mobile.changePage('/', {transition:'pop',reverse:true});
+});
 go('forgetroomback', 'settingsmenu', 'slide', true);
 
 $('#deleteroomconfirm').fastClick(function(e) {
-    forgetRoom();
-    $.post('/deleteroom',{'roomkey':getKey()}, function() {
+    $.post('http://ebcmdev.appspot.com/deleteroom',{'roomkey':getKey()}, function() {
+        forgetRoom();
         $.mobile.changePage('#get2key', {transition:'pop',reverse:true});
     });
 });
