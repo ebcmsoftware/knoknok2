@@ -585,3 +585,11 @@ button[disabled],
   width: 60% !important; 
   margin: 0 auto !important;
 }
+
+.toplinks{
+	text-decoration: none;
+	 background-color: #1095EA; 
+	 color: white;
+	 border-color: #1095EA; 
+	 font-size: 120%;
+}
