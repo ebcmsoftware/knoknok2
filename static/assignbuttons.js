@@ -20,7 +20,7 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 go('sendthiskey', 'sendkey', 'slide');
 
 $('#createroomtoroom').fastClick(function(e) {
-    $.mobile.changePage('?roomkey='+getKey()+'#KKhome', { transition : 'pop', reverse : false});
+    $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 });
 
 $('#addroommatephone').fastClick(addPhoneInput);
@@ -51,7 +51,7 @@ $('#setsave').fastClick(function(e) {
 go('customback', 'KKhome', 'pop', true);
 
 $('#errorbtn').fastClick(function(e) {
-    $.mobile.changePage('/', {transition : 'slide', reverse : true});
+    $.mobile.changePage('/templates/index.html', {transition : 'slide', reverse : true});
 });
 
 $('#changeunbtn').fastClick(function(e) {
@@ -88,7 +88,7 @@ go('changernback', 'settingsmenu', 'slide', true);
 
 $('#forgetroomconfirm').fastClick(function(e) {
     forgetRoom();
-    $.mobile.changePage('/', {transition:'pop',reverse:true});
+    $.mobile.changePage('/templates/index.html', {transition:'pop',reverse:true});
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);
 

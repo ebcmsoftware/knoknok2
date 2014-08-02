@@ -16,30 +16,45 @@ function clearCookies(debug){
 //redirects to KKhome when there is a key in localStorage
 function redirectWhenCookie() {
     var key = getKey(); 
-    if(key != "" && key != null && key != "undefined" && key != "None" && window.location.href.indexOf("#createroom") == -1) {
+    if(key && key != "" && key != null && key != "undefined" && key != "None") {
+        /* SLATED FOR REMOVAL
         var newplace = "?roomkey=" + key + "#KKhome";
         console.log('redirecting to ' + newplace)
-        window.location.href = newplace;
+        */
+        window.location.href = '#KKhome';
+    }
+    /* SLATED FOR REMOVAL BECAUSE ?ROOMKEY= NO LONGER EXISTS
     } else {
         var anchor = window.location.href.split('#');
-        console.log(anchor);
         if (anchor && anchor.length == 2) {
             var newplace = '#' + anchor[1];
             console.log(newplace);
             window.location.href = newplace;
         }
     }
+    */
 }
 
 //Changes the link to KKhome using the key in localStorage
 function changeLink() {
     var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
+                                                    // if keylen increase
     if (key == undefined || (key.length != 6 && true/*key.length != 9)*/)) {
         alert('That doesn\'t look like a real key! Please try again.');
         return;
     }
     localStorage.setItem("username", $('#username')[0].value);
-    window.location.href = "/?roomkey=" + key + "#KKhome";
+    localStroage['userkey'] = Number(key);
+    $.mobile.changePage('#KKhome', {transition : 'slide'});
+    //SLATED FOR REMOVAL
+    //window.location.href = "/?roomkey=" + key + "#KKhome";
+}
+
+function afterkeygen() {
+    $('#showkey')[0].innerHTML = formatKeyOutput();
+    refresh_info();
+    depth = 1;
+    var interval = setInterval(refresh_info, delay);
 }
 
 function navig8() {
@@ -54,10 +69,13 @@ function navig8() {
             localStorage['userkey'] = Number(data);
         }
         setTimeout(function() {
-            var path = '?roomkey=' + data + '#createroom';
-            console.log(path);
-            window.location.href = path;
-//$.mobile.changePage(path, {transition : 'slide'});
+            makeKey(getKey());
+            afterkeygen();
+            var path = '#createroom';
+            $.mobile.changePage(path, {transition : 'slide'});
+            //SLATED FOR REMOVAL
+            //var path = '?roomkey=' + data + '#createroom';
+            //window.location.href = path;
         },3500);
     });
 }
@@ -165,6 +183,7 @@ function setColor(msg) {
 
 var depth = 1;
 var delay = 5500;
+var deli = delay;
 
 function reset_interval(dly) {
     clearInterval(interval);
@@ -174,7 +193,7 @@ function reset_interval(dly) {
 
 function refresh_info() {
     var req = new XMLHttpRequest;
-    console.log('updating info with delay: ' + (depth/3 + 1) * delay / 1000 + 's');
+    console.log('updating info with delay: ' + deli / 1000 + 's');
     req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
     req.send();
     req.onreadystatechange = function() {
@@ -195,7 +214,8 @@ function refresh_info() {
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
     if (depth++ % 3 == 0) {
-        reset_interval((depth/3 + 1) * delay);
+        deli = (depth/3 + 1) * delay;
+        reset_interval(deli);
     }
 }
 if (getKey()) {

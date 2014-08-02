@@ -44,6 +44,9 @@ default_room.put()
 
 class MainPage(webapp.RequestHandler):
   def get(self):
+    self.redirect("/templates/index.html")
+    return
+    #this function actually has no more purpose. it's all API now that phonegap exists.
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
