@@ -181,7 +181,7 @@ function setColor(msg) {
 }
 
 var depth = 1;
-var delay = 5500;
+var delay = 10500;
 var deli = delay;
 
 function reset_interval(dly) {
