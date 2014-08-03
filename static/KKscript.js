@@ -44,7 +44,7 @@ function changeLink() {
         return;
     }
     localStorage.setItem("username", $('#username')[0].value);
-    localStroage['userkey'] = Number(key);
+    localStorage['userkey'] = Number(key);
     $.mobile.changePage('#KKhome', {transition : 'slide'});
     //SLATED FOR REMOVAL
     //window.location.href = "/?roomkey=" + key + "#KKhome";
