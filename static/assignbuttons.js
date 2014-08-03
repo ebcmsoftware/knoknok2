@@ -88,7 +88,7 @@ go('changernback', 'settingsmenu', 'slide', true);
 
 $('#forgetroomconfirm').fastClick(function(e) {
     forgetRoom();
-    $.mobile.changePage('/templates/index.html', {transition:'pop',reverse:true});
+    $.mobile.changePage('#get2key', {transition:'pop',reverse:true});
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);
 

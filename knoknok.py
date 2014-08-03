@@ -44,9 +44,10 @@ default_room.put()
 
 class MainPage(webapp.RequestHandler):
   def get(self):
-    self.redirect("/templates/index.html")
-    return
-    #this function actually has no more purpose. it's all API now that phonegap exists.
+    #self.response.out.write("/templates/index.html")
+    #return
+#this function actually has no more purpose (other than testing on localhost rather than file:// which is pointless. it's all API now that phonegap exists.
+#SLATED FOR REMOVAL
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
@@ -89,6 +90,7 @@ class MainPage(webapp.RequestHandler):
     }
     if room.status == WELCOME_GREETING:
         template_values['username'] = 'The Knoknok Team'
+#/SLATED FOR REMOVAL
     path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
     self.response.out.write(template.render(path, template_values))
 
