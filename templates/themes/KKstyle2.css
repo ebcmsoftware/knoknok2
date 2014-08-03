@@ -593,3 +593,23 @@ button[disabled],
 	 border-color: #1095EA; 
 	 font-size: 120%;
 }
+
+.keyload{
+    -webkit-animation: glow 1.0s infinite alternate;
+    animation: glow 1.0s infinite alternate;
+    /*color:#24AD62;*/
+    background-color:orange;
+    display:inline; /*defaults to display none so it can be shown when it actually is a record*/
+}
+@-webkit-keyframes glow {
+    to {
+        background-color: black;
+    }
+}
+
+@keyframes glow{
+	to {
+        background-color: black;
+    }
+}
+
