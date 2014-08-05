@@ -6,7 +6,8 @@
   <title>Knoknok: For Roommates</title>
   <link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
   <!-- fonts and formatting -->
-  <link href='stylesheets/Cabin_Telex.css' rel='stylesheet' type='text/css'>
+  <!-- <link href='stylesheets/Cabin_Telex.css' rel='stylesheet' type='text/css'> -->
+  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <link id="theme" rel="stylesheet" href="templates/themes/KKstyle2.css"/>
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
   <!-- mobile specific tags here -->
@@ -132,12 +133,12 @@ redirectWhenCookie();
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header">
           <a href = ""  class = "toplinks" data-role="none"> KNOKNOK </a>
-          <span class="ui-title" ><p id="roomname">roomname</p></span>
+          <h1>roomname</h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks" data-role="none">Settings</a>
       </div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "clear: both">
           
-          <div id="statustext" style = "font-size: 250%;">status</div>
+          <div id="statustext" style = "font-size: 250%; margin-top:20%;">status</div>
           <input type="text" name="status" id="statusinput" value="status" style="display:none;">
           <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
@@ -191,8 +192,7 @@ redirectWhenCookie();
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>General</p>
               <a href="javascript:;" class="ui-btn" id="showkeybtn">Show Key</a>
-              <a href="javascript:;" class="ui-btn" id="changeunbtn">Change name</a>
-              <a href="javascript:;" class="ui-btn" id="changernbtn">Change room name</a>
+              <a href="javascript:;" class="ui-btn" id="changeunbtn">Change info</a>
           </div>
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>Get rid of room</p>
@@ -218,6 +218,9 @@ redirectWhenCookie();
   <div data-role="page" data-theme="a" data-dialog="true" id="changeusername">
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
+              <p>Change room name to what?</p>
+              <input type="text" name="roomname" id="newroomname">
+              <a href="javascript:;" id="changeroomnamebtn" class="ui-btn">Update room name</a>
               <p>Change your name to what?</p>
               <input type="text" name="username" id="usernameinput">
               <a href="javascript:;" id="changeusernamebtn" class="ui-btn">Update username</a>
@@ -226,23 +229,11 @@ redirectWhenCookie();
       </div>
   </div>
 
-  <!-- popup for changing the room name -->
-  <div data-role="page" data-theme="a" data-dialog="true" id="changeroomname">
-      <div data-role="main" class="ui-content">
-          <div class="ui-field-contain">
-              <p>Change room name to what?</p>
-              <input type="text" name="roomname" id="newroomname">
-              <a href="javascript:;" id="changeroomnamebtn" class="ui-btn">Update room name</a>
-              <a href="javascript:;" id="changernback" class="ui-btn">&lt;- Go Back</a>
-          </div>
-      </div>
-  </div>
-
   <!--if they want to forget about a room -->
   <div data-role = "page" data-theme = "a" data-dialog="true" id="forgetroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
-              <p>Forget about this room? :(</p>
+              <p>Forget about this room?</p>
               <p>The room will still be available to be used by your roommates.</p>
               <p>(In case you press yes in error, this room's key is <span id="forget_key_display">-error-</span>)</p>
               <a href="javascript:;" id="forgetroomconfirm" class="ui-btn">Yes</a>
