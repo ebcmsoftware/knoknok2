@@ -242,9 +242,9 @@ function localRefresh(msg, username, time, roomname) {
         else $('#statusstats')[0].innerHTML = 'set';
         $('#statusstats')[0].innerHTML += ' ' + time;
     }
-//if (roomname) {
- //       $('#roomname')[0].innerHTML = roomname;
-  //  }
+    if (roomname) {
+        $('#roomname')[0].innerHTML = roomname;
+    }
 }
 
 function hideButtons() {
