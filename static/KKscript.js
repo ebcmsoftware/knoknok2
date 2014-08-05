@@ -7,7 +7,6 @@ String.prototype.isColor = function() {
 //clears the cookies for while we're testing
 function clearCookies(debug){
     if (debug) {
-        localStorage.removeItem("roomname");
         localStorage.removeItem("username");
         localStorage.removeItem("userkey");
     }
@@ -58,10 +57,9 @@ function afterkeygen() {
 
 function navig8() {
     localStorage.setItem("username", $('#enterfirstname')[0].value);
-    localStorage.setItem("roomname", $('#enterroomname')[0].value);
     $.mobile.changePage('#keyload', {transition : 'slide'});
     post_params = new Object();
-    post_params['enterroomname'] = localStorage['roomname'];
+    post_params['enterroomname'] = $('#enterroomname')[0].value;
     //$.post('/createroom', post_params, function(data) {
     $.post('http://ebcmdev.appspot.com/createroom', post_params, function(data) {
         if (data != "" && data != "1") {
@@ -77,6 +75,10 @@ function navig8() {
             //window.location.href = path;
         },3500);
     });
+}
+
+function showControls() {
+    $('#KKstatusbuttons')[0].style.display = 'block';
 }
 
 function formatKeyOutput(keystr) {
@@ -252,6 +254,7 @@ function localRefresh(msg, username, time, roomname) {
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
+    $('#KKstatusbuttons')[0].style.display = 'none';
     //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     //we want this to feel immediate
     var post_params = new Object();
