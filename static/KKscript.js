@@ -7,6 +7,7 @@ String.prototype.isColor = function() {
 var delay = 10500;
 
 function startup() {
+    alert('you just resumed or opened the app.');
     var interval = setInterval(refresh_info, delay);
     reset_interval(delay);
 }
@@ -15,7 +16,7 @@ document.addEventListener("deviceready", startup, false);
 document.addEventListener("resume", startup, false);
 
 //clears the cookies for while we're testing
-function clearCookies(debug){
+function clearCookies(debug) {
     if (debug) {
         localStorage.removeItem("username");
         localStorage.removeItem("userkey");
@@ -71,6 +72,9 @@ function navig8() {
 }
 
 function showControls() {
+    $('#statustext')[0].style.display = 'none';
+    $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    $('#statusinput')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
 }
 
@@ -193,6 +197,7 @@ function refresh_info() {
         if (req.readyState == 4) {
             var info = JSON.parse(req.responseText);
             localRefresh(info['status'], info['username'], info['time'], info['roomname']);
+            $('#statusinput')[0].setAttribute('placeholder', info['status']);
             /* SLATED FOR REMOVAL
             if (info['username'] && info['username'] != '') {
                 $('#statusstats')[0].innerHTML = 'set by: ' + info['username'] + ',';
@@ -242,11 +247,18 @@ function localRefresh(msg, username, time, roomname) {
     }
 }
 
+function hideButtons() {
+    $('#KKstatusbuttons')[0].style.display = 'none';
+    $('#statustext')[0].style.display = 'block';
+    $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    $('#statusinput')[0].style.display = 'none';
+}
+
 //makes the status something
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
-    $('#KKstatusbuttons')[0].style.display = 'none';
+    hideButtons();
     //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     //we want this to feel immediate
     var post_params = new Object();
@@ -328,7 +340,7 @@ function addExtraButtons() {
     //remembers the custom status in memory
 //  remember to make a page or some way to delete these saved messages.
 function saveText() {
-    savestatus = document.getElementById("status").value;
+    savestatus = document.getElementById("statusinput").value;
     var statuslist = localStorage.getItem("statuslist");
     if (!statuslist || statuslist == null) {
         statuslist = [savestatus];
@@ -339,7 +351,7 @@ function saveText() {
     }
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
     addExtraButton(savestatus, statuslist.length - 1);
-    document.getElementById("status").value = '';
+    document.getElementById("statusinput").value = '';
 }
 
 //deletes the cookie

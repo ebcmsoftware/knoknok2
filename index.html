@@ -135,25 +135,22 @@ redirectWhenCookie();
           <span class="ui-title" ><p id="roomname">roomname</p></span>
           <a href="javascript:;" id="settingsbutton" class = "toplinks" data-role="none">Settings</a>
       </div>
-      <div data-role="controlgroup" class = "centeredapparea" style = "clear: both">
+      <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "clear: both">
           
           <div id="statustext" style = "font-size: 250%;">status</div>
+          <input type="text" name="status" id="statusinput" value="status" style="display:none;">
           <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="KKstatusbuttons" style="display:none;">
               <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');">Open</a>
               <a href="javascript:;" class="ui-btn" onclick="setStatus('Closed');">Closed</a>
-          <!-- SLATED FOR REMOVAL
-          <script> addExtraButtons(); </script>
-          -->
-          <br>
-          <div data-role="controlgroup" style = "margin: 0 auto">
-              <input type="text" name="status" id="status">
-              <a href="javascript:;" id="setnosave" class="ui-btn">Set status</a>
-              <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
-              <a href="javascript:;" class="ui-btn" id="customback">&lt;- Go Back</a>
-          </div>
-          <!--
+              <br>
+              <div data-role="controlgroup" style = "margin: 0 auto">
+                  <a href="javascript:;" id="setnosave" class="ui-btn">Set status</a>
+                  <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
+                  <a href="javascript:;" class="ui-btn" id="customback">Hide edit UI</a>
+              </div>
+              <!-- SLATED FOR REMOVAL
           <a href="javascript:;" id="opencustom" class="ui-btn">Custom...</a>
           -->
           </div>
@@ -162,6 +159,7 @@ redirectWhenCookie();
   </div>
 
   <!-- the popup for entering custom messages -->
+  <!-- SLATED FOR REMOVAL - CODE MOVED TO KKHOME
   <div data-role = "page" data-theme = "a" data-dialog = "true" id="entercustom">
       <div data-role = "main" class = "ui-content" style = "margin: 0 auto">
           <p>New Custom Status</p>
@@ -173,6 +171,7 @@ redirectWhenCookie();
           </div>
       </div>
   </div>
+  -->
 
   <!-- for misc errors -->
   <div data-role = "page" data-theme = "a" data-dialog = "true" id="error">

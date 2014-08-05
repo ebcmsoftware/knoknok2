@@ -40,17 +40,19 @@ go('opencustom', 'entercustom', 'pop');
 */
 
 $('#setnosave').fastClick(function(e) {
-    setStatus($('#status').val());
+    setStatus($('#statusinput').val());
     $.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 });
 
 $('#setsave').fastClick(function(e) {
-    setStatus($('#status').val());
+    setStatus($('#statusinput').val());
     saveText();
     $.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 });
 
-go('customback', 'KKhome', 'pop', true);
+//go('customback', 'KKhome', 'pop', true);
+    
+$('#customback').fastClick(hideButtons);
 
 $('#errorbtn').fastClick(function(e) {
     $.mobile.changePage('/templates/index.html', {transition : 'slide', reverse : true});
@@ -86,7 +88,9 @@ $('#changeusernamebtn').fastClick(changeUserName);
 
 $('#changeroomnamebtn').fastClick(changeroomname);
 
-$('#statustext').fastClick(showControls);
+//$('#statustext').fastClick(showControls);
+$('#statustext:first-child').fastClick(showControls);
+//$('#KKhomebody').fastClick(showControls);
 
 go('changernback', 'settingsmenu', 'slide', true);
 
