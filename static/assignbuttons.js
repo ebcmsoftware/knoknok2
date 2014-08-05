@@ -76,9 +76,9 @@ go('showkeysms','sendkey', 'pop')
 
 go('showkeyemail','sendemail', 'pop')
 
-go('showkeybtn','showkeyscreen', 'pop')
+go('showkeybtn','showkeyscreen', 'slide')
 
-go('showkeyback','settingsmenu', 'pop', true)
+go('showkeyback','settingsmenu', 'slide', true)
 
 $('#changeusernamebtn').fastClick(changeUserName);
 
