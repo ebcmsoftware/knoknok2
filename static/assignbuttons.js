@@ -84,6 +84,8 @@ $('#changeusernamebtn').fastClick(changeUserName);
 
 $('#changeroomnamebtn').fastClick(changeroomname);
 
+$('#statustext').fastClick(showControls);
+
 go('changernback', 'settingsmenu', 'slide', true);
 
 $('#forgetroomconfirm').fastClick(function(e) {
