@@ -4,6 +4,16 @@ String.prototype.isColor = function() {
     return /^[0-9A-F]{6}$/i.test(this);
 }
 
+var delay = 10500;
+
+function startup() {
+    var interval = setInterval(refresh_info, delay);
+    reset_interval(delay);
+}
+
+document.addEventListener("deviceready", startup, false);
+document.addEventListener("resume", startup, false);
+
 //clears the cookies for while we're testing
 function clearCookies(debug){
     if (debug) {
@@ -16,22 +26,8 @@ function clearCookies(debug){
 function redirectWhenCookie() {
     var key = getKey(); 
     if(key && key != "" && key != null && key != "undefined" && key != "None") {
-        /* SLATED FOR REMOVAL
-        var newplace = "?roomkey=" + key + "#KKhome";
-        console.log('redirecting to ' + newplace)
-        */
         window.location.href = '#KKhome';
     }
-    /* SLATED FOR REMOVAL BECAUSE ?ROOMKEY= NO LONGER EXISTS
-    } else {
-        var anchor = window.location.href.split('#');
-        if (anchor && anchor.length == 2) {
-            var newplace = '#' + anchor[1];
-            console.log(newplace);
-            window.location.href = newplace;
-        }
-    }
-    */
 }
 
 //Changes the link to KKhome using the key in localStorage
@@ -70,9 +66,6 @@ function navig8() {
             afterkeygen();
             var path = '#createroom';
             $.mobile.changePage(path, {transition : 'slide'});
-            //SLATED FOR REMOVAL
-            //var path = '?roomkey=' + data + '#createroom';
-            //window.location.href = path;
         },3500);
     });
 }
@@ -183,7 +176,6 @@ function setColor(msg) {
 }
 
 var depth = 1;
-var delay = 10500;
 var deli = delay;
 
 function reset_interval(dly) {

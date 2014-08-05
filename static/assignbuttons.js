@@ -35,7 +35,9 @@ go('smstocreateroom', 'createroom', 'slide', true);
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
+/* SLATED FOR REMOVAL
 go('opencustom', 'entercustom', 'pop');
+*/
 
 $('#setnosave').fastClick(function(e) {
     setStatus($('#status').val());
