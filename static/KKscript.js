@@ -75,10 +75,7 @@ function showControls() {
     $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
     $('#statusinput')[0].style.display = 'block';
     //$('#statusinput')[0].style.width = $('#statustext')[0].style.width;
-    console.log($('#statusinput')[0].offsetHeight);
     $('#statusinput').height($('#statustext')[0].offsetHeight);
-    console.log($('#statustext')[0].offsetHeight);
-    console.log($('#statusinput')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
     //$('#homespacing1')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
