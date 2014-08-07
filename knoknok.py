@@ -44,6 +44,8 @@ default_room.put()
 
 class MainPage(webapp.RequestHandler):
   def get(self):
+    path = os.path.join(os.path.dirname(__file__), 'index.html')
+    self.response.out.write(template.render(path, {}))
     #self.response.out.write("/templates/index.html")
     #return
 #this function actually has no more purpose (other than testing on localhost rather than file:// which is pointless. it's all API now that phonegap exists.
@@ -119,24 +121,27 @@ class KKError(webapp.RequestHandler):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     self.response.out.write("""
 <html>
-<head>
-  <!-- title & favicon -->
-  <title>Knoknok: For Roommates</title>
-  <link rel="icon" href="../static/favicon.ico" type="image/x-icon">
-  <!-- fonts and formatting -->
-  <link href='http://fonts.googleapis.com/css?family=Cabin|Telex' rel='stylesheet' type='text/css'>
-  <link id= "theme" rel="stylesheet" href="themes/KKstyle2.css" />
-  <!-- <link rel="stylesheet" href="themes/KKstyleBW.css" /> -->
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
-  <!-- mobile specific tags here -->
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <!-- scripts galore -->
-  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-  <script src= "../static/KKscript.js"></script>
-</head>
+<head>
+  <!-- title & favicon -->
+  <title>Knoknok: For Roommates</title>
+  <link rel="icon" href="static/images/favicon.ico" type="image/x-icon">
+  <!-- fonts and formatting -->
+  <!-- <link href='stylesheets/Cabin_Telex.css' rel='stylesheet' type='text/css'> -->
+  <link href='http://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+  <link id="theme" rel="stylesheet" href="templates/themes/KKstyle2.css"/>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile.structure-1.4.2.min.css" />
+  <!-- mobile specific tags here -->
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <!-- scripts galore -->
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+  <script src= "static/KKscript.js"></script>
+  <script src= "static/fastbutton.js"></script>
+  <script src= "static/jQFastButtons.js"></script>
+</head>
+
 
 <div data-role = "page" data-theme = "a" data-dialog = "true" id= "error">
 <div data-role = "main" class = "ui-content">
