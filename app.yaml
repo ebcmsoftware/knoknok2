@@ -5,6 +5,9 @@ api_version: 1
 threadsafe: false
 
 handlers:
+- url: /templates/themes
+  static_dir: templates/themes
+
 - url: /themes
   static_dir: templates/themes
 
