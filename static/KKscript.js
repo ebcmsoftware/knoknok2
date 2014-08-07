@@ -82,6 +82,7 @@ function showControls() {
     $('#statustext')[0].style.display = 'none';
     //$('#homespacing1')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
+    $('#statusinput').focus();
 }
 
 function formatKeyOutput(keystr) {
