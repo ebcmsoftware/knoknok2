@@ -222,7 +222,7 @@ function refresh_info() {
         reset_interval(deli);
     }
 }
-if (getKey()) {
+if (getKey() && getKey() != null && getKey() != "null") {
     refresh_info();
     depth = 1;
     var interval = setInterval(refresh_info, delay);
