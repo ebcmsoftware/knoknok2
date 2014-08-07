@@ -27,7 +27,12 @@ function clearCookies(debug) {
 function redirectWhenCookie() {
     var key = getKey(); 
     if(key && key != "" && key != null && key != "undefined" && key != "None") {
+        console.log(key);
+        console.log(key);
+        console.log(key);
         window.location.href = '#KKhome';
+    } else {
+        console.log(key);
     }
 }
 
@@ -199,7 +204,7 @@ function reset_interval(dly) {
 function refresh() {
     var req = new XMLHttpRequest;
     console.log('updating info with delay: ' + deli / 1000 + 's');
-    if (getKey()) {
+    if (getKey() && getKey() != null && getKey() != "null") {
         req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
         req.send();
         req.onreadystatechange = function() {
