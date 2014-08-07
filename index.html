@@ -108,9 +108,8 @@ redirectWhenCookie();
           <div id="phonenumbers" class="ui-field-contain">
               <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
           </div>
-          <button type="button"  onclick="pickAContact()" > Click To Pick </button>
           <div id="annoyingpopup" data-role="popup" style="padding:30px;">Text message(s) sent!</div>
-          <a href="javascript:;" id="searchcontactssms" class="ui-btn">search contacts todo:make this look good</a>
+          <a href="javascript:;" id="searchcontactssms" class="ui-btn">Select from contacts</a>
           <a href="javascript:;" id="addroommatephone" class="ui-btn">+Roommate</a>
           <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
           <br>
@@ -127,6 +126,8 @@ redirectWhenCookie();
               <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
           </div>
           <div id="annoyingpopup2" data-role="popup" style="padding:30px;">Email(s) sent!</div>
+          <a href="javascript:;" id="searchcontactsemail" class="ui-btn">Select from contacts</a>
+          <!-- ***TODO***: when the searchcontacts(sms|email) is done, call add(sms|email)input() -->
           <a href="javascript:;" class="ui-btn" id="addroommateemail">+Roommate</a>
           <a href="#annoyingpopup2" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
           <br>
