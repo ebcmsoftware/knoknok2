@@ -20,8 +20,8 @@
   <script src= "static/KKscript.js"></script>
   <script src= "static/fastbutton.js"></script>
   <script src= "static/jQFastButtons.js"></script>
-  <!--
-  <script src="ContactPicker.js"/ >
+  <!-- TODO?
+  <script src="static/ContactPicker.js"/>
 -->
 </head>
 
@@ -110,6 +110,7 @@ redirectWhenCookie();
           </div>
           <button type="button"  onclick="pickAContact()" > Click To Pick </button>
           <div id="annoyingpopup" data-role="popup" style="padding:30px;">Text message(s) sent!</div>
+          <a href="javascript:;" id="searchcontactssms" class="ui-btn">search contacts todo:make this look good</a>
           <a href="javascript:;" id="addroommatephone" class="ui-btn">+Roommate</a>
           <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
           <br>

@@ -98,6 +98,12 @@ $('#statustext:first-child').fastClick(showControls);
 //SLATED FOR REMOVAL
 //go('changernback', 'settingsmenu', 'slide', true);
 
+$('#seachcontactssms').fastClick(function(e) {
+    window.plugins.ContactPicker.chooseContact(function(contactInfo) {
+        alert(contactInfo.displayName + " " + contactInfo.email);
+    });
+});
+
 $('#forgetroomconfirm').fastClick(function(e) {
     forgetRoom();
     $.mobile.changePage('#get2key', {transition:'pop',reverse:true});

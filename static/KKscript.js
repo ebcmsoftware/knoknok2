@@ -27,12 +27,7 @@ function clearCookies(debug) {
 function redirectWhenCookie() {
     var key = getKey(); 
     if(key && key != "" && key != null && key != "undefined" && key != "None") {
-        console.log(key);
-        console.log(key);
-        console.log(key);
         window.location.href = '#KKhome';
-    } else {
-        console.log(key);
     }
 }
 
