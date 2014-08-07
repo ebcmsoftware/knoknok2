@@ -138,7 +138,7 @@ redirectWhenCookie();
       </div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "clear: both; margin-top:15%;">
           <div id="statustext" style = "font-size: 250%;">status</div>
-          <input type="text" name="status" id="statusinput" value="status" style="display:none;">
+          <input type="text" name="status" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #006eb7; font-size: 250%; border: 0px" >
           <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="KKstatusbuttons" style="display:none;">
@@ -150,9 +150,6 @@ redirectWhenCookie();
                   <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
                   <a href="javascript:;" class="ui-btn" id="customback">Hide edit UI</a>
               </div>
-              <!-- SLATED FOR REMOVAL
-          <a href="javascript:;" id="opencustom" class="ui-btn">Custom...</a>
-          -->
           </div>
           <br>
       </div>
