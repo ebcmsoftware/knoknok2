@@ -196,26 +196,24 @@ function reset_interval(dly) {
         interval = setInterval(refresh_info, dly);
 }
 
-function refresh_info() {
+function refresh() {
     var req = new XMLHttpRequest;
     console.log('updating info with delay: ' + deli / 1000 + 's');
-    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
-    req.send();
-    req.onreadystatechange = function() {
-        if (req.readyState == 4) {
-            var info = JSON.parse(req.responseText);
-            localRefresh(info['status'], info['username'], info['time'], info['roomname']);
-            $('#statusinput')[0].setAttribute('placeholder', info['status']);
-            /* SLATED FOR REMOVAL
-            if (info['username'] && info['username'] != '') {
-                $('#statusstats')[0].innerHTML = 'set by: ' + info['username'] + ',';
-            } else {
-                $('#statusstats')[0].innerHTML = 'set';
+    if (getKey()) {
+        req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
+        req.send();
+        req.onreadystatechange = function() {
+            if (req.readyState == 4) {
+                var info = JSON.parse(req.responseText);
+                localRefresh(info['status'], info['username'], info['time'], info['roomname']);
+                $('#statusinput')[0].setAttribute('placeholder', info['status']);
             }
-            $('#statusstats')[0].innerHTML += ' ' + info['time'];
-            */
         }
     }
+}
+
+function refresh_info() {
+    refresh();
     //slowly make it stop spamming the server if theyre idle
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
