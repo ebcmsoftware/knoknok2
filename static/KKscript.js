@@ -74,10 +74,8 @@ function navig8() {
 function showControls() {
     $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
     $('#statusinput')[0].style.display = 'block';
-    //$('#statusinput')[0].style.width = $('#statustext')[0].style.width;
     $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
-    //$('#homespacing1')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
     $('#statusinput').select();

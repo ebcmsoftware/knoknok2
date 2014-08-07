@@ -22,6 +22,12 @@ go('sendthiskey', 'sendkey', 'slide');
 $('#createroomtoroom').fastClick(function(e) {
     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 });
+$('#smstoroom').fastClick(function(e) {
+    $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
+});
+$('#emailtoroom').fastClick(function(e) {
+    $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
+});
 
 $('#addroommatephone').fastClick(addPhoneInput);
 
@@ -35,10 +41,6 @@ go('smstocreateroom', 'createroom', 'slide', true);
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
-/* SLATED FOR REMOVAL
-go('opencustom', 'entercustom', 'pop');
-*/
-
 $('#setnosave').fastClick(function(e) {
     setStatus($('#statusinput').val());
     $.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
@@ -50,8 +52,6 @@ $('#setsave').fastClick(function(e) {
     $.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 });
 
-//go('customback', 'KKhome', 'pop', true);
-    
 $('#customback').fastClick(hideControls);
 
 $('#errorbtn').fastClick(function(e) {
@@ -63,13 +63,6 @@ $('#changeinfobtn').fastClick(function(e) {
     $('#usernameinput')[0].value = getUserName();
     $.mobile.changePage('#changeusername', {transition : 'slide', reverse : false});
 });
-
-//SLATED FOR REMOVAL
-/*
-$('#changernbtn').fastClick(function(e) {
-    $.mobile.changePage('#changeroomname', {transition : 'slide', reverse : false});
-});
-*/
 
 go('forgetroombtn', 'forgetroom', 'slide');
 
@@ -93,10 +86,6 @@ $('#changeroomnamebtn').fastClick(changeroomname);
 
 //$('#statustext').fastClick(showControls);
 $('#statustext:first-child').fastClick(showControls);
-//$('#KKhomebody').fastClick(showControls);
-
-//SLATED FOR REMOVAL
-//go('changernback', 'settingsmenu', 'slide', true);
 
 $('#searchcontactsemail').fastClick(function(e) {
     window.plugins.ContactPicker.chooseContact(function(contactInfo) {
