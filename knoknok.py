@@ -13,8 +13,8 @@ from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
-#from twilio import twiml
-#from twilio.rest import TwilioRestClient
+from twilio import twiml
+from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -57,7 +57,7 @@ class MainPage(webapp.RequestHandler):
     response = greetings_query.fetch(1)
     if response == []:
         if roomkey == DEFAULT_ROOMKEY:
-            path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+            path = os.path.join(os.path.dirname(__file__), 'index.html')
             self.response.out.write(template.render(path, {}))
             return
         room = Room(parent=guestbook_key(roomkey))
@@ -74,7 +74,7 @@ class MainPage(webapp.RequestHandler):
         logging.info(response)
         if room.roomkey != DEFAULT_ROOMKEY and not room.alive:
             logging.info("exited due to deleted room! roomkey " + str(roomkey) + " was deleted")
-            path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+            path = os.path.join(os.path.dirname(__file__), 'index.html')
             self.response.out.write(template.render(path, {}))
             self.redirect("/error")
             return
@@ -91,7 +91,7 @@ class MainPage(webapp.RequestHandler):
     if room.status == WELCOME_GREETING:
         template_values['username'] = 'The Knoknok Team'
 #/SLATED FOR REMOVAL
-    path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+    path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, template_values))
 
 
@@ -218,11 +218,10 @@ class SendSMS(webapp.RequestHandler):
     username = self.request.get('username', DEFAULT_ROOMKEY)
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
-    '''
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-    client = None #XXX
-    #client = TwilioRestClient(account_sid, auth_token)
+    #client = None #XXX
+    client = TwilioRestClient(account_sid, auth_token)
     if username and username != '':
         body = username
     else:
@@ -234,7 +233,6 @@ class SendSMS(webapp.RequestHandler):
                                     from_="+18646432174",
                                     body=body)
     self.response.write(str(rv))
-    '''
     self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
@@ -317,7 +315,7 @@ class CreateRoom(webapp.RequestHandler):
       'roomname':room.roomname,
       'time':'just now'
     }
-    path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+    path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(str(room.roomkey))
     #self.response.out.write(template.render(path, template_values))
     #self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')

@@ -52,21 +52,24 @@ $('#setsave').fastClick(function(e) {
 
 //go('customback', 'KKhome', 'pop', true);
     
-$('#customback').fastClick(hideButtons);
+$('#customback').fastClick(hideControls);
 
 $('#errorbtn').fastClick(function(e) {
     $.mobile.changePage('/templates/index.html', {transition : 'slide', reverse : true});
 });
 
-$('#changeunbtn').fastClick(function(e) {
+$('#changeinfobtn').fastClick(function(e) {
+    $('#newroomname')[0].value = $('#roomname')[0].innerHTML;
     $('#usernameinput')[0].value = getUserName();
     $.mobile.changePage('#changeusername', {transition : 'slide', reverse : false});
 });
 
+//SLATED FOR REMOVAL
+/*
 $('#changernbtn').fastClick(function(e) {
-    $('#newroomname')[0].value = $('#roomname')[0].innerHTML;
     $.mobile.changePage('#changeroomname', {transition : 'slide', reverse : false});
 });
+*/
 
 go('forgetroombtn', 'forgetroom', 'slide');
 
@@ -92,7 +95,8 @@ $('#changeroomnamebtn').fastClick(changeroomname);
 $('#statustext:first-child').fastClick(showControls);
 //$('#KKhomebody').fastClick(showControls);
 
-go('changernback', 'settingsmenu', 'slide', true);
+//SLATED FOR REMOVAL
+//go('changernback', 'settingsmenu', 'slide', true);
 
 $('#forgetroomconfirm').fastClick(function(e) {
     forgetRoom();

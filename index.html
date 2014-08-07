@@ -144,9 +144,10 @@ redirectWhenCookie();
           <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="KKstatusbuttons" style="display:none;">
-              <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');">Open</a>
-              <a href="javascript:;" class="ui-btn" onclick="setStatus('Closed');">Closed</a>
+              <a href="javascript:;" class="ui-btn" onclick="setStatus('Open');" style="color:green;">Open</a>
+              <a href="javascript:;" class="ui-btn" onclick="setStatus('Closed');" style="color:red;">Closed</a>
               <br>
+              <!-- we're going to redo this anyway to i'm not going to fix the button saving until we do. -->
               <div data-role="controlgroup" style = "margin: 0 auto">
                   <a href="javascript:;" id="setnosave" class="ui-btn">Set status</a>
                   <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
@@ -191,7 +192,7 @@ redirectWhenCookie();
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>General</p>
               <a href="javascript:;" class="ui-btn" id="showkeybtn">Show Key</a>
-              <a href="javascript:;" class="ui-btn" id="changeunbtn">Change info</a>
+              <a href="javascript:;" class="ui-btn" id="changeinfobtn">Change info</a>
           </div>
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>Get rid of room</p>
