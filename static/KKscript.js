@@ -80,7 +80,7 @@ function showControls() {
     console.log($('#statustext')[0].offsetHeight);
     console.log($('#statusinput')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
-    $('#homespacing1')[0].style.display = 'block';
+    //$('#homespacing1')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
 }
 
@@ -255,7 +255,7 @@ function localRefresh(msg, username, time, roomname) {
 
 function hideControls() {
     $('#KKstatusbuttons')[0].style.display = 'none';
-    $('#homespacing1')[0].style.display = 'none';
+    //$('#homespacing1')[0].style.display = 'none';
     $('#statustext')[0].style.display = 'block';
     $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
     $('#statusinput')[0].style.display = 'none';
