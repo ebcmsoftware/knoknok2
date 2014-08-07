@@ -20,6 +20,7 @@
   <script src= "static/KKscript.js"></script>
   <script src= "static/fastbutton.js"></script>
   <script src= "static/jQFastButtons.js"></script>
+  <script src="ContactPicker.js"/ >
 </head>
 
 <script> 
@@ -105,6 +106,7 @@ redirectWhenCookie();
           <div id="phonenumbers" class="ui-field-contain">
               <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
           </div>
+          <button type="button"  onclick="pickAContact()" > Click To Pick </button>
           <div id="annoyingpopup" data-role="popup" style="padding:30px;">Text message(s) sent!</div>
           <a href="javascript:;" id="addroommatephone" class="ui-btn">+Roommate</a>
           <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
@@ -153,6 +155,7 @@ redirectWhenCookie();
           </div>
           <br>
       </div>
+
   </div>
 
   <!-- the popup for entering custom messages -->

@@ -34,7 +34,7 @@ legend,
 .ui-input-text input,
 .ui-input-search input {
 	color: inherit;
-	text-shadow: inherit;
+	text-shadow: none;
 }
 /* Form labels (overrides font-weight bold in bars, and mini font-size) */
 .ui-mobile label,
