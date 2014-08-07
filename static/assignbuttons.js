@@ -98,14 +98,14 @@ $('#statustext:first-child').fastClick(showControls);
 //SLATED FOR REMOVAL
 //go('changernback', 'settingsmenu', 'slide', true);
 
-$('#seachcontactsemail').fastClick(function(e) {
+$('#searchcontactsemail').fastClick(function(e) {
     window.plugins.ContactPicker.chooseContact(function(contactInfo) {
         alert(contactInfo.displayName + " " + contactInfo.emails);
         alert(contactInfo.email);
     });
 });
 
-$('#seachcontactssms').fastClick(function(e) {
+$('#searchcontactssms').fastClick(function(e) {
     window.plugins.ContactPicker.chooseContact(function(contactInfo) {
         alert(contactInfo.displayName + " " + contactInfo.phoneNumbers);
         alert(contactInfo.phone);
