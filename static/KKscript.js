@@ -72,9 +72,15 @@ function navig8() {
 }
 
 function showControls() {
-    $('#statustext')[0].style.display = 'none';
     $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
     $('#statusinput')[0].style.display = 'block';
+    //$('#statusinput')[0].style.width = $('#statustext')[0].style.width;
+    console.log($('#statusinput')[0].offsetHeight);
+    $('#statusinput').height($('#statustext')[0].offsetHeight);
+    console.log($('#statustext')[0].offsetHeight);
+    console.log($('#statusinput')[0].offsetHeight);
+    $('#statustext')[0].style.display = 'none';
+    $('#homespacing1')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
 }
 
@@ -247,8 +253,9 @@ function localRefresh(msg, username, time, roomname) {
     }
 }
 
-function hideButtons() {
+function hideControls() {
     $('#KKstatusbuttons')[0].style.display = 'none';
+    $('#homespacing1')[0].style.display = 'none';
     $('#statustext')[0].style.display = 'block';
     $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
     $('#statusinput')[0].style.display = 'none';
@@ -258,7 +265,7 @@ function hideButtons() {
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
-    hideButtons();
+    hideControls();
     //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     //we want this to feel immediate
     var post_params = new Object();
