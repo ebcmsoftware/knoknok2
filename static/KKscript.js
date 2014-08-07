@@ -438,4 +438,3 @@ function startLink(){
     window.location.assign("#get2key");
 }
 */
-
