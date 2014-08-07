@@ -16,7 +16,6 @@
     <author href="https://build.phonegap.com" email="support@phonegap.com">
         Hardeep Shoker 
     </author>
-    <gap:plugin name="com.mobitel.nalaka.piccon" >
-    </gap:plugin >
 
+    <gap:plugin name="com.badrit.contactpicker" version="0.1.0" />
 </widget>
