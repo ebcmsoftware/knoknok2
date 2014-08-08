@@ -146,14 +146,18 @@ redirectWhenCookie();
       </div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "clear: both; margin-top:15%;">
           <div id="statustext" style = "font-size: 250%;">status</div>
-          <textarea cols="40" rows="1" type="text" name="status" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #006eb7; font-size: 250%; border: 0px"></textarea>
+          <textarea cols="40" rows="1" type="text" name="status" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #006eb7; font-size: 250%; border: 0px"></textarea>
           <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="KKstatusbuttons" style="display:none;">
               <div data-role="controlgroup" style = "margin: 0 auto">
+                  <!--
                   <a href="javascript:;" id="setnosave" class="ui-btn">Set status</a>
+                  -->
                   <a href="javascript:;" id="setsave" class="ui-btn">Save this status (locally)</a>
+                  <!--
                   <a href="javascript:;" class="ui-btn" id="customback">Hide edit UI</a>
+                  -->
               </div>
           </div>
           <br>

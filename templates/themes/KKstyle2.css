@@ -604,13 +604,13 @@ button[disabled],
 }
 @-webkit-keyframes glow {
     to {
-        background-color: black;
+        background-color: white;
     }
 }
 
 @keyframes glow{
 	to {
-        background-color: black;
+        background-color: white;
     }
 }
 

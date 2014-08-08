@@ -41,15 +41,13 @@ go('smstocreateroom', 'createroom', 'slide', true);
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
-$('#setnosave').fastClick(function(e) {
-    setStatus($('#statusinput').val());
-    $.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
-});
+$('#setnosave').fastClick(leave_custom);
+    //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 
 $('#setsave').fastClick(function(e) {
-    setStatus($('#statusinput').val());
     saveText();
-    $.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
+    leave_custom();
+    //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 });
 
 $('#customback').fastClick(hideControls);

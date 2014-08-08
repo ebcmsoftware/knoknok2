@@ -284,7 +284,7 @@ function destroyButton(i) {
     var statuslist = localStorage.getItem("statuslist");
     if (statuslist === null) return;
     statuslist = JSON.parse(statuslist);
-    var currButton = $('#KKstatusbuttons')[0].firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling;
+    var currButton = $('#KKstatusbuttons')[0].firstChild.nextSibling.nextSibling.nextSibling;
     statuslist.splice(i, 1);
     if (statuslist.length > 0) {
         localStorage.setItem("statuslist", JSON.stringify(statuslist));
@@ -339,8 +339,16 @@ function addExtraButtons() {
     }
 }
 
-    //remembers the custom status in memory
-//  remember to make a page or some way to delete these saved messages.
+//set the status according to the box
+function leave_custom() {
+        s = $('#statusinput').val();
+        if (s != $('#statustext')[0].innerHTML) {
+            setStatus(s);
+        }
+        else hideControls();
+}
+
+//remembers the custom status in memory
 function saveText() {
     savestatus = document.getElementById("statusinput").value;
     var statuslist = localStorage.getItem("statuslist");
