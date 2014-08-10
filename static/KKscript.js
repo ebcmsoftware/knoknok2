@@ -59,15 +59,16 @@ function navig8() {
     post_params['enterroomname'] = $('#enterroomname')[0].value;
     //$.post('/createroom', post_params, function(data) {
     $.post('http://ebcmdev.appspot.com/createroom', post_params, function(data) {
-        if (data != "" && data != "1") {
+        if (data != "") {
             localStorage['userkey'] = Number(data);
         }
         setTimeout(function() {
-            makeKey(getKey());
+            $('#forget_key_display')[0].innerHTML = formatKeyOutput();
+            makeKey();
             afterkeygen();
             var path = '#createroom';
             $.mobile.changePage(path, {transition : 'slide'});
-        },3500);
+        },3000);
     });
 }
 
@@ -94,11 +95,13 @@ function formatKeyOutput(keystr) {
     return keyoutput;
 }
 
-function makeKey(keystr) {
+function makeKey() {
     var keyoutput = formatKeyOutput();
     $('#key')[0].innerHTML = "Key: " + keyoutput;
     $('#keytosendsms')[0].innerHTML = "Key: " + keyoutput;
     $('#keytosendemail')[0].innerHTML = "Key: " + keyoutput;
+    $('#forget_key_display')[0].innerHTML = formatKeyOutput();
+    $('#delete_key_display')[0].innerHTML = formatKeyOutput();
 }
 
 //displays the key from the cookie
@@ -250,7 +253,6 @@ function localRefresh(msg, username, time, roomname) {
 
 function hideControls() {
     $('#KKstatusbuttons')[0].style.display = 'none';
-    //$('#homespacing1')[0].style.display = 'none';
     $('#statustext')[0].style.display = 'block';
     $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
     $('#statusinput')[0].style.display = 'none';

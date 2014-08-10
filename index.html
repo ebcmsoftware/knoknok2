@@ -103,7 +103,7 @@ redirectWhenCookie();
 
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
-      <p id = "keytosendsms">Key: </p>
+      <p id = "keytosendsms">Key: couldn't load key :(</p>
       <div class="centeredapparea">
           <div id="phonenumbers" class="ui-field-contain">
               <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
@@ -121,7 +121,7 @@ redirectWhenCookie();
 
   <!-- the page for sending the key via email -->
   <div data-role= "page" data-theme = "a" id = "sendemail">
-      <p id = "keytosendemail">Key:</p>
+      <p id = "keytosendemail">Key: couldn't load key :(</p>
       <div class="ui-field-contain centeredapparea">
           <div id="emailinputs" class="ui-field-contain">
               <input type="email" name="email1" value="" id="email1" placeholder="Email address...">
@@ -252,7 +252,8 @@ redirectWhenCookie();
   <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
-              <p>Delete your room from our database forever? :(</p>
+              <p>Delete this room from our database forever? :(</p>
+              <p>(Everyone with the roomkey <span id="delete_key_display">-error-</span> will no longer be able to access the room!)</p>
               <a href="javascript:;" id="deleteroomconfirm" class="ui-btn">Yes</a>
               <a href="javascript:;" id="deleteroomback" class="ui-btn">No</a>
           </div>

@@ -13,8 +13,8 @@ from google.appengine.ext import ndb
 from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
-from twilio import twiml
-from twilio.rest import TwilioRestClient
+#from twilio import twiml
+#from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -226,6 +226,7 @@ class SendSMS(webapp.RequestHandler):
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
     #client = None #XXX
+    '''
     client = TwilioRestClient(account_sid, auth_token)
     if username and username != '':
         body = username
@@ -238,36 +239,75 @@ class SendSMS(webapp.RequestHandler):
                                     from_="+18646432174",
                                     body=body)
     self.response.write(str(rv))
+    '''
     self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 def keygen(depth=0):
   num_digits = 6 #100000 to 999999
   if depth > 50:
+      mail.send_mail(sender="Knoknok CATASTROPHE <tuftswhistling@gmail.com>",
+                       to="popcorncolonel@gmail.com",
+                       subject="OH NO.",
+                       body="OH MY GOD YOU RAN OUT OF KEYS")
+
       class Catastrophe(Exception):
-        pass
-      raise Catastrophe #oh noe
+          pass
+      raise Catastrophe #oh noe :(
   roomkey = random.randint(10 ** (num_digits-1), (10 ** num_digits) - 1)
   response = Room.query_book(ancestor_key=guestbook_key(roomkey)).fetch(1) 
   if response != []:
+      room = response[0]
       if room.alive:
           logging.debug("WOAH JUST HIT A COLLISION")
-          logging.debug("WOAH JUST HIT A COLLISION")
-          logging.debug("WOAH JUST HIT A COLLISION")
-          logging.debug("WOAH JUST HIT A COLLISION")
-          logging.debug("WOAH JUST HIT A COLLISION")
-          logging.debug("WOAH JUST HIT A COLLISION")
-          logging.debug(str(roomkey) + " ALREADY EXISTS")
-          logging.debug(str(roomkey) + " ALREADY EXISTS")
-          logging.debug(str(roomkey) + " ALREADY EXISTS")
-          logging.debug(str(roomkey) + " ALREADY EXISTS")
-          logging.debug(str(roomkey) + " ALREADY EXISTS")
           logging.debug(str(roomkey) + " ALREADY EXISTS")
           return keygen(depth=depth+1) #rng failed, gogo retry
       else:
+          logging.debug("HIT COLLISION ("+str(roomkey)+") BUT RESOLVED IT!!!")
+          logging.debug("HIT COLLISION ("+str(roomkey)+") BUT RESOLVED IT!!!")
+          logging.debug("HIT COLLISION ("+str(roomkey)+") BUT RESOLVED IT!!!")
+          logging.debug("HIT COLLISION ("+str(roomkey)+") BUT RESOLVED IT!!!")
+          logging.debug("HIT COLLISION ("+str(roomkey)+") BUT RESOLVED IT!!!")
+          logging.debug("HIT COLLISION ("+str(roomkey)+") BUT RESOLVED IT!!!")
           return roomkey
   else:
       return roomkey
+
+
+class CreateRoom(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+    
+  def post(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+    roomkey = keygen()
+    greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
+    response = greetings_query.fetch(1)
+    roomname = self.request.get('enterroomname', DEFAULT_NAME)
+    if response == []:
+        room = Room(parent=guestbook_key(roomkey))
+    else:
+        room = response[0]
+    room.alive = True
+    room.roomkey = roomkey
+    room.roomname = roomname
+    room.most_recent_username = 'The Knoknok Team'
+    room.status = WELCOME_GREETING
+    room.time = datetime.now()
+    room.put()
+    template_values = {
+      'status': room.status,
+      'roomkey': room.roomkey,
+      'username':room.most_recent_username,
+      'roomname':room.roomname,
+      'time':'just now'
+    }
+    path = os.path.join(os.path.dirname(__file__), 'index.html')
+    self.response.out.write(str(room.roomkey))
+    #self.response.out.write(template.render(path, template_values))
+    #self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
 
 
 class ChangeRoomName(webapp.RequestHandler):
@@ -287,43 +327,6 @@ class ChangeRoomName(webapp.RequestHandler):
         raise KeyError #key not found - exit
     room.put()
     self.redirect('/?roomkey=' + str(roomkey)+ '#KKhome')
-
-
-class CreateRoom(webapp.RequestHandler):
-  def options(self):      
-      self.response.headers['Access-Control-Allow-Origin'] = '*'
-      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
-      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
-    
-  def post(self):
-    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    roomkey = keygen()
-    greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
-    response = greetings_query.fetch(1)
-    roomname = self.request.get('enterroomname', DEFAULT_NAME)
-    if response == []:
-        room = Room(parent=guestbook_key(roomkey))
-        room.alive = True
-        room.roomkey = roomkey
-        room.roomname = roomname
-        room.most_recent_username = 'The Knoknok Team'
-        room.status = WELCOME_GREETING
-        room.time = datetime.now()
-    else:
-        raise KeyError #my keygen failed me... we already have a room with this roomkey
-        #although this technically shouldn't happen because keygen() checks for this case but w/e
-    room.put()
-    template_values = {
-      'status': room.status,
-      'roomkey': room.roomkey,
-      'username':room.most_recent_username,
-      'roomname':room.roomname,
-      'time':'just now'
-    }
-    path = os.path.join(os.path.dirname(__file__), 'index.html')
-    self.response.out.write(str(room.roomkey))
-    #self.response.out.write(template.render(path, template_values))
-    #self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
 
 
 class DeleteRoom(webapp.RequestHandler):

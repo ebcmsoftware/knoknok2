@@ -100,7 +100,9 @@ $('#searchcontactssms').fastClick(function(e) {
 });
 
 $('#forgetroomconfirm').fastClick(function(e) {
+    console.log("roomkey was" + getKey());
     forgetRoom();
+    console.log("roomkey is" + getKey());
     $.mobile.changePage('#get2key', {transition:'pop',reverse:true});
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);

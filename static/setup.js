@@ -13,6 +13,8 @@ if (getKey())
 
 addExtraButtons();
 
+makeKey();
+
 //enter keys for setup
 document.getElementById("enterroomname").addEventListener("keydown", function(e) {
         if (!e) { var e = window.event; }
@@ -50,5 +52,4 @@ $("#roomkey1").on('paste', pastef);
    }
    });
  */
-$('#forget_key_display')[0].innerHTML = formatKeyOutput();
 
