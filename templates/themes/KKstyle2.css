@@ -588,11 +588,10 @@ button[disabled],
 }
 
 .toplinks{
-	text-decoration: none;
-	 background-color: #1095EA; 
-	 color: white;
-	 border-color: #1095EA; 
-	 font-size: 120%;
+	text-decoration: none !important;
+	 background-color: #1095EA !important; 
+	 color: white !important;
+	 border-color: #1095EA !important; 
 }
 
 .keyload{
