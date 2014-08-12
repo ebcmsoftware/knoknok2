@@ -8,9 +8,11 @@ var delay = 10500;
 
 function startup() {
     alert('you just resumed or opened the app.');
-    refresh();
-    var interval = setInterval(refresh_info, delay);
-    reset_interval(delay);
+    if (getKey()) {
+        refresh();
+        var interval = setInterval(refresh_info, delay);
+        reset_interval(delay);
+    }
 }
 
 document.addEventListener("deviceready", startup, false);
@@ -73,15 +75,6 @@ function navig8() {
     });
 }
 
-function showControls() {
-    $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
-    $('#statusinput')[0].style.display = 'block';
-    $('#statusinput').height($('#statustext')[0].offsetHeight);
-    $('#statustext')[0].style.display = 'none';
-    $('#KKstatusbuttons')[0].style.display = 'block';
-    $('#statusinput').focus();
-    $('#statusinput').select();
-}
 
 function formatKeyOutput(keystr) {
     keystr = keystr || getKey();
@@ -196,7 +189,7 @@ function refresh() {
             if (req.readyState == 4) {
                 var info = JSON.parse(req.responseText);
                 localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
-                $('#statusinput')[0].setAttribute('placeholder', info['status']);
+                //$('#statusinput')[0].setAttribute('placeholder', info['status']);
             }
         }
     }
@@ -207,8 +200,9 @@ var deli = delay;
 
 function reset_interval(dly) {
     clearInterval(interval);
-    if (getKey())
+    if (getKey()) {
         interval = setInterval(refresh_info, dly);
+    }
 }
 
 function refresh_info() {
@@ -253,10 +247,25 @@ function localRefresh(msg, username, time, roomname) {
     }
 }
 
+function showControls() {
+    var s = $('#statustext')[0].innerHTML; 
+    if (s && s != '')
+        $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    $('#statusinput')[0].style.display = 'block';
+    if (s && s != '')
+        $('#statusinput').height($('#statustext')[0].offsetHeight);
+    $('#statustext')[0].style.display = 'none';
+    $('#KKstatusbuttons')[0].style.display = 'block';
+    $('#statusinput').focus();
+    $('#statusinput').select();
+}
+
 function hideControls() {
     $('#KKstatusbuttons')[0].style.display = 'none';
     $('#statustext')[0].style.display = 'block';
-    $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    var s = $('#statustext')[0].innerHTML; 
+    if (s && s != '')
+        $('#statusinput')[0].value = s
     $('#statusinput')[0].style.display = 'none';
 }
 
@@ -264,6 +273,8 @@ function hideControls() {
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
+    if (msg == '')
+        return
     hideControls();
     //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     //we want this to feel immediate
@@ -277,7 +288,8 @@ function setStatus(msg, update) {
         localRefresh(msg, username, 'just now');
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
-    post_params['status'] = msg;
+    if (msg && msg != '') 
+        post_params['status'] = msg;
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     //they are active -> refresh frequently
     depth = 1;
@@ -371,6 +383,7 @@ function saveText() {
 
 //deletes the cookie
 function forgetRoom(){
+    clearInterval(interval);
     localStorage.removeItem("userkey");
 }
 
