@@ -225,7 +225,6 @@ class SendSMS(webapp.RequestHandler):
     logging.info(phone_numberlist)
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-    #client = None #XXX
     '''
     client = TwilioRestClient(account_sid, auth_token)
     if username and username != '':
