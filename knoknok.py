@@ -18,7 +18,7 @@ from google.appengine.api import mail
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
-WELCOME_GREETING = 'Welcome to Knoknok!#FFFFFF'
+WELCOME_GREETING = urllib.quote('Welcome to Knoknok!<br><a href=\'http://google.com\'>test</a>#FFFFFF')
 
 
 class Room(ndb.Model):
@@ -46,6 +46,7 @@ class MainPage(webapp.RequestHandler):
   def get(self):
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, {}))
+    return
     #self.response.out.write("/templates/index.html")
     #return
 #this function actually has no more purpose (other than testing on localhost rather than file:// which is pointless. it's all API now that phonegap exists.
@@ -177,7 +178,7 @@ class SendEmail(webapp.RequestHandler):
         if email != "" and well_formatted_email(email):
             mail.send_mail(sender="The Knoknok Team <tuftswhistling@gmail.com>",
                            to=email,
-                           subject="Welcome to Knoknok!",
+                           subject="Your friend invited you to Knoknok!",
                            body=
 """%s has invited you to join Knoknok, an app for Roommates!
 
@@ -239,7 +240,7 @@ class SendSMS(webapp.RequestHandler):
                                     body=body)
     self.response.write(str(rv))
     '''
-    self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
 
 
 def keygen(depth=0):
@@ -284,7 +285,7 @@ class CreateRoom(webapp.RequestHandler):
     roomkey = keygen()
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
-    roomname = self.request.get('enterroomname', DEFAULT_NAME)
+    roomname = urllib.quote(self.request.get('enterroomname', DEFAULT_NAME))
     if response == []:
         room = Room(parent=guestbook_key(roomkey))
     else:
@@ -315,7 +316,7 @@ class ChangeRoomName(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
-    roomname = self.request.get('roomname', DEFAULT_NAME)
+    roomname = urllib.quote(self.request.get('roomname', DEFAULT_NAME))
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     if response != []:
@@ -325,7 +326,7 @@ class ChangeRoomName(webapp.RequestHandler):
         logging.info(str(response) + "__" + roomkey + "__")
         raise KeyError #key not found - exit
     room.put()
-    self.redirect('/?roomkey=' + str(roomkey)+ '#KKhome')
+    #self.redirect('/?roomkey=' + str(roomkey)+ '#KKhome')
 
 
 class DeleteRoom(webapp.RequestHandler):
@@ -349,6 +350,11 @@ class DeleteRoom(webapp.RequestHandler):
 
 
 class UpdateStatus(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+    
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     #boolean - whether or not we are just updating the info and not making a new status 
@@ -366,12 +372,12 @@ class UpdateStatus(webapp.RequestHandler):
         room.alive = True
     else:
         room = response[0]
-    room.most_recent_username = self.request.get('username')
-    room.status = self.request.get('status')
+    room.most_recent_username = urllib.quote(self.request.get('username'))
+    room.status = urllib.quote(self.request.get('status'))
     if not update:
         room.time = datetime.now()
     room.put()
-    self.redirect('/?roomkey=' + str(room.roomkey)+'#KKhome')
+    #self.redirect('/?roomkey=' + str(room.roomkey)+'#KKhome')
 
 
 def pretty_date(time=False):

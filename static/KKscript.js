@@ -8,6 +8,7 @@ var delay = 10500;
 
 function startup() {
     alert('you just resumed or opened the app.');
+    refresh();
     var interval = setInterval(refresh_info, delay);
     reset_interval(delay);
 }
@@ -185,15 +186,6 @@ function setColor(msg) {
     $('#statusbar')[0].style.color = color;
 }
 
-var depth = 1;
-var deli = delay;
-
-function reset_interval(dly) {
-    clearInterval(interval);
-    if (getKey())
-        interval = setInterval(refresh_info, dly);
-}
-
 function refresh() {
     var req = new XMLHttpRequest;
     console.log('updating info with delay: ' + deli / 1000 + 's');
@@ -203,11 +195,20 @@ function refresh() {
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
                 var info = JSON.parse(req.responseText);
-                localRefresh(info['status'], info['username'], info['time'], info['roomname']);
+                localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
                 $('#statusinput')[0].setAttribute('placeholder', info['status']);
             }
         }
     }
+}
+
+var depth = 1;
+var deli = delay;
+
+function reset_interval(dly) {
+    clearInterval(interval);
+    if (getKey())
+        interval = setInterval(refresh_info, dly);
 }
 
 function refresh_info() {
@@ -220,6 +221,7 @@ function refresh_info() {
         reset_interval(deli);
     }
 }
+
 if (getKey() && getKey() != null && getKey() != "null") {
     refresh_info();
     depth = 1;
@@ -279,6 +281,7 @@ function setStatus(msg, update) {
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     //they are active -> refresh frequently
     depth = 1;
+    deli = delay;
     reset_interval(delay);
 }
 
