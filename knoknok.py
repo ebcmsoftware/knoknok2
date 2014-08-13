@@ -18,7 +18,7 @@ from google.appengine.api import mail
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
-WELCOME_GREETING = urllib.quote('Welcome to Knoknok!<br><a href=\'http://google.com\'>test</a>#FFFFFF')
+WELCOME_GREETING = urllib.quote('<span>Welcome to Knoknok!</span><p style="font-size:0.9em;">Tap here to update the status!</p>#FFFFFF')
 
 
 class Room(ndb.Model):
@@ -43,7 +43,13 @@ default_room.roomkey = DEFAULT_ROOMKEY
 default_room.put()
 
 class MainPage(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+
   def get(self):
+    self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     path = os.path.join(os.path.dirname(__file__), 'index.html')
     self.response.out.write(template.render(path, {}))
     return
@@ -99,6 +105,11 @@ class MainPage(webapp.RequestHandler):
 
 
 class API(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+
   def get(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
@@ -106,13 +117,14 @@ class API(webapp.RequestHandler):
         roomkey = int(roomkey)
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
+    self.response.headers['Content-Type'] = 'application/json'
     if response == []:
         logging.error("wait waht")
+        self.response.out.write('{}')
     else:
         room = response[0]
-    self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(
-'''{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status, room.most_recent_username, room.roomname, pretty_date(room.time))
+'''{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status if room.status != '' else '.', room.most_recent_username, room.roomname, pretty_date(room.time))
 )
 
 
@@ -373,7 +385,9 @@ class UpdateStatus(webapp.RequestHandler):
     else:
         room = response[0]
     room.most_recent_username = urllib.quote(self.request.get('username'))
-    room.status = urllib.quote(self.request.get('status'))
+    s = self.request.get('status')
+    if s and s != '':
+        room.status = urllib.quote(s)
     if not update:
         room.time = datetime.now()
     room.put()
