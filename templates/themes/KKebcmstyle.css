@@ -1,0 +1,33 @@
+/*-------------------------------*/
+.centeredapparea {
+  width: 65% !important; 
+  margin: 10% auto !important;
+
+}
+
+.toplinks{
+	text-decoration: none !important;
+	 background-color: #1095EA !important; 
+	 color: white !important;
+	 border-color: #1095EA !important; 
+}
+
+.keyload{
+    -webkit-animation: glow 1.0s infinite alternate;
+    animation: glow 1.0s infinite alternate;
+    /*color:#24AD62;*/
+    background-color:orange;
+    display:inline; /*defaults to display none so it can be shown when it actually is a record*/
+}
+@-webkit-keyframes glow {
+    to {
+        background-color: white;
+    }
+}
+
+@keyframes glow{
+	to {
+        background-color: white;
+    }
+}
+
