@@ -50,7 +50,7 @@ class MainPage(webapp.RequestHandler):
 
   def get(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    path = os.path.join(os.path.dirname(__file__), 'knoknok/index.html')
+    path = os.path.join(os.path.dirname(__file__), '../knoknok/index.html')
     self.response.out.write(template.render(path, {}))
     return
     #self.response.out.write("/templates/index.html")
@@ -66,7 +66,7 @@ class MainPage(webapp.RequestHandler):
     response = greetings_query.fetch(1)
     if response == []:
         if roomkey == DEFAULT_ROOMKEY:
-            path = os.path.join(os.path.dirname(__file__), 'knoknok/index.html')
+            path = os.path.join(os.path.dirname(__file__), '../knoknok/index.html')
             self.response.out.write(template.render(path, {}))
             return
         room = Room(parent=guestbook_key(roomkey))
@@ -83,7 +83,7 @@ class MainPage(webapp.RequestHandler):
         logging.info(response)
         if room.roomkey != DEFAULT_ROOMKEY and not room.alive:
             logging.info("exited due to deleted room! roomkey " + str(roomkey) + " was deleted")
-            path = os.path.join(os.path.dirname(__file__), 'knoknok/index.html')
+            path = os.path.join(os.path.dirname(__file__), '../knoknok/index.html')
             self.response.out.write(template.render(path, {}))
             self.redirect("/error")
             return
@@ -100,7 +100,7 @@ class MainPage(webapp.RequestHandler):
     if room.status == WELCOME_GREETING:
         template_values['username'] = 'The Knoknok Team'
 #/SLATED FOR REMOVAL
-    path = os.path.join(os.path.dirname(__file__), 'knoknok/index.html')
+    path = os.path.join(os.path.dirname(__file__), '../knoknok/index.html')
     self.response.out.write(template.render(path, template_values))
 
 
@@ -316,7 +316,7 @@ class CreateRoom(webapp.RequestHandler):
       'roomname':room.roomname,
       'time':'just now'
     }
-    path = os.path.join(os.path.dirname(__file__), 'knoknok/index.html')
+    path = os.path.join(os.path.dirname(__file__), '../knoknok/index.html')
     self.response.out.write(str(room.roomkey))
     #self.response.out.write(template.render(path, template_values))
     #self.redirect('/?roomkey=' + str(roomkey)+ '#createroom')
