@@ -7,7 +7,8 @@ String.prototype.isColor = function() {
 var delay = 10500;
 
 function startup() {
-    alert('you just resumed or opened the app.');
+    alert('you just resumed or opened the app. todo: remove this arelt');
+    showControls();
     if (getKey()) {
         refresh();
         var interval = setInterval(refresh_info, delay);
@@ -37,15 +38,25 @@ function redirectWhenCookie() {
 //Changes the link to KKhome using the key in localStorage
 function changeLink() {
     var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
-                                                    // if keylen increase
     if (key == undefined || (key.length != 6 && true/*key.length != 9)*/)) {
         alert('That doesn\'t look like a real key! Please try again.');
         return;
     }
-    localStorage.setItem("username", $('#username')[0].value);
-    localStorage['userkey'] = Number(key);
-    $.mobile.changePage('#KKhome', {transition : 'slide'});
-    afterkeygen();
+    var req = new XMLHttpRequest;
+    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+key);
+    req.send();
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            if (req.responseText || req.responseText == '' || req.responseText == "null") {
+                alert('That doesn\'t look like a real key! Please try again.');
+                return;
+            }
+            localStorage.setItem("username", $('#username')[0].value);
+            localStorage['userkey'] = Number(key);
+            afterkeygen();
+            $.mobile.changePage('#KKhome', {transition : 'slide'});
+        }
+    }
 }
 
 function afterkeygen() {
@@ -402,7 +413,10 @@ function changeUserName() {
 }
 
 function getKey() {
-    return localStorage.getItem("userkey");
+    var k = localStorage.getItem("userkey"); 
+    if (k != "NaN")
+        return k;
+    else return null;
 }
 
 function getUserName() {

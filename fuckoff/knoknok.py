@@ -18,7 +18,7 @@ from google.appengine.api import mail
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
-WELCOME_GREETING = urllib.quote('<span>Welcome to Knoknok!</span><p style="font-size:0.9em;">Tap here to update the status!</p>#FFFFFF')
+WELCOME_GREETING = urllib.quote('Tap here to update the status!#FFFFFF')
 
 
 class Room(ndb.Model):
@@ -119,16 +119,23 @@ class API(webapp.RequestHandler):
     response = greetings_query.fetch(1)
     self.response.headers['Content-Type'] = 'application/json'
     if response == []:
-        logging.error("wait waht")
-        self.response.out.write('{}')
+        logging.debug("Aw, someone entered a bad key :-(")
+        self.response.out.write('null')
+        return
     else:
         room = response[0]
-    self.response.out.write(
-'''{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'''%(room.status if room.status != '' else '.', room.most_recent_username, room.roomname, pretty_date(room.time))
-)
+        self.response.out.write(
+        '{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'%(room.status if room.status != '' else '.', 
+                                                                       room.most_recent_username, 
+                                                                       room.roomname, 
+                                                                       pretty_date(room.time)))
 
 
 class KKError(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
   def get(self):
     #i stole this code from charlie :)))))))))))
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -174,6 +181,11 @@ def well_formatted_email(address):
             len(address.split('.')) >= 2)
 
 class SendEmail(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     emails = self.request.get('emails').strip()

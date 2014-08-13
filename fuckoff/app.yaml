@@ -5,16 +5,16 @@ api_version: 1
 threadsafe: false
 
 handlers:
-- url: /templates/themes
+- url: ../templates/themes
   static_dir: ../Knoknok/templates/themes
 
-- url: /themes
+- url: ../themes
   static_dir: ../Knoknok/templates/themes
 
-- url: /static
+- url: ../static
   static_dir: ../Knoknok/static
 
-- url: /stylesheets
+- url: ../stylesheets
   static_dir: ../Knoknok/stylesheets
 
 - url: /.*
