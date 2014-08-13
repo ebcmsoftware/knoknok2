@@ -3,6 +3,8 @@ import os
 import logging
 import random
 import urllib
+import urllib2
+import json
 import re
 from datetime import datetime
 
@@ -244,27 +246,35 @@ class SendSMS(webapp.RequestHandler):
             if s[0] == '1' or s[0] == '0':
                 return s[1:]
         return ''
-    roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
+    try:
+        roomkey = int(self.request.get('roomkey', DEFAULT_ROOMKEY))
+    except ValueError:
+        return #I can't imagine a scenario in which this would happen.
     username = self.request.get('username', DEFAULT_ROOMKEY)
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-    '''
-    client = TwilioRestClient(account_sid, auth_token)
+    client = None #XXX XXX XXX XXX XXX XXX  
+    #client = TwilioRestClient(account_sid, auth_token)
     if username and username != '':
         body = username
     else:
         body = 'Your roommate'
-    body += " invited you to join Knoknok! It's free! Download the app, then just enter the key: " + formatKeyOutput(roomkey) 
+    def getShortURL(body, roomkey):
+        longUrl = urllib.quote("http://getknoknok.appspot.com/dl?r=" + str(roomkey) + "&u=" + body)
+        domain = 'j.mp'
+        s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain=" + domain
+        data = json.load(urllib2.urlopen(s))
+        return 'http://' + domain + '/' + data['global_hash']
+    body += " invited you to join Knoknok! It's free! Get started here: " + getShortURL(body, roomkey)
     for phone_number in phone_numberlist:
         if phone_number != '':
             rv = client.sms.messages.create(to="+1" + str(phone_number),
                                     from_="+18646432174",
                                     body=body)
     self.response.write(str(rv))
-    '''
-    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome')
+    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome') #SLATED FOR REMOVAL
 
 
 def keygen(depth=0):
