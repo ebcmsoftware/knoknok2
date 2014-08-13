@@ -582,9 +582,9 @@ button[disabled],
 }
 
 .centeredapparea {
-  width: 60% !important; 
-  margin-left: auto !important;
-  margin-right: auto !important;
+  width: 65% !important; 
+  margin: 5% auto !important;
+
 }
 
 .toplinks{
