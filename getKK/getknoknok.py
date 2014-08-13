@@ -1,5 +1,6 @@
 import os
 import logging
+import urllib
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -13,8 +14,7 @@ class MainPage(webapp.RequestHandler):
 
   def get(self):
       path = os.path.join(os.path.dirname(__file__), 'index.html')
-      self.response.out.write("GOTTA GET GIT. GOT IT?" + path)
-
+      self.response.out.write(template.render(path, {}))
 
 
 def formatKeyOutput(keystr):
@@ -42,11 +42,10 @@ class Download(webapp.RequestHandler):
           params['roomkey'] = ''
 #TODO: "download knoknok here: <sites>"
           self.response.out.write("An error occurred :-( lol sry but u can dl knoknok here: www.ios.com www.android.com")
-          return
-      params['username']= self.request.get('u', 'your roommate')
+          raise
+      params['username']= urllib.unquote(self.request.get('u', 'your roommate'))
       self.response.out.write(template.render(path, params))
       
-
 
 application = webapp.WSGIApplication([('/', MainPage),
                                       ('/dl', Download)],

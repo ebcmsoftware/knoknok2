@@ -262,7 +262,7 @@ class SendSMS(webapp.RequestHandler):
     else:
         body = 'Your roommate'
     def getShortURL(body, roomkey):
-        longUrl = urllib.quote("http://getknoknok.appspot.com/dl?r=" + str(roomkey) + "&u=" + body)
+        longUrl = urllib.quote("http://getknoknok.appspot.com/dl?r=" + str(roomkey) + "&u=" + urllib.quote(body))
         domain = 'j.mp'
         s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain=" + domain
         data = json.load(urllib2.urlopen(s))
