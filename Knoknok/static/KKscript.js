@@ -192,6 +192,7 @@ function setColor(msg) {
 
 function refresh() {
     var req = new XMLHttpRequest;
+    depth += 1;
     console.log('updating info with delay: ' + deli / 1000 + 's');
     if (getKey() && getKey() != null && getKey() != "null") {
         req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
@@ -228,8 +229,8 @@ function refresh_info() {
 }
 
 if (getKey() && getKey() != null && getKey() != "null") {
-    refresh_info();
     depth = 1;
+    refresh();
     var interval = setInterval(refresh_info, delay);
 }
 else console.log("No roomkey loaded yet.");
@@ -269,6 +270,7 @@ function showControls() {
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
     $('#statusinput').select();
+    $('#statusinput')[0].setSelectionRange(0, 9999);
 }
 
 function hideControls() {
