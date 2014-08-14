@@ -192,7 +192,7 @@ function setColor(msg) {
 
 function refresh() {
     var req = new XMLHttpRequest;
-    depth += 1;
+    //depth += 1;
     console.log('updating info with delay: ' + deli / 1000 + 's');
     if (getKey() && getKey() != null && getKey() != "null") {
         req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
@@ -222,10 +222,11 @@ function refresh_info() {
     //slowly make it stop spamming the server if theyre idle
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
-    if (depth++ % 3 == 0) {
+    if (depth % 3 == 0) {
         deli = (depth/3 + 1) * delay;
         reset_interval(deli);
     }
+    depth += 1;
 }
 
 if (getKey() && getKey() != null && getKey() != "null") {
@@ -301,8 +302,12 @@ function setStatus(msg, update) {
         localRefresh(msg, username, 'just now');
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
-    if (msg && msg != '') 
+    if (msg && msg != '') {
         post_params['status'] = msg;
+        console.log(post_params);
+    }else{
+        console.log("WHAT. " + msg);
+    }
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     //they are active -> refresh frequently
     depth = 1;
@@ -373,7 +378,9 @@ function addExtraButtons() {
 function leave_custom() {
         s = $('#statusinput').val();
         if (s != $('#statustext')[0].innerHTML) {
-            setStatus(s);
+            console.log(s);
+            console.log("here...");
+            setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
 }
