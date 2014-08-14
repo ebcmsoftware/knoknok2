@@ -121,6 +121,8 @@ function addPhoneInput() {
     num_phone_numbers++;
     var i = num_phone_numbers;
     $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Cell Number...">');
+    addEnterListener('sendnum'+i, addPhoneInput);
+    $('#sendnum'+i).focus();
 }
 
 var numberArray = "";
@@ -149,6 +151,8 @@ function addEmailInput() {
     num_emails++;
     var i = num_emails;
     $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Email Address...">');
+    addEnterListener('email'+i, addEmailInput);
+    $('#email'+i).focus();
 }
 
 var emailArray = "";
