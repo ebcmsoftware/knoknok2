@@ -134,6 +134,16 @@ function setNumberList() {
     }
 }
 
+function deleteRoom() {
+    var post_params = new Object();
+    post_params['roomkey'] = getKey();
+    //$.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
+    $.post('http://ebcmdev.appspot.com/deleteroom',post_params, function() {
+        forgetRoom();
+        $.mobile.changePage('#get2key', {transition:'pop',reverse:true});
+    });
+}
+
 function sendsms() {
     setNumberList();
     var post_params = new Object();

@@ -107,15 +107,7 @@ $('#forgetroomconfirm').fastClick(function(e) {
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);
 
-$('#deleteroomconfirm').fastClick(function(e) {
-    var post_params = new Object();
-    post_params['roomkey'] = getKey();
-    //$.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
-    $.post('http://ebcmdev.appspot.com/deleteroom',post_params, function() {
-        forgetRoom();
-        $.mobile.changePage('#get2key', {transition:'pop',reverse:true});
-    });
-});
+$('#deleteroomconfirm').fastClick(deleteRoom);
 
 go('deleteroomback', 'settingsmenu', 'slide', true);
 
