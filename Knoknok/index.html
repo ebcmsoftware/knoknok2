@@ -48,7 +48,7 @@ redirectWhenCookie();
   <div data-role= "page" data-theme = "a" id = "makeroom">
       <div class="centeredapparea">
       <p style  = "text-align: left">Enter info for you new Knoknok room (you can change these later in settings)</p>
-          <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname">
+          <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname" maxlength="12">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name">
           
       </div>
@@ -204,7 +204,7 @@ redirectWhenCookie();
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
               <p>Change room name to what?</p>
-              <input type="text" name="roomname" id="newroomname">
+              <input type="text" name="roomname" id="newroomname" maxlength="12">
               <a href="javascript:;" id="changeroomnamebtn" class="ui-btn">Update room name</a>
               <p>Change your name to what?</p>
               <input type="text" name="username" id="usernameinput">
