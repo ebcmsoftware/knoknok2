@@ -5,6 +5,8 @@ function go(from, to, transition, reverse) {
     $('#'+from).fastClick(function(e) {$.mobile.changePage('#'+to, {transition : transition, reverse : reverse});});
 }
 
+go('keybacktoroominfo', 'makeroom', 'slide', true);
+
 go('makeroombutton', 'makeroom', 'slide');
 
 go('enterkeybutton', 'enterkey', 'slide');
@@ -25,13 +27,13 @@ $('#createroomtoroom').fastClick(function(e) {
 $('#smstoroom').fastClick(function(e) {
     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 });
-$('#emailtoroom').fastClick(function(e) {
-    $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
-});
+// $('#emailtoroom').fastClick(function(e) {
+//     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
+// });
 
 $('#addroommatephone').fastClick(addPhoneInput);
 
-$('#addroommateemail').fastClick(addEmailInput);
+//$('#addroommateemail').fastClick(addEmailInput);
 
 go('smstoemail', 'sendemail', 'slide', false);
 
@@ -72,7 +74,7 @@ go('changeunback', 'settingsmenu', 'slide', true);
 
 go('showkeysms','sendkey', 'pop')
 
-go('showkeyemail','sendemail', 'pop')
+//go('showkeyemail','sendemail', 'pop')
 
 go('showkeybtn','showkeyscreen', 'slide')
 
@@ -85,12 +87,12 @@ $('#changeroomnamebtn').fastClick(changeroomname);
 //$('#statustext').fastClick(showControls);
 $('#statustext:first-child').fastClick(showControls);
 
-$('#searchcontactsemail').fastClick(function(e) {
-    window.plugins.ContactPicker.chooseContact(function(contactInfo) {
-        alert(contactInfo.displayName + " " + contactInfo.emails);
-        alert(contactInfo.email);
-    });
-});
+// $('#searchcontactsemail').fastClick(function(e) {
+//     window.plugins.ContactPicker.chooseContact(function(contactInfo) {
+//         alert(contactInfo.displayName + " " + contactInfo.emails);
+//         alert(contactInfo.email);
+//     });
+// });
 
 $('#searchcontactssms').fastClick(function(e) {
     window.plugins.ContactPicker.chooseContact(function(contactInfo) {

@@ -1,8 +1,13 @@
 /*-------------------------------*/
 .centeredapparea {
   width: 80% !important; 
-  margin: 10% auto !important;
+  margin: 25% auto !important;
 
+}
+
+.setupbuttons{
+    margin: 50px auto 0 auto !important;
+    width: 80% !important; 
 }
 
 .toplinks{
@@ -19,6 +24,7 @@
     background-color:orange;
     display:inline; /*defaults to display none so it can be shown when it actually is a record*/
 }
+
 @-webkit-keyframes glow {
     to {
         background-color: white;

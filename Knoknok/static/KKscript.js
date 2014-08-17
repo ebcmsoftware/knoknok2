@@ -104,7 +104,6 @@ function makeKey() {
     var keyoutput = formatKeyOutput();
     $('#key')[0].innerHTML = "Key: " + keyoutput;
     $('#keytosendsms')[0].innerHTML = "Key: " + keyoutput;
-    $('#keytosendemail')[0].innerHTML = "Key: " + keyoutput;
     $('#forget_key_display')[0].innerHTML = formatKeyOutput();
     $('#delete_key_display')[0].innerHTML = formatKeyOutput();
 }
@@ -145,37 +144,38 @@ function sendsms() {
     });
 }
 
-var num_emails = 1;
-//adds a new email input slot for sendemail
-function addEmailInput() {
-    num_emails++;
-    var i = num_emails;
-    $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Email Address...">');
-    addEnterListener('email'+i, addEmailInput);
-    $('#email'+i).focus();
-}
+// SLATED FOR REMOVAL
+// var num_emails = 1;
+// //adds a new email input slot for sendemail
+// function addEmailInput() {
+//     num_emails++;
+//     var i = num_emails;
+//     $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Email Address...">');
+//     addEnterListener('email'+i, addEmailInput);
+//     $('#email'+i).focus();
+// }
 
-var emailArray = "";
-function setEmailList() {
-    emailArray = "";
-    for (var i = 1; i < num_emails + 1; i++) {
-        emailArray += $("#email" + i).val();
-        emailArray += " ";
-    }
-//document.getElementById("emaillist").value = emailArray;
-}
+// var emailArray = "";
+// function setEmailList() {
+//     emailArray = "";
+//     for (var i = 1; i < num_emails + 1; i++) {
+//         emailArray += $("#email" + i).val();
+//         emailArray += " ";
+//     }
+// //document.getElementById("emaillist").value = emailArray;
+// }
 
-function sendemail() {
-    setEmailList();
-    var post_params = new Object();
-    post_params['roomkey'] = getKey();
-    post_params['emailsentby'] = getUserName();
-    post_params['emails'] = emailArray;
-    $.post('http://ebcmdev.appspot.com/sendemail', post_params, function(){
-        $.mobile.changePage('#KKhome', { transition:"pop" });
-        //window.location.assign('#KKhome');
-    });
-}
+// function sendemail() {
+//     setEmailList();
+//     var post_params = new Object();
+//     post_params['roomkey'] = getKey();
+//     post_params['emailsentby'] = getUserName();
+//     post_params['emails'] = emailArray;
+//     $.post('http://ebcmdev.appspot.com/sendemail', post_params, function(){
+//         $.mobile.changePage('#KKhome', { transition:"pop" });
+//         //window.location.assign('#KKhome');
+//     });
+// }
 
 function setColor(msg) {
     var color = '#006eb7';
@@ -436,36 +436,6 @@ function getUserName() {
     return localStorage.getItem("username");
 }
 
-/* SLATED FOR REMOVAL
-function changeTheme(){
-    console.log("the theme is:");
-    console.log($('#theme')[0].href);
-    if($('#theme')[0].href === "themes/KKstyle2.css"){
-        $('#theme')[0].href = "themes/KKstyleBW.css";
-        $('#themebutton').innerHTML = "Change Theme (Blue)";
-    }
-    else {
-        $('#theme')[0].href = "themes/KKstyle2.css";
-        $('#themebutton').innerHTML = "Change Theme (B & W) clicked";
-    }
-}
-*/
-function changeTheme(){
-    console.log("the theme is:");
-    console.log($('#theme')[0].href);
-    var originalTheme = window.location.href.split("?")[0] + "themes/KKstyle2.css";
-    console.log(originalTheme);
-    console.log($('#themebutton')[0].text);
-     if($('#theme')[0].href === originalTheme){
-        $('#theme')[0].href = "themes/KKstyleBW.css";
-        $('#themebutton')[0].innerHTML = "Change Theme (Blue)";
-     }
-     else {
-         $('#theme')[0].href = "themes/KKstyle2.css";
-         $('#themebutton')[0].innerHTML = "Change Theme (B & W) clickeed";
-     }
-}
-
 function changeroomname() {
     var post_params = new Object();
     post_params['roomkey'] = getKey();
@@ -476,8 +446,3 @@ function changeroomname() {
     });
 }
 
-/* SLATED FOR REMOVAL
-function startLink(){
-    window.location.assign("#get2key");
-}
-*/

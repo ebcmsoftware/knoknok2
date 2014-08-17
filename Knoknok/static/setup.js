@@ -27,7 +27,7 @@ function addEnterListener(inputId, f) {
 addEnterListener('enterroomname', navig8);
 addEnterListener('enterfirstname', navig8);
 addEnterListener('sendnum1', addPhoneInput);
-addEnterListener('email1', addEmailInput);
+//addEnterListener('email1', addEmailInput);
 addEnterListener('statusinput', function(){
     leave_custom();
     document.getElementById("statusinput").setAttribute('onblur','');

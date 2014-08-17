@@ -34,13 +34,12 @@ redirectWhenCookie();
 <body>  
   <!-- the page for getting the key -->
   <div data-role="page" data-theme="a" id="get2key">
-       <h1>Welcome to Knoknok,</h1>
-       <h2>the app for roommates!</h2>
-       <div class="centeredapparea" style = "margin-top: 0 !important">
-            <p style = "text-align: left" >New User?</p>
+       <h1>Welcome to Knoknok!</h1>
+       <div class="centeredapparea" style = "margin-top: 25% !important">
+            <p>New User?</p>
             <a href="javascript:;" id="makeroombutton" class="ui-btn" >Make a new Room</a>
             <br>
-            <p style = "text-align: left"> Roommate sent you a key?</p>
+            <p> Roommate sent you a key?</p>
             <a href="javascript:;" id="enterkeybutton" class="ui-btn">Enter a Key</a>
       </div>
   </div>
@@ -51,10 +50,11 @@ redirectWhenCookie();
       <p style  = "text-align: left">Enter info for you new Knoknok room (you can change these later in settings)</p>
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name">
-          <div>
+          
+      </div>
+      <div class = "setupbuttons">
           <a href="javascript:;" class="ui-btn" id="keygenbtn" style = "float: right;">Next -&gt;</a>
           <a href="javascript:;" id="makeroomtog2k" class="ui-btn" style = "float: left;">&lt;- Go Back</a>
-          </div>
       </div>
   </div>
 
@@ -72,10 +72,10 @@ redirectWhenCookie();
               </div>
               <a class="ui-btn" style="float: right">Paste Key</a>
           </div>
-          <div style = "clear: both">
-              <a href="javascript:;" id="enterkeytokkhome" class="ui-btn" style = "width: 45%; float: right;">Go to Knoknok!</a>
-              <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "width: 45%; float: left;">&lt;- Go Back</a>
-          </div>
+      </div>
+      <div class = "setupbuttons" style = "clear: both">
+              <a href="javascript:;" id="enterkeytokkhome" class="ui-btn" style = "float: right;">Go to Room</a>
+              <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "float: left;">&lt;- Go Back</a>
       </div>
   </div>
 
@@ -91,12 +91,16 @@ redirectWhenCookie();
 
   <!-- the page for getting your key w/ option to send an sms -->
   <div data-role= "page" data-theme = "a" id = "createroom">
-      <div class="ui-field-contain centeredapparea">
+      <div class="centeredapparea">
       <p style = "text-align: left">This key identifies your room! Give it to your roommate(s), and you'll never need it again.</p>
       <p id="key" style = "text-align: left">Key : couldn't load key :(</p>
           <a href="javascript:;" id="sendthiskey" class="ui-btn">Send this key</a>
-          <a href="javascript:;" class="ui-btn" id="createroomtoroom">Go to room</a>
+          
       </div> 
+      <div class = "setupbuttons">
+          <a href="javascript:;" class="ui-btn" id="keybacktoroominfo" style = "float: left;">&lt;- Go Back</a>
+          <a href="javascript:;" class="ui-btn" id="createroomtoroom" style="float: right;">Go to room</a>
+      </div>
   </div>
 
   <!-- the page for generating a key the key to the roommate -->
@@ -111,13 +115,12 @@ redirectWhenCookie();
           <a href="javascript:;" id="addroommatephone" class="ui-btn">+Roommate</a>
           <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
           <br>
-          <a href="javascript:;" id="smstoemail" class="ui-btn">Or, send an email -&gt;</a>
           <a href="javascript:;" class="ui-btn" id="smstoroom">Skip this step</a>
           <a href="javascript:;" id="smstocreateroom" class="ui-btn">&lt;- Go Back</a>
       </div>
   </div>
 
-  <!-- the page for sending the key via email -->
+  <!-- SLATED FOR REMOVAL
   <div data-role= "page" data-theme = "a" id = "sendemail">
       <p id = "keytosendemail">Key: couldn't load key :(</p>
       <div class="ui-field-contain centeredapparea">
@@ -126,14 +129,13 @@ redirectWhenCookie();
           </div>
           <div id="annoyingpopup2" data-role="popup" style="padding:30px;">Email(s) sent!</div>
           <a href="javascript:;" id="searchcontactsemail" class="ui-btn">Select from contacts</a>
-          <!-- ***TODO***: when the searchcontacts(sms|email) is done, call add(sms|email)input() -->
           <a href="javascript:;" class="ui-btn" id="addroommateemail">+Roommate</a>
           <a href="#annoyingpopup2" data-rel="popup" onclick="setTimeout(sendemail, 1000);" class="ui-btn">Send!</a>
           <br>
           <a href="javascript:;" class="ui-btn" id="emailtoroom">Skip this step</a>
           <a href="javascript:;" id="emailtosendkey" class="ui-btn">&lt;- Go Back</a>
       </div>
-  </div>
+  </div> -->
 
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme = "a" id="KKhome">
@@ -142,11 +144,8 @@ redirectWhenCookie();
           <h1 id = "roomname">roomname</h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
-      <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody">
+      <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "margin-top: 10%;">
           <div id="statustext" style = "font-size: 250%;">status</div>
-          <!--
-          <textarea cols="40" rows="1" type="text" name="status" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #006eb7; font-size: 250%; border: 0px"></textarea>
-          -->
           <textarea cols="40" rows="1" type="text" name="status" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #0062A5; font-size: 250%; border: 0px"></textarea>
           <p id="statusstats" style = "font-size: 80%;">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
