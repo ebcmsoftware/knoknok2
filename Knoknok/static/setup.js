@@ -17,14 +17,22 @@ addExtraButtons();
 makeKey();
 
 //enter keys for setup
-document.getElementById("enterroomname").addEventListener("keydown", function(e) {
+//f is the function to run when enter is pressed when typing inputId
+function addEnterListener(inputId, f) {
+    document.getElementById(inputId).addEventListener('keydown', function(e) {
         if (!e) { var e = window.event; }
-        if (e.keyCode == 13) { navig8();console.log("YOU PRESSED ENTER"); }
-}, false);
-document.getElementById("enterfirstname").addEventListener("keydown", function(e) {
-        if (!e) { var e = window.event; }
-        if (e.keyCode == 13) { navig8();console.log("YOU PRESSED ENTER"); }
-}, false);
+        if (e.keyCode == 13) f();
+    });
+}
+addEnterListener('enterroomname', navig8);
+addEnterListener('enterfirstname', navig8);
+addEnterListener('sendnum1', addPhoneInput);
+addEnterListener('email1', addEmailInput);
+addEnterListener('statusinput', function(){
+    leave_custom();
+    document.getElementById("statusinput").setAttribute('onblur','');
+});
+
 //initializing the enterkey textboxes.
 $("#roomkey0").keyup(function () {
     if($(this).val().length == 3) {

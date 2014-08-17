@@ -121,6 +121,8 @@ function addPhoneInput() {
     num_phone_numbers++;
     var i = num_phone_numbers;
     $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Cell Number...">');
+    addEnterListener('sendnum'+i, addPhoneInput);
+    $('#sendnum'+i).focus();
 }
 
 var numberArray = "";
@@ -149,6 +151,8 @@ function addEmailInput() {
     num_emails++;
     var i = num_emails;
     $('#emailinputs input:last').after('<input type="email" name="email'+i+'" id="email'+i+'" placeholder="Email Address...">');
+    addEnterListener('email'+i, addEmailInput);
+    $('#email'+i).focus();
 }
 
 var emailArray = "";
@@ -192,6 +196,7 @@ function setColor(msg) {
 
 function refresh() {
     var req = new XMLHttpRequest;
+    //depth += 1;
     console.log('updating info with delay: ' + deli / 1000 + 's');
     if (getKey() && getKey() != null && getKey() != "null") {
         req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
@@ -221,15 +226,16 @@ function refresh_info() {
     //slowly make it stop spamming the server if theyre idle
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
-    if (depth++ % 3 == 0) {
+    if (depth % 3 == 0) {
         deli = (depth/3 + 1) * delay;
         reset_interval(deli);
     }
+    depth += 1;
 }
 
 if (getKey() && getKey() != null && getKey() != "null") {
-    refresh_info();
     depth = 1;
+    refresh();
     var interval = setInterval(refresh_info, delay);
 }
 else console.log("No roomkey loaded yet.");
@@ -269,6 +275,7 @@ function showControls() {
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
     $('#statusinput').select();
+    $('#statusinput')[0].setSelectionRange(0, 9999);
 }
 
 function hideControls() {
@@ -299,8 +306,12 @@ function setStatus(msg, update) {
         localRefresh(msg, username, 'just now');
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
-    if (msg && msg != '') 
+    if (msg && msg != '') {
         post_params['status'] = msg;
+        console.log(post_params);
+    }else{
+        console.log("WHAT. " + msg);
+    }
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     //they are active -> refresh frequently
     depth = 1;
@@ -371,7 +382,9 @@ function addExtraButtons() {
 function leave_custom() {
         s = $('#statusinput').val();
         if (s != $('#statustext')[0].innerHTML) {
-            setStatus(s);
+            console.log(s);
+            console.log("here...");
+            setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
 }

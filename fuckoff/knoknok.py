@@ -380,7 +380,7 @@ class DeleteRoom(webapp.RequestHandler):
         room = response[0]
         room.alive = False
         room.put()
-    self.redirect('/')
+    #self.redirect('/')
 
 
 class UpdateStatus(webapp.RequestHandler):
