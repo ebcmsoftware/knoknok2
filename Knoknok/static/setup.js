@@ -10,6 +10,7 @@ else console.log(s);
 makeKey(getKey());
 if (getKey()) {
     $('#showkey')[0].innerHTML = formatKeyOutput();
+    refresh();
 }
 
 addExtraButtons();

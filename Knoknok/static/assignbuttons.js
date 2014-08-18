@@ -47,6 +47,7 @@ $('#setnosave').fastClick(leave_custom);
 $('#setsave').fastClick(function(e) {
     saveText();
     leave_custom();
+    pressed_button = true;
     //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 });
 

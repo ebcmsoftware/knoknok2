@@ -47,7 +47,7 @@ function changeLink() {
     req.send();
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
-            if (req.responseText || req.responseText == '' || req.responseText == "null") {
+            if (req.responseText && (req.responseText == '' || req.responseText == "null")) {
                 alert('That doesn\'t look like a real key! Please try again.');
                 return;
             }
@@ -312,8 +312,10 @@ function setStatus(msg, update) {
         post_params['update'] = '1';
         localRefresh(msg, username);
     }
-    else
+    else {
+        pressed_button = true;
         localRefresh(msg, username, 'just now');
+    }
     post_params['roomkey'] = getKey();
     post_params['username'] = username;
     if (msg && msg != '') {
@@ -388,8 +390,12 @@ function addExtraButtons() {
     }
 }
 
+//whether or not a button was pressed to get out of the blur!
+var pressed_button = false;
+
 //set the status according to the box
 function leave_custom() {
+    if (!pressed_button) {
         s = $('#statusinput').val();
         if (s != $('#statustext')[0].innerHTML) {
             console.log(s);
@@ -397,6 +403,7 @@ function leave_custom() {
             setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
+    }
 }
 
 //remembers the custom status in memory
@@ -412,7 +419,7 @@ function saveText() {
     }
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
     addExtraButton(savestatus, statuslist.length - 1);
-    document.getElementById("statusinput").value = '';
+    //document.getElementById("statusinput").value = '';
 }
 
 //deletes the cookie
