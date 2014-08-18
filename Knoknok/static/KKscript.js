@@ -269,7 +269,7 @@ function localRefresh(msg, username, time, roomname) {
         else $('#statusstats')[0].innerHTML = 'set';
         $('#statusstats')[0].innerHTML += ' ' + time;
     }
-    if (roomname) {
+    if (roomname != null) {
         $('#roomname')[0].innerHTML = roomname;
     }
 }
