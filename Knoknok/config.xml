@@ -40,8 +40,6 @@
 
 <icon src="icons/cordova_173.png" gap:platform="winphone" gap:role="background"/>
 
- 
-
 <gap:splash src="icons/res/screen/android_ldpi_portrait.png.png" gap:platform="android" gap:density="ldpi"/>
 
 <gap:splash src="icons/res/screen/android_mdpi_portrait.png" gap:platform="android" gap:density="mdpi"/>
@@ -60,7 +58,7 @@
 
 <gap:splash src="icons/res/screen/ipad_landscape.png" gap:platform="ios" width="1024″ height="768″/>
 
-<gap:splash src="icons/res/screen/windows_phone_portrait.jpg" gap:platform="winphone"/><
+<gap:splash src="icons/res/screen/windows_phone_portrait.jpg" gap:platform="winphone"/>
     <author href="https://build.phonegap.com" email="support@phonegap.com">
         Hardeep Shoker 
     </author>
