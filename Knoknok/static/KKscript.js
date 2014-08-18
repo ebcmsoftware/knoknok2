@@ -35,11 +35,20 @@ function redirectWhenCookie() {
     }
 }
 
+//this is for removing the title of apple alerts.
+function myAlert(s) {
+  var iframe = document.createElement("IFRAME");
+  iframe.setAttribute("src", 'data:text/plain,');
+  document.documentElement.appendChild(iframe);
+  window.frames[0].window.alert(s);
+  iframe.parentNode.removeChild(iframe);
+}
+
 //Changes the link to KKhome using the key in localStorage
 function changeLink() {
     var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
     if (key == undefined || (key.length != 6 && true/*key.length != 9)*/)) {
-        alert('That doesn\'t look like a real key! Please try again.');
+        myAlert('That doesn\'t look like a real key! Please try again.');
         return;
     }
     var req = new XMLHttpRequest;
@@ -48,7 +57,7 @@ function changeLink() {
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             if (req.responseText && (req.responseText == '' || req.responseText == "null")) {
-                alert('That doesn\'t look like a real key! Please try again.');
+                myAlert('That doesn\'t look like a real key! Please try again.');
                 return;
             }
             localStorage.setItem("username", $('#username')[0].value);
@@ -237,7 +246,7 @@ function refresh_info() {
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
     if (depth % 3 == 0) {
-        deli = (depth/3 + 1) * delay;
+        deli = (depth/3 + 1) * deli;
         reset_interval(deli);
     }
     depth += 1;

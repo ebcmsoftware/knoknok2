@@ -64,4 +64,5 @@
     </author>
 
     <gap:plugin name="com.badrit.contactpicker" version="0.1.0" />
+    <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
 </widget>

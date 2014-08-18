@@ -21,6 +21,21 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 
 go('sendthiskey', 'sendkey', 'slide');
 
+$('#pastekeybtn').fastClick(function(e) {
+    p = window.plugins;
+    //console.log(cordova);
+    //console.log(cordova.plugins);
+    //console.log(cordova.plugins.paste);
+    console.log(p);
+    //console.log(p.paste);
+    window.plugins.paste(function (text) {
+        alert(text);
+    },
+    function(text) {
+      alert("oh. nothing's in the whatever.");
+    });
+});
+
 $('#createroomtoroom').fastClick(function(e) {
     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 });
@@ -98,7 +113,6 @@ $('#statustext:first-child').fastClick(showControls);
 $('#searchcontactssms').fastClick(function(e) {
     window.plugins.ContactPicker.chooseContact(function(contactInfo) {
         alert(contactInfo.displayName + " " + contactInfo.phoneNumbers);
-        alert(contactInfo.phone);
     });
 });
 

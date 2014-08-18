@@ -20,9 +20,6 @@
   <script src= "static/jquery/fastbutton.js"></script>
   <script src= "static/jquery/jQFastButtons.js"></script>
   <script src= "static/KKscript.js"></script>
-  <!-- TODO? "cordova not defined". what do i do wrt this?
-  <script src="static/jquery/ContactPicker.js"></script>
-  -->
 </head>
 
 <script> 
@@ -70,7 +67,7 @@ redirectWhenCookie();
                   <div style="width: 40%;float:right;"><input type="tel" name="roomkey" id="roomkey1" placeholder="456"></div>
                   <br>
               </div>
-              <a class="ui-btn" style="float: right">Paste Key</a>
+              <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
           </div>
       </div>
       <div class = "setupbuttons" style = "clear: both">
@@ -239,6 +236,10 @@ redirectWhenCookie();
       </div>
   </div>
 
+<script src="static/cordova/cordova.js"></script>
+<!-- TODO? "cordova not defined". what do i do wrt this?
+<script src="static/jquery/ContactPicker.js"></script>
+-->
 <script src="static/setup.js"></script>
 <script src="static/assignbuttons.js"></script>
 
