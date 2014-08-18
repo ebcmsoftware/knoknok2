@@ -7,12 +7,12 @@ String.prototype.isColor = function() {
 var delay = 10500;
 
 function startup() {
-    alert('you just resumed or opened the app. todo: remove this arelt');
+    alert('you just resumed or opened the app. todo: remove this alert');
     showControls();
     if (getKey()) {
         refresh();
         var interval = setInterval(refresh_info, delay);
-        reset_interval(delay);
+        //reset_interval(delay);
     }
 }
 
@@ -234,7 +234,8 @@ var depth = 1;
 var deli = delay;
 
 function reset_interval(dly) {
-    clearInterval(interval);
+    if (interval) 
+        clearInterval(interval);
     if (getKey()) {
         interval = setInterval(refresh_info, dly);
     }
@@ -245,8 +246,9 @@ function refresh_info() {
     //slowly make it stop spamming the server if theyre idle
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
+    console.log("depth: " + depth);
     if (depth % 3 == 0) {
-        deli = (depth/3 + 1) * deli;
+        deli = (depth/3 + 1) * delay;
         reset_interval(deli);
     }
     depth += 1;
@@ -254,7 +256,7 @@ function refresh_info() {
 
 if (getKey() && getKey() != null && getKey() != "null") {
     depth = 1;
-    refresh();
+    //refresh();
     var interval = setInterval(refresh_info, delay);
 }
 else console.log("No roomkey loaded yet.");
@@ -337,10 +339,11 @@ function setStatus(msg, update) {
     //they are active -> refresh frequently
     depth = 1;
     deli = delay;
-    reset_interval(delay);
+    reset_interval(deli);
 }
 
 function destroyButton(i) {
+    pressed_button=true;
     var statuslist = localStorage.getItem("statuslist");
     if (statuslist === null) return;
     statuslist = JSON.parse(statuslist);
@@ -350,7 +353,8 @@ function destroyButton(i) {
         localStorage.setItem("statuslist", JSON.stringify(statuslist));
     }
     else {
-        localStorage.removeItem("statuslist");
+        localStorage.setItem('statuslist', JSON.stringify([]));
+        //localStorage.removeItem("statuslist");
     }
     var nextButton;
     while (currButton) {
@@ -388,8 +392,10 @@ function addExtraButton(msg, i) {
 }
 
 function addExtraButtons() {
+    //localStorage.removeItem("statuslist");
     var statuslist = localStorage.getItem("statuslist");
     if (statuslist === null) return;
+    console.log(statuslist);
     statuslist = JSON.parse(statuslist);
     console.log(statuslist);
     var input, btn;

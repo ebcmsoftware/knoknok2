@@ -13,6 +13,11 @@ if (getKey()) {
     refresh();
 }
 
+//don't want to make it if !localStorage[''] because if it's an empty list it will be true and set these buttons.
+if (localStorage['statuslist'] == undefined || localStorage['statuslist'] == null) {
+    localStorage['statuslist'] = '["Open#00FF00", "Closed#FF0000"]';
+}
+
 addExtraButtons();
 
 makeKey();
