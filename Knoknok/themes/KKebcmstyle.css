@@ -1,13 +1,16 @@
 /*-------------------------------*/
 .centeredapparea {
   width: 80% !important; 
-  margin: 25% auto !important;
+  margin: 15% auto !important;
 
 }
 
 .setupbuttons{
-    margin: 50px auto 0 auto !important;
     width: 80% !important; 
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    margin: 0 0 0 -40%;
 }
 
 .toplinks{
