@@ -23,9 +23,9 @@ go('sendthiskey', 'sendkey', 'slide');
 
 $('#pastekeybtn').fastClick(function(e) {
     p = window.plugins;
-    //console.log(cordova);
-    //console.log(cordova.plugins);
-    //console.log(cordova.plugins.paste);
+    console.log(cordova);
+    console.log(cordova.plugins);
+    console.log(cordova.plugins.paste);
     console.log(p);
     //console.log(p.paste);
     window.plugins.paste(function (text) {
