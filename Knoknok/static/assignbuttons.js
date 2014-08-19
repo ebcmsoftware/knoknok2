@@ -29,6 +29,7 @@ $('#pastekeybtn').fastClick(function(e) {
     console.log(p);
     //console.log(p.paste);
     window.plugins.paste(function (text) {
+        alert("D:D:D:D::DD:D:D:D:D");
         alert(text);
     },
     function(text) {
