@@ -297,6 +297,21 @@ function showControls() {
     $('#statusinput').focus();
     $('#statusinput').select();
     $('#statusinput')[0].setSelectionRange(0, 40);
+  window.document.execCommand('SelectAll', true);
+    
+    function f() {
+        var $this = $(this);
+        $this.select();
+
+        // Work around Chrome's little problem
+        $this.mouseup(function() {
+            // Prevent further mouseup intervention
+            $this.unbind("mouseup");
+            return false;
+        });
+    }
+    $("#statustext").click(f);
+    $("#statusinput").focus(f);
 }
 
 function hideControls() {
