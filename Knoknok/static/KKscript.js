@@ -297,6 +297,21 @@ function showControls() {
     $('#statusinput').focus();
     $('#statusinput').select();
     $('#statusinput')[0].setSelectionRange(0, 40);
+  window.document.execCommand('SelectAll', true);
+    
+    function f() {
+        var $this = $(this);
+        $this.select();
+
+        // Work around Chrome's little problem
+        $this.mouseup(function() {
+            // Prevent further mouseup intervention
+            $this.unbind("mouseup");
+            return false;
+        });
+    }
+    $("#statustext").click(f);
+    $("#statusinput").focus(f);
 }
 
 function hideControls() {
@@ -369,7 +384,7 @@ function addExtraButton(msg, i) {
     btn = document.createElement("a");
     btn.href="javascript:;";
     btn.className = "ui-btn";
-    btn.setAttribute("onclick", "setStatus('"+msg+"');");
+    btn.setAttribute("onclick", "pressed_button=true;setStatus('"+msg+"');");
     var split_msg = msg.split('#');
     if (split_msg[split_msg.length - 1].isColor()) {
         btn.style.color = '#' + split_msg[split_msg.length - 1];
