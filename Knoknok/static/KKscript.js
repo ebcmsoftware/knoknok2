@@ -284,6 +284,23 @@ function localRefresh(msg, username, time, roomname) {
         $('#roomname')[0].innerHTML = roomname;
     }
 }
+function select_input() {
+    //window.document.execCommand('SelectAll', true);
+    setTimeout(function() {
+        console.log("here!!!!");
+        var $this = $("#statusinput");
+        $this.select();
+
+        // Work around Chrome's little problem
+        $this.mouseup(function() {
+            // Prevent further mouseup intervention
+            $this.unbind("mouseup");
+            return false;
+        });
+    }, 100);
+}
+$("#statustext").click(select_input);
+$("#statusinput").focus(select_input);
 
 function showControls() {
     var s = $('#statustext')[0].innerHTML; 
@@ -296,22 +313,10 @@ function showControls() {
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
     $('#statusinput').select();
+    select_input();
     $('#statusinput')[0].setSelectionRange(0, 40);
-  window.document.execCommand('SelectAll', true);
+    //window.document.execCommand('SelectAll', true);
     
-    function f() {
-        var $this = $(this);
-        $this.select();
-
-        // Work around Chrome's little problem
-        $this.mouseup(function() {
-            // Prevent further mouseup intervention
-            $this.unbind("mouseup");
-            return false;
-        });
-    }
-    $("#statustext").click(f);
-    $("#statusinput").focus(f);
 }
 
 function hideControls() {
