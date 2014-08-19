@@ -362,6 +362,7 @@ function setStatus(msg, update) {
     reset_interval(deli);
 }
 
+//SLATED FOR REMOVAL?
 function destroyButton(i) {
     pressed_button=true;
     var statuslist = localStorage.getItem("statuslist");
@@ -386,29 +387,16 @@ function destroyButton(i) {
 }
 
 function addExtraButton(msg, i) {
-    btn = document.createElement("a");
-    btn.href="javascript:;";
-    btn.className = "ui-btn";
-    btn.setAttribute("onclick", "pressed_button=true;setStatus('"+msg+"');");
+    option = document.createElement("option");
+    //btn.setAttribute("onclick", "pressed_button=true;setStatus('"+msg+"');");
     var split_msg = msg.split('#');
     if (split_msg[split_msg.length - 1].isColor()) {
-        btn.style.color = '#' + split_msg[split_msg.length - 1];
+        option.style.color = '#' + split_msg[split_msg.length - 1];
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
-    btn.innerHTML = msg;
-    close = document.createElement("span");
-    close.addEventListener('click', function(element){
-        this.parentNode.removeAttribute('onclick');
-    });
-    close.setAttribute("onclick", "destroyButton("+i+");");
-    close.style.color = "red";
-    close.style.cssFloat = "right";
-    close.style.textDecoration = "none";
-    close.style.right = "5px";
-    close.innerHTML = 'x';
-    btn.appendChild(close);
-    var div = document.getElementById("KKstatusbuttons");
-    div.appendChild(btn);
+    option.innerHTML = msg;
+    var dropdown = document.getElementById("KKstatusbuttons");
+    dropdown.appendChild(option);
 }
 
 function addExtraButtons() {

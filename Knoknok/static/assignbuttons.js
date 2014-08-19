@@ -61,6 +61,10 @@ go('settingsbutton', 'settingsmenu', 'pop');
 $('#setnosave').fastClick(leave_custom);
     //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 
+$('#KKstatusbuttons').fastClick(function(e) {
+    pressed_button = true;
+});
+
 $('#setsave').fastClick(function(e) {
     saveText();
     pressed_button = false;
