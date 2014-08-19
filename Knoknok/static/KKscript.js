@@ -369,7 +369,7 @@ function addExtraButton(msg, i) {
     btn = document.createElement("a");
     btn.href="javascript:;";
     btn.className = "ui-btn";
-    btn.setAttribute("onclick", "setStatus('"+msg+"');");
+    btn.setAttribute("onclick", "pressed_button=true;setStatus('"+msg+"');");
     var split_msg = msg.split('#');
     if (split_msg[split_msg.length - 1].isColor()) {
         btn.style.color = '#' + split_msg[split_msg.length - 1];
