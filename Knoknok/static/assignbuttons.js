@@ -58,8 +58,8 @@ go('smstocreateroom', 'createroom', 'slide', true);
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
-$('#setnosave').fastClick(leave_custom);
-    //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
+//$('#setnosave').fastClick(leave_custom);
+//$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 
 $('#KKstatusbuttons').fastClick(function(e) {
     pressed_button = true;

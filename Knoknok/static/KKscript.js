@@ -344,6 +344,7 @@ function setStatus(msg, update) {
         localRefresh(msg, username);
     }
     else {
+        $("#setpopup").popup("open", {history:false}, {transition:'fade'});
         pressed_button = true;
         localRefresh(msg, username, 'just now');
     }
@@ -403,6 +404,10 @@ function addExtraButtons() {
     //localStorage.removeItem("statuslist");
     var statuslist = localStorage.getItem("statuslist");
     if (statuslist === null) return;
+    if (statuslist == '' || statuslist == '[]') {
+        $('#KKstatusbuttons')[0].style.display = 'none';
+        return;
+    }
     console.log(statuslist);
     statuslist = JSON.parse(statuslist);
     console.log(statuslist);
@@ -423,11 +428,15 @@ $(document).on('popupafteropen', '.ui-popup', function() {
 });
 
 //set the status according to the box
-function leave_custom() {
+function leave_custom(msg) {
+    if (msg) {
+        if (msg != $('#statustext')[0].innerHTML) {
+            setStatus(msg); //setStatus hides the controls if good input.
+        }
+    }
     if (!pressed_button) {
         s = $('#statusinput').val();
         if (s != $('#statustext')[0].innerHTML) {
-            $("#setpopup").popup("open", {history:false}, {transition:'fade'});
             setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
