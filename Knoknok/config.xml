@@ -47,25 +47,6 @@
 
 <icon src="icons/cordova_173.png" gap:platform="winphone" gap:role="background"/>
 
-<gap:splash src="icons/res/screen/android_ldpi_portrait.png.png" gap:platform="android" gap:density="ldpi"/>
-
-<gap:splash src="icons/res/screen/android_mdpi_portrait.png" gap:platform="android" gap:density="mdpi"/>
-
-<gap:splash src="icons/res/screen/android_hdpi_portrait.png" gap:platform="android" gap:density="hdpi"/>
-
-<gap:splash src="icons/res/screen/android_xhdpi_portrait.png" gap:platform="android" gap:density="xhdpi"/>
-
-<gap:splash src="icons/res/screen/blackberry_transparent_300.png" gap:platform="blackberry"/>
-
-<gap:splash src="icons/res/screen/iphone_portrait.png" gap:platform="ios" width="320″ height="480″/>
-
-<gap:splash src="icons/res/screen/iphone_retina_portrait.png" gap:platform="ios" width="640″ height="960″/>
-
-<gap:splash src="icons/res/screen/ipad_portrait.png" gap:platform="ios" width="768″ height="1024″/>
-
-<gap:splash src="icons/res/screen/ipad_landscape.png" gap:platform="ios" width="1024″ height="768″/>
-
-<gap:splash src="icons/res/screen/windows_phone_portrait.jpg" gap:platform="winphone"/>
     <author href="https://build.phonegap.com" email="support@phonegap.com">
         Hardeep Shoker 
     </author>
