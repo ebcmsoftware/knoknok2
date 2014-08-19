@@ -222,8 +222,10 @@ function get_coloring(msg, default_color) {
 
 function setColor(msg) {
     var color = get_coloring(msg, '#006eb7');
-    $('#statusbar')[0].style.borderColor = color;
-    $('#statusbar')[0].style.color = color;
+    if (color != '#000000') {
+        $('#statusbar')[0].style.borderColor = color;
+        $('#statusbar')[0].style.color = color;
+    }
 }
 
 function refresh() {
@@ -403,12 +405,15 @@ function addExtraButton(msg, i) {
     option = document.createElement("option");
     //btn.setAttribute("onclick", "pressed_button=true;setStatus('"+msg+"');");
     var split_msg = msg.split('#');
+    var color = '#000000';
     if (split_msg[split_msg.length - 1].isColor()) {
-        option.style.color = '#' + split_msg[split_msg.length - 1];
+        color = '#' + split_msg[split_msg.length - 1];
+        option.style.color = color;
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
     //option.style.color = get_coloring(msg, option.style.color);
     console.log(msg + ' - ' + option.style.color);
+    option.value = msg + color;
     option.innerHTML = msg;
     var dropdown = document.getElementById("KKstatusbuttons");
     dropdown.appendChild(option);
@@ -458,10 +463,13 @@ function leave_custom(msg) {
 
 //remembers the custom status in memory
 function saveText(text) {
+    console.log(text);
     text = text || document.getElementById("statusinput").value;
+    console.log(text);
     if (!text.slice(-7).isColor()) {
         text += get_coloring(text);
     }
+    console.log(text);
     var statuslist = localStorage.getItem("statuslist");
     if (!statuslist || statuslist == null) {
         statuslist = [text];

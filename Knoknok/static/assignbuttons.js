@@ -80,6 +80,11 @@ $('#errorbtn').fastClick(function(e) {
     $.mobile.changePage('/templates/index.html', {transition : 'slide', reverse : true});
 });
 
+$('#deletestatibtn').fastClick(function(e) {
+
+    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
+});
+
 $('#changeinfobtn').fastClick(function(e) {
     $('#newroomname')[0].value = $('#roomname')[0].innerHTML;
     $('#usernameinput')[0].value = getUserName();
