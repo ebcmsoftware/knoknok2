@@ -296,7 +296,7 @@ function showControls() {
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
     $('#statusinput').select();
-    $('#statusinput')[0].setSelectionRange(0, 9999);
+    $('#statusinput')[0].setSelectionRange(0, 40);
 }
 
 function hideControls() {
