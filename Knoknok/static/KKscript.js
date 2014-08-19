@@ -310,16 +310,18 @@ function showControls() {
     if (s && s != '')
         $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
+    $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
+    console.log($('#pleasenodisplay')[0].style.display);
     $('#statusinput').focus();
     $('#statusinput').select();
     select_input();
     $('#statusinput')[0].setSelectionRange(0, 40);
-    //window.document.execCommand('SelectAll', true);
-    
+    console.log("here.");
 }
 
 function hideControls() {
+    $('#pleasenodisplay')[0].style.display = 'none';
     $('#KKstatusbuttons')[0].style.display = 'none';
     $('#statustext')[0].style.display = 'block';
     var s = $('#statustext')[0].innerHTML; 

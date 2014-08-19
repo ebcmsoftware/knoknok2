@@ -150,9 +150,11 @@ redirectWhenCookie();
           <p id="statusstats" style = "font-size: 80%;" class = "unselectable">set by: username, time</p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="setpopup" data-role="popup" style="padding:30px;" data-transition="fade">Status set!</div>
-          <select id="KKstatusbuttons" style="display:none;" onchange="pressed_button=false;leave_custom(this.value);">
-          </select>
-          <br>
+          <div id = "pleasenodisplay" style="display:none;">
+              <select id="KKstatusbuttons" onchange="pressed_button=false;leave_custom(this.value);">
+                  <option value="-1"> - </option>
+              </select>
+          </div>
       </div>
 
   </div>
