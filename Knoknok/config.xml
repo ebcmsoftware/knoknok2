@@ -14,10 +14,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>tqm</name>
+    <name>Knoknok</name>
 
     <description>
-        this shits a test 
+       The app for roommates. 
     </description>
     <icon src="icons/cordova_128.png"/>
 
