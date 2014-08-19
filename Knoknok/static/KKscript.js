@@ -428,13 +428,18 @@ function addExtraButtons() {
 //whether or not a button was pressed to get out of the blur!
 var pressed_button = false;
 
+$(document).on('popupafteropen', '.ui-popup', function() {
+ setTimeout(function () {
+  $('#setpopup').popup('close', {transition:'fade'});
+ }, 1000);
+});
+
 //set the status according to the box
 function leave_custom() {
     if (!pressed_button) {
         s = $('#statusinput').val();
         if (s != $('#statustext')[0].innerHTML) {
-            console.log(s);
-            console.log("here...");
+            $("#setpopup").popup("open", {history:false}, {transition:'fade'});
             setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
