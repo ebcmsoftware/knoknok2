@@ -45,16 +45,22 @@ $("#roomkey0").keyup(function () {
         $('#roomkey1').focus();
     }
 });
+
+//puts the key in its full form into the proper text areas and submits
+function insertKey(k) {
+    if (k.length >= 3)
+        $("#roomkey0")[0].value = k.substring(0,3);
+    if (k.length == 7)
+        $("#roomkey1")[0].value = k.substring(4,7);
+    else if (k.length == 6)
+        $("#roomkey1")[0].value = k.substring(3,6); 
+}
+
 var pastef = function() {
     var elt = this;
     setTimeout(function() {
         var k = $(elt).val();
-        if (k.length >= 3)
-            $("#roomkey0")[0].value = k.substring(0,3);
-        if (k.length == 7)
-            $("#roomkey1")[0].value = k.substring(4,7);
-        else if (k.length == 6)
-            $("#roomkey1")[0].value = k.substring(3,6); 
+        insertKey(k);
     }, 10);
 }
 $("#roomkey0").on('paste', pastef);

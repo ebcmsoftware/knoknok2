@@ -22,18 +22,11 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 go('sendthiskey', 'sendkey', 'slide');
 
 $('#pastekeybtn').fastClick(function(e) {
-    p = window.plugins;
-    console.log(cordova);
-    console.log(cordova.plugins);
-    console.log(cordova.plugins.paste);
-    console.log(p);
-    //console.log(p.paste);
-    window.plugins.paste(function (text) {
-        alert("D:D:D:D::DD:D:D:D:D");
-        alert(text);
+    window.plugins.clipboard.paste(function (text) {
+        insertKey(text);
     },
     function(text) {
-      alert("oh. nothing's in the whatever.");
+        myAlert("You haven't copied the key yet!");
     });
 });
 

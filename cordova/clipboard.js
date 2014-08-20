@@ -1,4 +1,8 @@
+try {
 var cordova = require('cordova');
+} catch(e) {
+    alert(e);
+}
 
 /**
  * Clipboard plugin for Cordova
