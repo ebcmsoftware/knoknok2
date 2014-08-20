@@ -9,8 +9,9 @@ Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
 };
 
-var delay = 8585; //ms
-var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up more space),
+var VERSION_NUM = encodeURIComponent("1.0");
+var delay = 18585; //ms
+var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't take up more space),
                            //i see no reason to cap it at 5
 
 function startup() {
@@ -60,7 +61,7 @@ function changeLink() {
         return;
     }
     var req = new XMLHttpRequest;
-    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+key);
+    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+key+'&vers='+VERSION_NUM);
     req.send();
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
@@ -234,7 +235,7 @@ function refresh() {
     //depth += 1;
     console.log('updating info with delay: ' + deli / 1000 + 's');
     if (getKey() && getKey() != null && getKey() != "null") {
-        req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
+        req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey()+'&vers='+VERSION_NUM);
         req.send();
         req.onreadystatechange = function() {
             if (req.readyState == 4) {

@@ -115,6 +115,7 @@ class API(webapp.RequestHandler):
   def get(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
+    version = urllib.unquote(self.request.get('vers', '1%2E0'))
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
