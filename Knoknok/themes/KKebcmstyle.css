@@ -26,6 +26,8 @@
     /*color:#24AD62;*/
     background-color:orange;
     display:inline; /*defaults to display none so it can be shown when it actually is a record*/
+    width: 100px;
+    height: auto;
 }
 
 @-webkit-keyframes glow {
