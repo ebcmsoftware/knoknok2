@@ -14,8 +14,16 @@ var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up m
                            //i see no reason to cap it at 5
 
 function startup() {
-    $.mobile.changePage('#KKhome', {transition : 'slide'});
-    alert('you just resumed or opened the app. todo: remove this alert');
+    try {
+    //StatusBar.overlaysWebView(true);
+    StatusBar.overlaysWebView(false);
+    } catch (e) {
+      alert(e.message);
+    }
+    if (getKey()) {
+      $.mobile.changePage('#KKhome', {transition : 'slide'});
+    } else console.log(getKey());
+    myAlert('you just resumed or opened the app. todo: remove this alert');
     //showControls();
     if (getKey()) {
         refresh();
