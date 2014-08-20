@@ -21,31 +21,43 @@
         </description>
         <icon src="icons/cordova_128.png"/>
 
-        <icon src="icons/cordova_android_36.png" gap:platform="android" gap:density="ldpi"/>
-
-        <icon src="icons/cordova_android_48.png" gap:platform="android" gap:density="mdpi"/>
-
-        <icon src="icons/cordova_android_72.png" gap:platform="android" gap:density="hdpi"/>
-
-        <icon src="icons/cordova_android_96.png" gap:platform="android" gap:density="xhdpi"/>
-
-        <icon src="icons/cordova_bb_80.png" gap:platform="blackberry"/>
-
-        <icon src="icons/cordova_bb_80.png" gap:platform="blackberry" gap:state="hover"/>
-
         <icon src="icons/cordova_ios_57.png" gap:platform="ios" width="57" height="57"/>
-
         <icon src="icons/cordova_ios_72.png" gap:platform="ios" width="72" height="72"/>
-
         <icon src="icons/cordova_ios_114.png" gap:platform="ios" width="114" height="114"/>
-
         <icon src="icons/cordova_ios_144.png" gap:platform="ios" width="144" height="144"/>
 
-        <icon src="icons/cordova_64.png" gap:platform="webos"/>
+        <icon src="icons/cordova_android_36.png" gap:platform="android" gap:density="ldpi"/>
+        <icon src="icons/cordova_android_48.png" gap:platform="android" gap:density="mdpi"/>
+        <icon src="icons/cordova_android_72.png" gap:platform="android" gap:density="hdpi"/>
+        <icon src="icons/cordova_android_96.png" gap:platform="android" gap:density="xhdpi"/>
 
-        <icon src="icons/cordova_48.png" gap:platform="winphone"/>
+        <!-- iPhone and iPod touch -->
+        <gap:splash src="splash/Default.png" gap:platform="ios" width="320" height="480" />
+        <gap:splash src="splash/Default@2x.png" gap:platform="ios" width="640" height="960" />
 
-        <icon src="icons/cordova_173.png" gap:platform="winphone" gap:role="background"/>
+        <!-- iPhone 5 / iPod Touch (5th Generation) -->
+        <gap:splash src="splash/Default-568h@2x.png" gap:platform="ios" width="640" height="1136" />
+
+        <!-- iPad
+        <gap:splash src="splash/Default-Portrait.png" gap:platform="ios" width="768" height="1024" />
+        <gap:splash src="splash/Default-Landscape.png" gap:platform="ios" width="1024" height="768" />
+
+         Retina iPad 
+        <gap:splash src="splash/Default-Portrait@2x.png" gap:platform="ios" width="1536" height="2048" />
+        <gap:splash src="splash/Default-Landscape@2x.png" gap:platform="ios" width="2048" height="1536" />
+        -->
+
+        <!-- Android -->
+        <gap:splash src="splash/ldpi.png" gap:platform="android" gap:qualifier="ldpi" />
+        <gap:splash src="splash/mdpi.png" gap:platform="android" gap:qualifier="mdpi" />
+        <gap:splash src="splash/hdpi.png" gap:platform="android" gap:qualifier="hdpi" />
+        <gap:splash src="splash/xhdpi.png" gap:platform="android" gap:qualifier="xhdpi" />
+        <gap:splash src="splash/fr-xhdpi.png" gap:platform="android" gap:qualifier="fr-xhdpi" />
+        <gap:splash src="splash/portrait-xxhdpi.png" gap:platform="android" gap:qualifier="port-xxhdpi" />
+        <gap:splash src="splash/landscape-xxhdpi.png" gap:platform="android" gap:qualifier="land-xxhdpi" />
+
+
+        <gap:splash src="splash/Default@2x.png" /> <!-- default -->
 
         <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
         <gap:plugin name="hu.dpal.phonegap.plugins.contactnumberpicker" version="0.1.1" />
@@ -57,7 +69,6 @@
         <gap:plugin name="com.badrit.contactpicker"/>
         <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
 -->
-
         <access origin="*"/>
 
         </widget>

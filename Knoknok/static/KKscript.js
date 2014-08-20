@@ -16,7 +16,6 @@ var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't
 
 function startup() {
     try {
-    //StatusBar.overlaysWebView(true);
     StatusBar.overlaysWebView(false);
     } catch (e) {
       alert(e.message);
@@ -24,7 +23,6 @@ function startup() {
     if (getKey()) {
       $.mobile.changePage('#KKhome', {transition : 'slide'});
     } else console.log(getKey());
-    myAlert('you just resumed or opened the app. todo: remove this alert');
     //showControls();
     if (getKey()) {
         refresh();
