@@ -10,13 +10,21 @@ Array.prototype.move = function(from, to) {
 };
 
 var VERSION_NUM = encodeURIComponent("1.0");
-var delay = 18585; //ms
-var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't take up more space),
-                           //i see no reason to cap it at 5
+var delay = 17585; //ms
+var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't 
+                          //take up more space), i see no reason to cap it at 5 
 
 function startup() {
-    $.mobile.changePage('#KKhome', {transition : 'slide'});
-    alert('you just resumed or opened the app. todo: remove this alert');
+    try {
+    //StatusBar.overlaysWebView(true);
+    StatusBar.overlaysWebView(false);
+    } catch (e) {
+      alert(e.message);
+    }
+    if (getKey()) {
+      $.mobile.changePage('#KKhome', {transition : 'slide'});
+    } else console.log(getKey());
+    myAlert('you just resumed or opened the app. todo: remove this alert');
     //showControls();
     if (getKey()) {
         refresh();
@@ -274,6 +282,8 @@ if (getKey() && getKey() != null && getKey() != "null") {
     depth = 1;
     //refresh();
     var interval = setInterval(refresh_info, delay);
+    setTimeout(refresh, 6000);
+    setTimeout(refresh, 12000);
 }
 else console.log("No roomkey loaded yet.");
 

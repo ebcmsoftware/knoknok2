@@ -49,8 +49,10 @@
 
         <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
         <gap:plugin name="hu.dpal.phonegap.plugins.contactnumberpicker" version="0.1.1" />
+        <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
 
 <!--
+<gap:plugin name="com.phonegap.plugin.statusbar" />
 <gap:plugin name="com.kolwit.pickcontact" version="1.0.3"/>
         <gap:plugin name="com.badrit.contactpicker"/>
         <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
