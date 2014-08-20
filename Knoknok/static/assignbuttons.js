@@ -115,9 +115,16 @@ $('#statustext:first-child').fastClick(showControls);
 // });
 
 $('#searchcontactssms').fastClick(function(e) {
-    window.plugins.ContactPicker.chooseContact(function(contactInfo) {
-        alert(contactInfo.displayName + " " + contactInfo.phoneNumbers);
-    });
+    try {
+      window.plugins.PickContact.chooseContact(function(contactInfo) {
+        setTimeout(function() {
+          alert(Object.keys(contactInfo));
+          alert(contactInfo.displayName + " " + contactInfo.phoneNr);
+        }, 1);
+      });
+    } catch(e) {
+      myAlert("ERROR! " + e.message);
+    }
 });
 
 $('#forgetroomconfirm').fastClick(function(e) {
