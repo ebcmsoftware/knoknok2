@@ -155,7 +155,7 @@ function deleteRoom() {
     //$.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     $.post('http://ebcmdev.appspot.com/deleteroom',post_params, function() {
         forgetRoom();
-        $.mobile.changePage('#get2key', {transition:'pop',reverse:true});
+        //$.mobile.changePage('#get2key', {transition:'pop',reverse:true});
     });
 }
 
