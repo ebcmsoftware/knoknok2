@@ -534,4 +534,3 @@ function changeroomname() {
     $.post('http://ebcmdev.appspot.com/changeroomname', post_params, function(){
     });
 }
-

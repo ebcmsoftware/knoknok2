@@ -44,7 +44,7 @@ redirectWhenCookie();
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
       <div class="centeredapparea">
-      <p style  = "text-align: left">Enter info for your Knoknok room (you can change these later in settings)</p>
+      <p style  = "text-align: left">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname" maxlength="12">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name">
           
@@ -82,8 +82,8 @@ redirectWhenCookie();
   <div data-role = "page" data-theme = "a" id="keyload">
       <div class = "centeredapparea">
           <div id = "bottombox">
+          <p>Your key is being generated...</p>
               <img src="static/images/key2.png" class="keyload">
-              <h1>Your key is being generated...</h1>
           </div>
       </div>
   </div>
@@ -232,7 +232,7 @@ redirectWhenCookie();
   <div data-role = "page" data-theme = "a" data-dialog="true" id="deleteroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
-              <p>Delete this room from our database forever? :(</p>
+              <p>Delete this room from our database forever?</p>
               <p>(Everyone with the roomkey <span id="delete_key_display">-error-</span> will no longer be able to access the room!)</p>
               <a href="javascript:;" id="deleteroomconfirm" class="ui-btn">Yes</a>
               <a href="javascript:;" id="deleteroomback" class="ui-btn">No</a>
