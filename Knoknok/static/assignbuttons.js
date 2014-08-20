@@ -29,6 +29,7 @@ $('#pastekeybtn').fastClick(function(e) {
     console.log(p);
     //console.log(p.paste);
     window.plugins.paste(function (text) {
+        alert("D:D:D:D::DD:D:D:D:D");
         alert(text);
     },
     function(text) {
@@ -58,8 +59,8 @@ go('smstocreateroom', 'createroom', 'slide', true);
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
-$('#setnosave').fastClick(leave_custom);
-    //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
+//$('#setnosave').fastClick(leave_custom);
+//$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 
 $('#KKstatusbuttons').fastClick(function(e) {
     pressed_button = true;
@@ -77,6 +78,11 @@ $('#customback').fastClick(hideControls);
 
 $('#errorbtn').fastClick(function(e) {
     $.mobile.changePage('/templates/index.html', {transition : 'slide', reverse : true});
+});
+
+$('#deletestatibtn').fastClick(function(e) {
+
+    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 });
 
 $('#changeinfobtn').fastClick(function(e) {

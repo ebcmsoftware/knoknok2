@@ -1,10 +1,17 @@
 //19BFA1 is a color (for this function - it's based on looking at the output of split('#'))
 //#000000 is not!
 String.prototype.isColor = function() {
-    return /^[0-9A-F]{6}$/i.test(this);
+    return /^(#|)[0-9A-F]{6}$/i.test(this);
 }
 
-var delay = 10500;
+//http://stackoverflow.com/questions/5306680/move-an-array-element-from-one-array-position-to-another
+Array.prototype.move = function(from, to) {
+    this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
+var delay = 8585; //ms
+var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up more space),
+                           //i see no reason to cap it at 5
 
 function startup() {
     alert('you just resumed or opened the app. todo: remove this alert');
@@ -196,8 +203,9 @@ function sendsms() {
 //     });
 // }
 
-function setColor(msg) {
-    var color = '#006eb7';
+//returns the color for the given msg
+function get_coloring(msg, default_color) {
+    var color = default_color || "#000000";
     var split_msg = msg.split('#');
     // if it's a valid color
     if (split_msg[split_msg.length - 1].isColor()) {
@@ -209,8 +217,15 @@ function setColor(msg) {
     else if (msg == 'Closed') {
         color = '#FF0000';
     }
-    $('#statusbar')[0].style.borderColor = color;
-    $('#statusbar')[0].style.color = color;
+    return color;
+}
+
+function setColor(msg) {
+    var color = get_coloring(msg, '#006eb7');
+    if (color != '#000000') {
+        $('#statusbar')[0].style.borderColor = color;
+        $('#statusbar')[0].style.color = color;
+    }
 }
 
 function refresh() {
@@ -246,7 +261,6 @@ function refresh_info() {
     //slowly make it stop spamming the server if theyre idle
     //idk maybe rething how the scaling works.
     //  10s 10s 10s 20s 20s 20s 30s 30s 30s 40s 40s 40s etc.
-    console.log("depth: " + depth);
     if (depth % 3 == 0) {
         deli = (depth/3 + 1) * delay;
         reset_interval(deli);
@@ -287,7 +301,6 @@ function localRefresh(msg, username, time, roomname) {
 function select_input() {
     //window.document.execCommand('SelectAll', true);
     setTimeout(function() {
-        console.log("here!!!!");
         var $this = $("#statusinput");
         $this.select();
 
@@ -310,16 +323,16 @@ function showControls() {
     if (s && s != '')
         $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
+    $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
     $('#statusinput').select();
     select_input();
     $('#statusinput')[0].setSelectionRange(0, 40);
-    //window.document.execCommand('SelectAll', true);
-    
 }
 
 function hideControls() {
+    $('#pleasenodisplay')[0].style.display = 'none';
     $('#KKstatusbuttons')[0].style.display = 'none';
     $('#statustext')[0].style.display = 'block';
     var s = $('#statustext')[0].innerHTML; 
@@ -344,6 +357,7 @@ function setStatus(msg, update) {
         localRefresh(msg, username);
     }
     else {
+        $("#setpopup").popup("open", {history:false}, {transition:'fade'});
         pressed_button = true;
         localRefresh(msg, username, 'just now');
     }
@@ -356,6 +370,7 @@ function setStatus(msg, update) {
         console.log("WHAT. " + msg);
     }
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
+    saveText(msg);
     //they are active -> refresh frequently
     depth = 1;
     deli = delay;
@@ -390,10 +405,15 @@ function addExtraButton(msg, i) {
     option = document.createElement("option");
     //btn.setAttribute("onclick", "pressed_button=true;setStatus('"+msg+"');");
     var split_msg = msg.split('#');
+    var color = '#000000';
     if (split_msg[split_msg.length - 1].isColor()) {
-        option.style.color = '#' + split_msg[split_msg.length - 1];
+        color = '#' + split_msg[split_msg.length - 1];
+        option.style.color = color;
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
+    //option.style.color = get_coloring(msg, option.style.color);
+    console.log(msg + ' - ' + option.style.color);
+    option.value = msg + color;
     option.innerHTML = msg;
     var dropdown = document.getElementById("KKstatusbuttons");
     dropdown.appendChild(option);
@@ -403,9 +423,12 @@ function addExtraButtons() {
     //localStorage.removeItem("statuslist");
     var statuslist = localStorage.getItem("statuslist");
     if (statuslist === null) return;
+    if (statuslist == '' || statuslist == '[]') {
+        //$('#KKstatusbuttons')[0].style.display = 'none';
+        return;
+    }
     console.log(statuslist);
     statuslist = JSON.parse(statuslist);
-    console.log(statuslist);
     var input, btn;
     var len = statuslist.length;
     for (var i=0; i < len; i++) {
@@ -423,11 +446,15 @@ $(document).on('popupafteropen', '.ui-popup', function() {
 });
 
 //set the status according to the box
-function leave_custom() {
+function leave_custom(msg) {
+    if (msg) {
+        if (msg != $('#statustext')[0].innerHTML) {
+            setStatus(msg); //setStatus hides the controls if good input.
+        }
+    }
     if (!pressed_button) {
         s = $('#statusinput').val();
         if (s != $('#statustext')[0].innerHTML) {
-            $("#setpopup").popup("open", {history:false}, {transition:'fade'});
             setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
@@ -435,18 +462,35 @@ function leave_custom() {
 }
 
 //remembers the custom status in memory
-function saveText() {
-    savestatus = document.getElementById("statusinput").value;
+function saveText(text) {
+    console.log(text);
+    text = text || document.getElementById("statusinput").value;
+    console.log(text);
+    if (!text.slice(-7).isColor()) {
+        text += get_coloring(text);
+    }
+    console.log(text);
     var statuslist = localStorage.getItem("statuslist");
     if (!statuslist || statuslist == null) {
-        statuslist = [savestatus];
+        statuslist = [text];
     } 
     else {
         statuslist = JSON.parse(statuslist);
-        statuslist.push(savestatus);
+        var i = statuslist.indexOf(text); 
+        statuslist.unshift(text); //move it to the front always.
+        if (i < 0) { //if the element is NOT there
+            if (statuslist.length >= MAX_SAVED_STATI) {
+                statuslist.pop();
+            }
+        } else { //if the elt is in there, move it to the front
+            statuslist.splice(i+1, 1);
+        }
     }
+    console.log(statuslist)
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
-    addExtraButton(savestatus, statuslist.length - 1);
+    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Select a status... </option>';
+    addExtraButtons();
+    //addExtraButton(text, statuslist.length - 1);
     //document.getElementById("statusinput").value = '';
 }
 
