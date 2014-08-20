@@ -14,11 +14,12 @@ var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up m
                            //i see no reason to cap it at 5
 
 function startup() {
+    $.mobile.changePage('#KKhome', {transition : 'slide'});
     alert('you just resumed or opened the app. todo: remove this alert');
     //showControls();
     if (getKey()) {
         refresh();
-        var interval = setInterval(refresh_info, delay);
+        //var interval = setInterval(refresh_info, delay);
         //reset_interval(delay);
     }
 }
@@ -86,7 +87,7 @@ function navig8() {
     localStorage.setItem("username", $('#enterfirstname')[0].value);
     $.mobile.changePage('#keyload', {transition : 'slide'});
     post_params = new Object();
-    post_params['enterroomname'] = $('#enterroomname')[0].value;
+    post_params['enterroomname'] = encodeURIComponent($('#enterroomname')[0].value);
     //$.post('/createroom', post_params, function(data) {
     $.post('http://ebcmdev.appspot.com/createroom', post_params, function(data) {
         if (data != "") {
@@ -162,9 +163,9 @@ function deleteRoom() {
 function sendsms() {
     setNumberList();
     var post_params = new Object();
-    post_params['username'] = getUserName();
+    post_params['username'] = encodeURIComponent(getUserName());
     post_params['roomkey'] = getKey();
-    post_params['sendnum'] = numberArray;
+    post_params['sendnum'] = encodeURIComponent(numberArray);
     $.post('http://ebcmdev.appspot.com/sendsms', post_params, function(){
         $.mobile.changePage('#KKhome', { transition:"pop" });
     });
@@ -362,10 +363,9 @@ function setStatus(msg, update) {
         localRefresh(msg, username, 'just now');
     }
     post_params['roomkey'] = getKey();
-    post_params['username'] = username;
+    post_params['username'] = encodeURIComponent(username);
     if (msg && msg != '') {
-        post_params['status'] = msg;
-        console.log(post_params);
+        post_params['status'] = encodeURIComponent(msg);
     }else{
         console.log("WHAT. " + msg);
     }
@@ -488,7 +488,7 @@ function saveText(text) {
     }
     console.log(statuslist)
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
-    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Select a status... </option>';
+    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Or, select a status! </option>';
     addExtraButtons();
     //addExtraButton(text, statuslist.length - 1);
     //document.getElementById("statusinput").value = '';
@@ -528,9 +528,11 @@ function getUserName() {
 function changeroomname() {
     var post_params = new Object();
     post_params['roomkey'] = getKey();
-    post_params['roomname'] = $('#newroomname').val();
-    $('#roomname')[0].innerHTML = post_params['roomname'];
+    var s = $('#newroomname').val()
+    $('#roomname')[0].innerHTML = s;
+    post_params['roomname'] = encodeURIComponent(s);
     $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
     $.post('http://ebcmdev.appspot.com/changeroomname', post_params, function(){
     });
 }
+
