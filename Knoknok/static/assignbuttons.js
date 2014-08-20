@@ -40,7 +40,7 @@ $('#smstoroom').fastClick(function(e) {
 //     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 // });
 
-$('#addroommatephone').fastClick(addPhoneInput);
+//$('#addroommatephone').fastClick(add Phone Input);
 
 //$('#addroommateemail').fastClick(addEmailInput);
 
@@ -115,13 +115,19 @@ $('#statustext:first-child').fastClick(showControls);
 // });
 
 $('#searchcontactssms').fastClick(function(e) {
+    var successCallback = function(result) {
+        setTimeout(function(){
+            $('#sendnum'+num_phone_numbers)[0].value = result.phoneNumber;
+            addPhoneInput();
+        },0);
+    };
+    var failedCallback = function(result) {
+        setTimeout(function(){
+            myAlert('Error getting contact\'s phone! ' + result);
+        },0);
+    }
     try {
-      window.plugins.PickContact.chooseContact(function(contactInfo) {
-        setTimeout(function() {
-          alert(Object.keys(contactInfo));
-          alert(contactInfo.displayName + " " + contactInfo.phoneNr);
-        }, 1);
-      });
+        window.plugins.contactNumberPicker.pick(successCallback,failedCallback);
     } catch(e) {
       myAlert("ERROR! " + e.message);
     }
