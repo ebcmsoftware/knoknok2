@@ -15,7 +15,7 @@ var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up m
 
 function startup() {
     alert('you just resumed or opened the app. todo: remove this alert');
-    showControls();
+    //showControls();
     if (getKey()) {
         refresh();
         var interval = setInterval(refresh_info, delay);
