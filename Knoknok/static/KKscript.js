@@ -9,7 +9,7 @@ Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
 };
 
-var delay = 8585; //ms
+var delay = 15585; //ms
 var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up more space),
                            //i see no reason to cap it at 5
 
@@ -273,6 +273,8 @@ if (getKey() && getKey() != null && getKey() != "null") {
     depth = 1;
     //refresh();
     var interval = setInterval(refresh_info, delay);
+    setTimeout(refresh, 6000);
+    setTimeout(refresh, 12000);
 }
 else console.log("No roomkey loaded yet.");
 
