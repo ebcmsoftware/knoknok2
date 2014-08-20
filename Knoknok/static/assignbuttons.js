@@ -22,12 +22,7 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 go('sendthiskey', 'sendkey', 'slide');
 
 $('#pastekeybtn').fastClick(function(e) {
-    p = window.plugins;
-    console.log(cordova);
-    console.log(cordova.plugins);
-    console.log(cordova.plugins.paste);
-    console.log(p);
-    //console.log(p.paste);
+    alert("alright i'm in the fn. if you get another alert, then we kosher.");
     window.plugins.paste(function (text) {
         alert("D:D:D:D::DD:D:D:D:D");
         alert(text);
