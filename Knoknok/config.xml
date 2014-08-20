@@ -48,7 +48,7 @@
         <icon src="icons/cordova_173.png" gap:platform="winphone" gap:role="background"/>
 
         <gap:plugin name="com.kolwit.pickcontact" version="1.0.3"/>
-        <gap:plugin name="com.verso.cordova.clipboard"/>
+        <gap:plugin name="hu.dpal.phonegap.plugins.contactnumberpicker" version="0.1.1" />
 
         <access origin="*"/>
 
