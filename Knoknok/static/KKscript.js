@@ -34,12 +34,10 @@ document.addEventListener("deviceready", startup, false);
 document.addEventListener("resume", startup, false);
 
 function toOffline() {
-    myAlert("You are offline");
     $("#offlinething")[0].style.display = 'block';
 }
 
 function toOnline() {
-    myAlert("You are online");
     $("#offlinething")[0].style.display = 'none';
 }
 
