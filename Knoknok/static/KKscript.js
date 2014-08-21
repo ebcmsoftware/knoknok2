@@ -16,6 +16,7 @@ var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't
 
 function startup() {
     try {
+        navigator.splashscreen.hide()
         StatusBar.overlaysWebView(false); //ios7 junk
     } catch (e) {
         alert(e.message);
