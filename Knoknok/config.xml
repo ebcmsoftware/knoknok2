@@ -64,6 +64,7 @@
         <gap:plugin name="hu.dpal.phonegap.plugins.contactnumberpicker" version="0.1.1" />
         <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
         <gap:plugin name="org.apache.cordova.SplashScreen"/>
+        <gap:plugin name="org.apache.cordova.network-information"/>
 
         <preference name="orientation" value="portrait" />
         <preference name="android-windowSoftInputMode" value="adjustNothing" />
