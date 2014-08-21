@@ -5,7 +5,11 @@ function go(from, to, transition, reverse) {
     $('#'+from).fastClick(function(e) {$.mobile.changePage('#'+to, {transition : transition, reverse : reverse});});
 }
 
-go('keybacktoroominfo', 'makeroom', 'slide', true);
+//go('keybacktoroominfo', 'makeroom', 'slide', true);
+$('#keybacktoroominfo').fastClick(function(e) {
+    deleteRoom();
+    $.mobile.changePage('#makeroom', { transition:'flow', reverse:true});
+});
 
 go('makeroombutton', 'makeroom', 'slide');
 
@@ -48,19 +52,20 @@ $('#smstoroom').fastClick(function(e) {
 //     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 // });
 
-//$('#addroommatephone').fastClick(add Phone Input);
-
 //$('#addroommateemail').fastClick(addEmailInput);
 
 go('smstoemail', 'sendemail', 'slide', false);
 
 go('emailtosendkey', 'sendkey', 'slide', true);
 
-//go('smstocreateroom', 'createroom', 'slide', true);
+go('smstocreateroom', 'createroom', 'slide', true);
+go('smstokkhome', 'KKhome', 'flow', true);
+/*
 $('#smstocreateroom').fastClick(function(e) {
-    deleteRoom();
-    $.mobile.changePage('#createroom', {transition : 'flow', reverse : true});
+    //deleteRoom();
+    $.mobile.changePage('#createroom', {transition : 'slide', reverse : true});
 });
+*/
 
 go('settingsbutton', 'settingsmenu', 'pop');
 
@@ -69,14 +74,6 @@ go('settingsbutton', 'settingsmenu', 'pop');
 
 $('#KKstatusbuttons').fastClick(function(e) {
     pressed_button = true;
-});
-
-$('#setsave').fastClick(function(e) {
-    saveText();
-    pressed_button = false;
-    leave_custom();
-    pressed_button = true;
-    //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
 });
 
 $('#customback').fastClick(hideControls);
@@ -101,13 +98,11 @@ go('changeunback', 'settingsmenu', 'slide', true);
 
 //go('showkeysms','sendkey', 'pop')
 $('#showkeysms').fastClick(function(e) {
-    for (var i=0; i < num_phone_numbers; i++) {
-        $('#sendnum'+i).remove();
-    }
-    num_phone_numbers = 0;
-    addPhoneInput();
-    go('smstocreateroom', 'KKhome', 'flow', true);
-    $.mobile.changePage('#sendkey', {transition:'flow',reverse:true});
+    $('#phonenumbers')[0].innerHTML = '<input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">';
+    num_phone_numbers = 1;
+    $('#smstocreateroom')[0].style.display = 'none';
+    $('#smstokkhome')[0].style.display = 'block';
+    $.mobile.changePage('#sendkey', {transition:'slide',reverse:false});
 });
 
 //go('showkeyemail','sendemail', 'pop')
@@ -119,6 +114,7 @@ go('showkeyback','settingsmenu', 'slide', true)
 function changeInfo() {
     changeroomname();
     changeUserName();
+    populateFields()
     $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 }
 
@@ -129,8 +125,6 @@ $('#statustext:first-child').fastClick(showControls);
 
 // $('#searchcontactsemail').fastClick(function(e) {
 //     window.plugins.ContactPicker.chooseContact(function(contactInfo) {
-//         alert(contactInfo.displayName + " " + contactInfo.emails);
-//         alert(contactInfo.email);
 //     });
 // });
 

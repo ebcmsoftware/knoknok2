@@ -22,8 +22,8 @@ function startup() {
         alert(e.message);
     }
     if (getKey()) {
-        $.mobile.changePage('#KKhome', {transition : 'slide'});
-    } else console.log(getKey());
+        //window.location.href = '#KKhome';
+    }
     if (getKey()) {
         refresh();
     }
@@ -60,7 +60,7 @@ function redirectWhenCookie() {
     }
 }
 
-//this is for removing the title of apple alerts.
+//this is for removing the title ("index.html" in our case) of ios alerts.
 function myAlert(s) {
   var iframe = document.createElement("IFRAME");
   iframe.setAttribute("src", 'data:text/plain,');
@@ -119,7 +119,7 @@ function navig8() {
     var connection_error = true;
     setTimeout(function() {
         if (connection_error) {//aka we never got back the server response
-            $('#makeroomtext')[0].innerHTML = '<p style="color:orange">Looks like there was a connection error! Make sure you\'re connected to the Internet, and try again in a few minutes.<br>If you are sure your Internet is working and you keep getting redirected here, email our <a href="mailto:popcorncolonel@gmail.com>debugging team</a></p><br><br>Enter info for your Knoknok room <br>(You can change these later in settings)';
+            $('#makeroomtext')[0].innerHTML = '<p style="color:orange">Looks like there was a connection error!<br>If you are sure your Internet is working and you keep getting redirected here, email our <a href="mailto:popcorncolonel@gmail.com>debugging team</a></p><br><br>Enter info for your Knoknok room <br>(You can change these later in settings)';
             $.mobile.changePage('#makeroom', {transition:'slide',reverse:true});
         }
     }, 6000);
@@ -127,6 +127,7 @@ function navig8() {
         if (data != "") {
             localStorage['userkey'] = Number(data);
             connection_error = false;
+            $('#makeroomtext')[0].innerHTML = 'Enter info for your Knoknok room <br>(you can change these later in settings)'
             setTimeout(function() {
                 makeKey();
                 afterkeygen();
@@ -171,8 +172,10 @@ function addPhoneInput() {
     num_phone_numbers++;
     var i = num_phone_numbers;
     $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Cell Number...">');
-    addEnterListener('sendnum'+i, addPhoneInput);
-    $('#sendnum'+i).focus();
+    setTimeout(function() {
+        addEnterListener('sendnum'+i, addPhoneInput);
+        $('#sendnum'+i).focus();
+    }, 100);
 }
 
 var numberArray = "";
@@ -187,10 +190,8 @@ function setNumberList() {
 function deleteRoom() {
     var post_params = new Object();
     post_params['roomkey'] = getKey();
-    //$.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     $.post('http://ebcmdev.appspot.com/deleteroom',post_params, function() {
         forgetRoom();
-        //$.mobile.changePage('#get2key', {transition:'pop',reverse:true});
     });
 }
 
@@ -201,7 +202,7 @@ function sendsms() {
     post_params['roomkey'] = getKey();
     post_params['sendnum'] = encodeURIComponent(numberArray);
     $.post('http://ebcmdev.appspot.com/sendsms', post_params, function(){
-        $.mobile.changePage('#KKhome', { transition:"pop" });
+        $.mobile.changePage('#KKhome', {transition:"pop"});
     });
 }
 
@@ -387,8 +388,10 @@ function hideControls() {
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
-    if (msg == '')
-        return
+    if (msg == '') {
+        //hideControls();
+        return;
+    }
     hideControls();
     //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     //we want this to feel immediate
@@ -553,7 +556,7 @@ function changeUserName() {
     if (oldname == username) {
         return;
     }
-    var key = localStorage.setItem('username', username);
+    localStorage.setItem('username', username);
     //maybe have it update the previously updated status? it still shows the older status
     var stats = $('#statusstats')[0].innerHTML;
     //if they set the most recent status
