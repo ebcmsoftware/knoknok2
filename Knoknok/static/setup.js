@@ -30,14 +30,6 @@ function addEnterListener(inputId, f) {
         if (e.keyCode == 13) f();
     });
 }
-addEnterListener('enterroomname', navig8);
-addEnterListener('enterfirstname', navig8);
-addEnterListener('sendnum1', addPhoneInput);
-//addEnterListener('email1', addEmailInput);
-addEnterListener('statusinput', function(){
-    leave_custom();
-    document.getElementById("statusinput").setAttribute('onblur','');
-});
 
 //initializing the enterkey textboxes.
 $("#roomkey0").keyup(function () {

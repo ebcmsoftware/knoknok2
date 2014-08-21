@@ -61,7 +61,7 @@ redirectWhenCookie();
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
       <div class="centeredapparea">
-      <p style  = "text-align: left">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
+      <p style  = "text-align: left" id="makeroomtext">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
           <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname" maxlength="12">
           <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name">
           
@@ -114,7 +114,7 @@ redirectWhenCookie();
       <div class="centeredapparea">
       <p style = "text-align: left">This key identifies your room! Give it to your roommate(s) to let them access your new Knoknok room</p>
       <p id="key" style = "text-align: left">Key : couldn't load key :(</p>
-          <a href="javascript:;" id="sendthiskey" class="ui-btn">Invite your roommate</a>
+          <a href="javascript:;" id="sendthiskey" class="ui-btn">Invite your roommate!</a>
           
       </div> 
       <div class = "setupbuttons">

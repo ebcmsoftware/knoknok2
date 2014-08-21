@@ -116,11 +116,13 @@ go('showkeybtn','showkeyscreen', 'slide')
 
 go('showkeyback','settingsmenu', 'slide', true)
 
-$('#changeusernamebtn').fastClick(function() {
+function changeInfo() {
     changeroomname();
     changeUserName();
     $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
-});
+}
+
+$('#changeusernamebtn').fastClick(changeInfo);
 
 //$('#statustext').fastClick(showControls);
 $('#statustext:first-child').fastClick(showControls);
@@ -163,4 +165,16 @@ $('#deleteroomconfirm').fastClick(function(e) {
 });
 
 go('deleteroomback', 'settingsmenu', 'slide', true);
+
+addEnterListener('enterroomname', navig8);
+addEnterListener('enterfirstname', navig8);
+addEnterListener('sendnum1', addPhoneInput);
+addEnterListener('statusinput', function(){
+    leave_custom();
+    document.getElementById("statusinput").setAttribute('onblur','');
+});
+addEnterListener('newroomname', changeInfo);
+addEnterListener('usernameinput', changeInfo);
+addEnterListener('roomkey1', changeLink);
+addEnterListener('username', changeLink);
 

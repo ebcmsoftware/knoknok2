@@ -94,7 +94,7 @@ function changeLink() {
 }
 
 function afterkeygen() {
-    $('#showkey')[0].innerHTML = formatKeyOutput();
+    makeKey();
     refresh_info();
     depth = 1;
     if (!interval)
@@ -116,18 +116,23 @@ function navig8() {
     $.mobile.changePage('#keyload', {transition : 'slide'});
     post_params = new Object();
     post_params['enterroomname'] = encodeURIComponent($('#enterroomname')[0].value);
-    //$.post('/createroom', post_params, function(data) {
+    var connection_error = true;
+    setTimeout(function() {
+        if (connection_error) {//aka we never got back the server response
+            $('#makeroomtext')[0].innerHTML = '<p style="color:orange">Looks like there was a connection error! Make sure you\'re connected to the Internet, and try again in a few minutes.<br>If you are sure your Internet is working and you keep getting redirected here, email our <a href="mailto:popcorncolonel@gmail.com>debugging team</a></p><br><br>Enter info for your Knoknok room <br>(You can change these later in settings)';
+            $.mobile.changePage('#makeroom', {transition:'slide',reverse:true});
+        }
+    }, 6000);
     $.post('http://ebcmdev.appspot.com/createroom', post_params, function(data) {
         if (data != "") {
             localStorage['userkey'] = Number(data);
+            connection_error = false;
+            setTimeout(function() {
+                makeKey();
+                afterkeygen();
+                $.mobile.changePage('#createroom', {transition : 'slide'});
+            },3000);
         }
-        setTimeout(function() {
-            $('#forget_key_display')[0].innerHTML = formatKeyOutput();
-            makeKey();
-            afterkeygen();
-            var path = '#createroom';
-            $.mobile.changePage(path, {transition : 'slide'});
-        },3000);
     });
 }
 
@@ -149,8 +154,9 @@ function makeKey() {
     var keyoutput = formatKeyOutput();
     $('#key')[0].innerHTML = "Key: " + keyoutput;
     $('#keytosendsms')[0].innerHTML = "Key: " + keyoutput;
-    $('#forget_key_display')[0].innerHTML = formatKeyOutput();
-    $('#delete_key_display')[0].innerHTML = formatKeyOutput();
+    $('#showkey')[0].innerHTML = keyoutput;
+    $('#forget_key_display')[0].innerHTML = keyoutput;
+    $('#delete_key_display')[0].innerHTML = keyoutput;
 }
 
 //displays the key from the cookie
