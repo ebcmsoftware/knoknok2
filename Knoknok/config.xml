@@ -63,6 +63,8 @@
         <gap:plugin name="hu.dpal.phonegap.plugins.contactnumberpicker" version="0.1.1" />
         <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
 
+        <preference name="orientation" value="portrait" />
+
         <access origin="*"/>
 
         </widget>
