@@ -16,18 +16,15 @@ var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't
 
 function startup() {
     try {
-    StatusBar.overlaysWebView(false);
+        StatusBar.overlaysWebView(false); //ios7 junk
     } catch (e) {
-      alert(e.message);
+        alert(e.message);
     }
     if (getKey()) {
-      $.mobile.changePage('#KKhome', {transition : 'slide'});
+        $.mobile.changePage('#KKhome', {transition : 'slide'});
     } else console.log(getKey());
-    //showControls();
     if (getKey()) {
         refresh();
-        //var interval = setInterval(refresh_info, delay);
-        //reset_interval(delay);
     }
     populateFields();
 }
@@ -99,7 +96,8 @@ function afterkeygen() {
     $('#showkey')[0].innerHTML = formatKeyOutput();
     refresh_info();
     depth = 1;
-    var interval = setInterval(refresh_info, delay);
+    if (!interval)
+        var interval = setInterval(refresh_info, delay);
 }
 
 function populateFields() {
@@ -281,6 +279,10 @@ var deli = delay;
 function reset_interval(dly) {
     if (interval) 
         clearInterval(interval);
+    else {
+        console.log("INTERVAL DOES NOT EXIST");
+        return;
+    }
     if (getKey()) {
         interval = setInterval(refresh_info, dly);
     }
@@ -301,7 +303,8 @@ function refresh_info() {
 if (getKey() && getKey() != null && getKey() != "null") {
     depth = 1;
     //refresh();
-    var interval = setInterval(refresh_info, delay);
+    if (!interval)
+        var interval = setInterval(refresh_info, delay);
     setTimeout(refresh, 6000);
     setTimeout(refresh, 12000);
 }
