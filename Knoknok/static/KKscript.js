@@ -581,3 +581,10 @@ function changeroomname() {
     //$.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 }
 
+$("textarea, input").blur(function() {
+    $(".setupbuttons").show();
+});
+
+$("textarea, input").focus(function() {
+    $(".setupbuttons").hide();
+});
