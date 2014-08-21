@@ -22,13 +22,15 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 go('sendthiskey', 'sendkey', 'slide');
 
 $('#pastekeybtn').fastClick(function(e) {
+  try{
     window.plugins.clipboard.paste(function (text) {
-        myAlert(text);
+        myAlert('"' + text + '"');
         insertKey(text);
     },
     function(text) {
         myAlert("You haven't copied the key yet!");
     });
+    }catch(e) {myAlert(e.message);}
 });
 
 $('#createroomtoroom').fastClick(function(e) {
@@ -49,7 +51,7 @@ go('smstoemail', 'sendemail', 'slide', false);
 
 go('emailtosendkey', 'sendkey', 'slide', true);
 
-go('smstocreateroom', 'createroom', 'slide', true);
+//go('smstocreateroom', 'createroom', 'slide', true);
 $('#smstocreateroom').fastClick(function(e) {
     deleteRoom();
     $.mobile.changePage('#createroom', {transition : 'flow', reverse : true});
@@ -97,7 +99,16 @@ go('settingsback', 'KKhome', 'pop', true);
 
 go('changeunback', 'settingsmenu', 'slide', true);
 
-go('showkeysms','sendkey', 'pop')
+//go('showkeysms','sendkey', 'pop')
+$('#showkeysms').fastClick(function(e) {
+    for (var i=0; i < num_phone_numbers; i++) {
+        $('#sendnum'+i).remove();
+    }
+    num_phone_numbers = 0;
+    addPhoneInput();
+    go('smstocreateroom', 'KKhome', 'flow', true);
+    $.mobile.changePage('#sendkey', {transition:'flow',reverse:true});
+});
 
 //go('showkeyemail','sendemail', 'pop')
 

@@ -231,7 +231,7 @@ def formatKeyOutput(keystr):
 class SendSMS(webapp.RequestHandler):
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    phone_number = self.request.get('sendnum').strip()
+    phone_number = (self.request.get('sendnum').strip())
     phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
@@ -239,7 +239,7 @@ class SendSMS(webapp.RequestHandler):
           int(s)
         except ValueError:
           return ''
-        s = s.replace('.','').replace('-','').replace('(','').replace(')','').replace(' ','')
+        s = s.replace('.','').replace('-','').replace('(','').replace(')','').replace('+','').replace('[','').replace(']','').replace(' ','').replace('{','').replace('}','')
         if len(s) == 10:
             return s
         if len(s) == 11:
@@ -250,7 +250,7 @@ class SendSMS(webapp.RequestHandler):
         roomkey = int(self.request.get('roomkey', DEFAULT_ROOMKEY))
     except ValueError:
         return #I can't imagine a scenario in which this would happen.
-    username = self.request.get('username', DEFAULT_ROOMKEY)
+    username = (self.request.get('username', DEFAULT_ROOMKEY))
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
@@ -319,7 +319,7 @@ class CreateRoom(webapp.RequestHandler):
     roomkey = keygen()
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
-    roomname = urllib.quote(self.request.get('enterroomname', DEFAULT_NAME))
+    roomname = self.request.get('enterroomname', DEFAULT_NAME)
     if response == []:
         room = Room(parent=guestbook_key(roomkey))
     else:
@@ -350,7 +350,7 @@ class ChangeRoomName(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY)
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
-    roomname = urllib.quote(self.request.get('roomname', DEFAULT_NAME))
+    roomname = self.request.get('roomname', DEFAULT_NAME)
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
     if response != []:
@@ -406,10 +406,10 @@ class UpdateStatus(webapp.RequestHandler):
         room.alive = True
     else:
         room = response[0]
-    room.most_recent_username = urllib.quote(self.request.get('username'))
+    room.most_recent_username = self.request.get('username')
     s = self.request.get('status')
     if s and s != '':
-        room.status = urllib.quote(s)
+        room.status = s
     if not update:
         room.time = datetime.now()
     room.put()

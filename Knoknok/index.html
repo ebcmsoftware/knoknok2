@@ -39,7 +39,15 @@ redirectWhenCookie();
             <br>
             <p> Roommate sent you a key?</p>
             <a href="javascript:;" id="enterkeybutton" class="ui-btn">Enter a Key</a>
+            <a href = "#explainknoknok" style = "margin-top: 30%">About Knoknok</a>
       </div>
+  </div>
+
+  <div data-role = "page" data-theme="a" id = "explainknoknok">
+      <div class="centeredapparea">
+      <h1>About Knoknok</h1>
+      <p style = "text-align: left;">Knoknok is a mini social network for you and your roommates, meant to make living together more convenient and seamless.<br><br> Make a Knoknok room and invite your roommates, and once you're all set up you can view the status of your room and set it. For instance, if you're going to sleep, set your Knoknok status to "asleep" to let your roommate know they should be quiet when they enter your room.</p>
+      </div> 
   </div>
 
   <!-- the page for entering initial info -->
@@ -62,9 +70,13 @@ redirectWhenCookie();
           <div>
               <p style = "text-align: left;">Your key is a 6 digit number, given to you by someone with the app already</p>
               <div id = "keynums" style = "width: 50%; float: left">
-                  <div style="width: 40%;float:left;"><input type="tel" name="roomkey" id="roomkey0" placeholder="123" ></div>
+                  <div style="width: 40%;float:left;">
+                      <input type="tel" name="roomkey" id="roomkey0" placeholder="123">
+                  </div>
                   <span>_</span>
-                  <div style="width: 40%;float:right;"><input type="tel" name="roomkey" id="roomkey1" placeholder="456"></div>
+                  <div style="width: 40%;float:right;">
+                      <input type="tel" name="roomkey" id="roomkey1" placeholder="456">
+                      </div>
                   <br>
               </div>
               <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
@@ -92,9 +104,9 @@ redirectWhenCookie();
   <!-- the page for getting your key w/ option to send an sms -->
   <div data-role= "page" data-theme = "a" id = "createroom">
       <div class="centeredapparea">
-      <p style = "text-align: left">This key identifies your room! Give it to your roommate(s), and you'll never need it again.</p>
+      <p style = "text-align: left">This key identifies your room! Give it to your roommate(s) to let them access your new Knoknok room</p>
       <p id="key" style = "text-align: left">Key : couldn't load key :(</p>
-          <a href="javascript:;" id="sendthiskey" class="ui-btn">Send this key</a>
+          <a href="javascript:;" id="sendthiskey" class="ui-btn">Invite your roommate</a>
           
       </div> 
       <div class = "setupbuttons">
@@ -143,21 +155,21 @@ redirectWhenCookie();
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header">
           <a href = ""  class = "toplinks"> KNOKNOK </a>
-          <h1 id = "roomname">roomname</h1>
+          <h1 id = "roomname">_</h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "margin-top: 10%;">
-          <div id="statustext" style = "font-size: 250%;">status</div>
+          <div id="statustext" style = "font-size: 250%;">_</div>
           <textarea cols="40" rows="1" type="text" name="status" onfocus="pressed_button=false;" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #0062A5; font-size: 250%; border: 0px" maxlength=40></textarea>
           <div id = "pleasenodisplay" style="display:none;">
               <select id="KKstatusbuttons" onchange="pressed_button=false;leave_custom(this.value);">
-                  <option value="-1"> Select a status... </option>
+                  <option value="-1">  Or, select a status! </option>
               </select>
           </div>
-          <p id="statusstats" style = "font-size: 80%;" class = "unselectable">set by: username, time</p>
+          <p id="statusstats" style = "font-size: 80%;" class = "unselectable"></p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
-          <div id="setpopup" data-role="popup" style="padding:30px;" data-transition="fade">
-              Status set!
+          <div id="setpopup" data-role="popup" style="padding:10px;" data-transition="fade">
+              <p style = "font-size: 150%; padding: 0">Status set!</p> <img style = "display: inline" src = "static/images/checkmark.png">
           </div>
       </div>
 
@@ -197,7 +209,7 @@ redirectWhenCookie();
       <div data-role="main" class="ui-content">
           <p>This is your key.</p>
           <p id="showkey"></p>
-          <a href="javascript:;" class="ui-btn" id="showkeysms">Text it to another roommate</a>
+          <a href="javascript:;" class="ui-btn" id="showkeysms">Text this key again</a>
           <a href="javascript:;" class="ui-btn" id="showkeyback">&lt;- Go Back</a>
       </div>
   </div>
@@ -246,13 +258,16 @@ redirectWhenCookie();
 <!-- THIS IS TERRIBLE LINE OF CODE vvvvv
 <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 -->
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script> -->
-<script type="text/javascript" charset="utf-8" src="clipboard.js"></script> -->
 <!-- TODO? "cordova not defined". what do i do wrt this?????
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript" charset="utf-8" src="clipboard.js"></script>
 <script src="static/cordova/clipboard.js"></script>
-<script src="static/cordova/cordova.js"></script>
+<script src="static/cordova/cordova.js"></script> -->
+
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script type="text/javascript" charset="utf-8" src="clipboard.js"></script>
 <script src="static/jquery/ContactPicker.js"></script>
--->
+
 <script src="static/setup.js"></script>
 <script src="static/assignbuttons.js"></script>
 </body>
