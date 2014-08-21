@@ -34,6 +34,17 @@ function startup() {
 document.addEventListener("deviceready", startup, false);
 document.addEventListener("resume", startup, false);
 
+function toOffline() {
+    $("#offlinething")[0].style.display = 'block';
+}
+
+function toOnline() {
+    $("#offlinething")[0].style.display = 'none';
+}
+
+document.addEventListener("offline", toOffline, false);
+document.addEventListener("online", toOnline, false);
+
 //clears the cookies for while we're testing
 function clearCookies(debug) {
     if (debug) {
@@ -512,6 +523,9 @@ function forgetRoom(){
 function changeUserName() {
     var oldname  = getUserName();
     var username = document.getElementById('usernameinput').value; 
+    if (oldname == username) {
+        return;
+    }
     var key = localStorage.setItem('username', username);
     //maybe have it update the previously updated status? it still shows the older status
     var stats = $('#statusstats')[0].innerHTML;
@@ -520,7 +534,6 @@ function changeUserName() {
         (oldname == '' && stats.split(',')[0] == stats)) {//if they didn't set a name
             setStatus($('#statustext')[0].innerHTML, true); //reset the status
     }
-    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 }
 
 function getKey() {
@@ -535,13 +548,16 @@ function getUserName() {
 }
 
 function changeroomname() {
+    var oldroomname = $('#roomname')[0].innerHTML;
+    var s = $('#newroomname').val()
+    if (oldroomname == s) {
+        return;
+    }
+    $('#roomname')[0].innerHTML = s;
     var post_params = new Object();
     post_params['roomkey'] = getKey();
-    var s = $('#newroomname').val()
-    $('#roomname')[0].innerHTML = s;
     post_params['roomname'] = encodeURIComponent(s);
-    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
-    $.post('http://ebcmdev.appspot.com/changeroomname', post_params, function(){
-    });
+    $.post('http://ebcmdev.appspot.com/changeroomname', post_params, function(){});
+    //$.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 }
 

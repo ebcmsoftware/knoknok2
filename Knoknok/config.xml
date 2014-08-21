@@ -49,13 +49,14 @@
 
         <!-- Android -->
         <gap:splash src="splash/ldpi.png" gap:platform="android" gap:qualifier="ldpi" />
-        <gap:splash src="splash/mdpi.png" gap:platform="android" gap:qualifier="mdpi" />
+        <gap:splash src="splash/Default.png" gap:platform="android" gap:qualifier="mdpi" />
         <gap:splash src="splash/hdpi.png" gap:platform="android" gap:qualifier="hdpi" />
-        <gap:splash src="splash/xhdpi.png" gap:platform="android" gap:qualifier="xhdpi" />
+        <gap:splash src="splash/Default@2x.png" gap:platform="android" gap:qualifier="xhdpi" />
+        <!--
         <gap:splash src="splash/fr-xhdpi.png" gap:platform="android" gap:qualifier="fr-xhdpi" />
         <gap:splash src="splash/portrait-xxhdpi.png" gap:platform="android" gap:qualifier="port-xxhdpi" />
         <gap:splash src="splash/landscape-xxhdpi.png" gap:platform="android" gap:qualifier="land-xxhdpi" />
-
+        -->
 
         <gap:splash src="splash/Default@2x.png" /> <!-- default -->
 

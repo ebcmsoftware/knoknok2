@@ -28,13 +28,14 @@ go('sendthiskey', 'sendkey', 'slide');
 $('#pastekeybtn').fastClick(function(e) {
   try{
     window.plugins.clipboard.paste(function (text) {
-        myAlert('"' + text + '"');
         insertKey(text);
     },
     function(text) {
         myAlert("You haven't copied the key yet!");
     });
-    }catch(e) {myAlert(e.message);}
+    }catch(e) {
+        myAlert("Error! Please report this to eric.bailey@tufts.edu: " + e.message);
+    }
 });
 
 $('#createroomtoroom').fastClick(function(e) {
@@ -115,9 +116,13 @@ go('showkeybtn','showkeyscreen', 'slide')
 
 go('showkeyback','settingsmenu', 'slide', true)
 
-$('#changeusernamebtn').fastClick(changeUserName);
+$('#changeusernamebtn').fastClick(function() {
+    changeroomname();
+    changeUserName();
+    $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
+});
 
-$('#changeroomnamebtn').fastClick(changeroomname);
+//$('#changeroomnamebtn').fastClick(changeroomname);
 
 //$('#statustext').fastClick(showControls);
 $('#statustext:first-child').fastClick(showControls);
