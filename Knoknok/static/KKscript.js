@@ -545,3 +545,10 @@ function changeroomname() {
     });
 }
 
+$("textarea, input").blur(function() {
+    $(".setupbuttons").show();
+});
+
+$("textarea, input").focus(function() {
+    $(".setupbuttons").hide();
+});

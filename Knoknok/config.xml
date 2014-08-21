@@ -8,6 +8,7 @@
         -->
         <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
+        xmlns:android   = "http://schemas.android.com/apk/res/android"
         id          = "com.ebcmsoftware.knoknok"
         versionCode = "10" 
         version     = "1.0.0" >
@@ -64,6 +65,7 @@
         <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
 
         <preference name="orientation" value="portrait" />
+        <preference name="android-windowSoftInputMode" value="adjustNothing" />
 
         <access origin="*"/>
 
