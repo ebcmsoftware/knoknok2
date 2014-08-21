@@ -544,11 +544,3 @@ function changeroomname() {
     $.post('http://ebcmdev.appspot.com/changeroomname', post_params, function(){
     });
 }
-
-$("textarea, input").blur(function() {
-    $(".setupbuttons").show();
-});
-
-$("textarea, input").focus(function() {
-    $(".setupbuttons").hide();
-});
