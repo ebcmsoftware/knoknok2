@@ -29,6 +29,7 @@ function startup() {
         //var interval = setInterval(refresh_info, delay);
         //reset_interval(delay);
     }
+    populateFields();
 }
 
 document.addEventListener("deviceready", startup, false);
@@ -101,7 +102,17 @@ function afterkeygen() {
     var interval = setInterval(refresh_info, delay);
 }
 
+function populateFields() {
+    if (getUserName()) {
+        var s = getUserName();
+        $('#enterfirstname')[0].value = s; //in createroom
+        $('#username')[0].value = s; //in enterkey
+        $('#usernameinput')[0].value = s; //in KKhome settings
+    }
+}
+
 function navig8() {
+    populateFields();
     localStorage.setItem("username", $('#enterfirstname')[0].value);
     $.mobile.changePage('#keyload', {transition : 'slide'});
     post_params = new Object();
@@ -395,6 +406,8 @@ function setStatus(msg, update) {
     depth = 1;
     deli = delay;
     reset_interval(deli);
+    setTimeout(refresh, 6000);
+    setTimeout(refresh, 12000);
 }
 
 //SLATED FOR REMOVAL?
@@ -432,7 +445,6 @@ function addExtraButton(msg, i) {
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
     //option.style.color = get_coloring(msg, option.style.color);
-    console.log(msg + ' - ' + option.style.color);
     option.value = msg + color;
     option.innerHTML = msg;
     var dropdown = document.getElementById("KKstatusbuttons");
@@ -447,7 +459,6 @@ function addExtraButtons() {
         //$('#KKstatusbuttons')[0].style.display = 'none';
         return;
     }
-    console.log(statuslist);
     statuslist = JSON.parse(statuslist);
     var input, btn;
     var len = statuslist.length;
@@ -508,7 +519,7 @@ function saveText(text) {
     }
     console.log(statuslist)
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
-    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Or, select a status! </option>';
+    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Recent Statuses </option>';
     addExtraButtons();
     //addExtraButton(text, statuslist.length - 1);
     //document.getElementById("statusinput").value = '';
@@ -518,6 +529,12 @@ function saveText(text) {
 function forgetRoom(){
     clearInterval(interval);
     localStorage.removeItem("userkey");
+    localStorage['statuslist'] = '["Open#00FF00", "Closed#FF0000"]';
+    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Recent Statuses </option>';
+    addExtraButtons();
+    hideControls();
+    //localStorage.removeItem("statuslist");
+    //localStorage.removeItem("username");
 }
 
 function changeUserName() {

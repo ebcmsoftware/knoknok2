@@ -122,8 +122,6 @@ $('#changeusernamebtn').fastClick(function() {
     $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 });
 
-//$('#changeroomnamebtn').fastClick(changeroomname);
-
 //$('#statustext').fastClick(showControls);
 $('#statustext:first-child').fastClick(showControls);
 
@@ -154,9 +152,7 @@ $('#searchcontactssms').fastClick(function(e) {
 });
 
 $('#forgetroomconfirm').fastClick(function(e) {
-    console.log("roomkey was" + getKey());
     forgetRoom();
-    console.log("roomkey is" + getKey());
     $.mobile.changePage('#get2key', {transition:'flow',reverse:true});
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);
