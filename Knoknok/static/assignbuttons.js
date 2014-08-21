@@ -17,6 +17,10 @@ go('makeroomtog2k', 'get2key', 'slide', true);
 
 $('#enterkeytokkhome').fastClick(changeLink);
 
+go('g2ktoexplainknoknok', 'explainknoknok', 'slide');
+
+go('abouttoget2key', 'get2key', 'slide', true);
+
 go('enterkeytog2k', 'get2key', 'slide', true);
 
 go('sendthiskey', 'sendkey', 'slide');
@@ -81,7 +85,7 @@ $('#errorbtn').fastClick(function(e) {
 });
 
 $('#deletestatibtn').fastClick(function(e) {
-
+    localStorage['statuslist'] = '["Open#00FF00", "Closed#FF0000"]';
     $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 });
 
