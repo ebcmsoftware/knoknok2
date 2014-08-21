@@ -9,13 +9,20 @@ Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
 };
 
-var delay = 8585; //ms
-var MAX_SAVED_STATI = 128; //since it's a dropdown (more input doesn't take up more space),
-                           //i see no reason to cap it at 5
+var VERSION_NUM = encodeURIComponent("1.0");
+var delay = 17585; //ms
+var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't 
+                          //take up more space), i see no reason to cap it at 5 
 
 function startup() {
-    $.mobile.changePage('#KKhome', {transition : 'slide'});
-    alert('you just resumed or opened the app. todo: remove this alert');
+    try {
+    StatusBar.overlaysWebView(false);
+    } catch (e) {
+      alert(e.message);
+    }
+    if (getKey()) {
+      $.mobile.changePage('#KKhome', {transition : 'slide'});
+    } else console.log(getKey());
     //showControls();
     if (getKey()) {
         refresh();
@@ -60,7 +67,7 @@ function changeLink() {
         return;
     }
     var req = new XMLHttpRequest;
-    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+key);
+    req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+key+'&vers='+VERSION_NUM);
     req.send();
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
@@ -234,7 +241,7 @@ function refresh() {
     //depth += 1;
     console.log('updating info with delay: ' + deli / 1000 + 's');
     if (getKey() && getKey() != null && getKey() != "null") {
-        req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey());
+        req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey()+'&vers='+VERSION_NUM);
         req.send();
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
@@ -273,6 +280,8 @@ if (getKey() && getKey() != null && getKey() != "null") {
     depth = 1;
     //refresh();
     var interval = setInterval(refresh_info, delay);
+    setTimeout(refresh, 6000);
+    setTimeout(refresh, 12000);
 }
 else console.log("No roomkey loaded yet.");
 
