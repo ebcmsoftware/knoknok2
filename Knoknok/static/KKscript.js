@@ -419,7 +419,7 @@ function setStatus(msg, update) {
     }
     else {
         $("#setpopup").popup("open", {history:false}, {transition:'fade'});
-        pressed_button = true;
+        pressed_button = false;
         localRefresh(msg, username, 'just now');
     }
     post_params['roomkey'] = getKey();
