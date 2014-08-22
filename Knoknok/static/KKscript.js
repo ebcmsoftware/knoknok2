@@ -270,6 +270,7 @@ function setColor(msg) {
 
 var disable_refresh = false;
 function refresh() {
+    if (offline) return;
     $('#refresher')[0].innerHTML = 'Refreshed!';
     setTimeout(function() {
         $('#refresher')[0].innerHTML = 'Refresh';
