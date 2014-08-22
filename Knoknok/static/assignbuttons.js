@@ -152,12 +152,18 @@ $('#refresher').fastClick(function() {
     if (offline) return;
     $('#refresher')[0].innerHTML = 'Refreshing...';
     setTimeout(function() {
+        if (disable_refresh) {
+            $('#refresher')[0].innerHTML = 'Refreshed!';
+            setTimeout(function() {
+                $('#refresher')[0].innerHTML = 'Refresh';
+            }, 2000);
+            return;
+        }
+        refresh();
         $('#refresher')[0].innerHTML = 'Refreshed!';
         setTimeout(function() {
             $('#refresher')[0].innerHTML = 'Refresh';
         }, 2000);
-        if (disable_refresh) return;
-        refresh();
     }, 500);
 });
 

@@ -17,23 +17,22 @@ var MAX_SAVED_STATI = 9;  //since it's a dropdown (more input doesn't
                           //this is 1 fewer (9 -> 10 stati saved) is that bad
 
 function startup() {
-    try {
+    setTimeout(function() {
+        if (getKey()) {
+            refresh();
+        }
         navigator.splashscreen.hide()
         StatusBar.overlaysWebView(false); //ios7 junk
-    } catch (e) {
-        alert(e.message);
-    }
-    if (getKey()) {
-        //window.location.href = '#KKhome';
-    }
-    if (getKey()) {
-        refresh();
-    }
-    populateFields();
+        populateFields();
+    }, 0);
 }
 
+//happens when opening on background
 document.addEventListener("deviceready", startup, false);
-document.addEventListener("resume", startup, false);
+//This doesn't work (ios) but doesnt batter.
+document.addEventListener("resume", startup, false); 
+//ios thing wooooooooooooo
+document.addEventListener("active", startup, false);
 
 //clears the cookies for while we're testing
 function clearCookies(debug) {
