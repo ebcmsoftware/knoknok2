@@ -264,17 +264,17 @@ class SendSMS(webapp.RequestHandler):
     #client = TwilioRestClient(account_sid, auth_token)
 
     def getShortURL(username, roomkey):
-        longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u=") + username
+        longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u="+username)
         domain = 'j.mp'
         s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain="+domain
         data = json.load(urllib2.urlopen(s))
         return 'http://' + domain + '/' + data[u'data'][u'global_hash']
 
     if username and username != '':
-        body = urllib.unquote(username)
+        username = urllib.unquote(username)
     else:
-        body = 'Your roommate'
-    body += " invited you to join Knoknok! It's free! Get started here: " + getShortURL(body, roomkey)
+        username = 'Your roommate'
+    body = username+" invited you to join Knoknok! It's free! Get started here: " + getShortURL(username, roomkey)
     for phone_number in phone_numberlist:
         if phone_number != '':
             rv = client.sms.messages.create(to="+1" + str(phone_number),
