@@ -22,15 +22,11 @@
         </description>
         <icon src="icons/cordova_128.png"/>
 
+        <!-- IOS -->
         <icon src="icons/cordova_ios_57.png" gap:platform="ios" width="57" height="57"/>
         <icon src="icons/cordova_ios_72.png" gap:platform="ios" width="72" height="72"/>
         <icon src="icons/cordova_ios_114.png" gap:platform="ios" width="114" height="114"/>
         <icon src="icons/cordova_ios_144.png" gap:platform="ios" width="144" height="144"/>
-
-        <icon src="icons/cordova_android_36.png" gap:platform="android" gap:density="ldpi"/>
-        <icon src="icons/cordova_android_48.png" gap:platform="android" gap:density="mdpi"/>
-        <icon src="icons/cordova_android_72.png" gap:platform="android" gap:density="hdpi"/>
-        <icon src="icons/cordova_android_96.png" gap:platform="android" gap:density="xhdpi"/>
 
         <!-- iPhone and iPod touch -->
         <gap:splash src="splash/Default.png" gap:platform="ios" width="320" height="480" />
@@ -48,7 +44,13 @@
         <gap:splash src="splash/Default-Landscape@2x.png" gap:platform="ios" width="2048" height="1536" />
         -->
 
-        <!-- Android -->
+
+        <!-- ANRDOID -->
+        <icon src="icons/cordova_android_36.png" gap:platform="android" gap:density="ldpi"/>
+        <icon src="icons/cordova_android_48.png" gap:platform="android" gap:density="mdpi"/>
+        <icon src="icons/cordova_android_72.png" gap:platform="android" gap:density="hdpi"/>
+        <icon src="icons/cordova_android_96.png" gap:platform="android" gap:density="xhdpi"/>
+
         <gap:splash src="splash/ldpi.png" gap:platform="android" gap:qualifier="ldpi" />
         <gap:splash src="splash/Default.png" gap:platform="android" gap:qualifier="mdpi" />
         <gap:splash src="splash/hdpi.png" gap:platform="android" gap:qualifier="hdpi" />

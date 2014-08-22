@@ -160,15 +160,15 @@ $('#deleteroomconfirm').fastClick(function(e) {
 
 go('deleteroomback', 'settingsmenu', 'slide', true);
 
-addEnterListener('enterroomname', navig8);
-addEnterListener('enterfirstname', navig8);
-addEnterListener('sendnum1', addPhoneInput);
-addEnterListener('statusinput', function(){
+addEnterListener('enterroomname', navig8); //makeroom
+addEnterListener('enterfirstname', navig8); //makeroom
+addEnterListener('roomkey1', changeLink); //enterkey
+addEnterListener('username', changeLink); //enterkey
+addEnterListener('sendnum1', addPhoneInput); //sendsms
+addEnterListener('newroomname', changeInfo); //changeinfo
+addEnterListener('usernameinput', changeInfo); //changeinfo
+addEnterListener('statusinput', function(){ //KKhome
     leave_custom();
     document.getElementById("statusinput").setAttribute('onblur','');
 });
-addEnterListener('newroomname', changeInfo);
-addEnterListener('usernameinput', changeInfo);
-addEnterListener('roomkey1', changeLink);
-addEnterListener('username', changeLink);
 

@@ -33,14 +33,26 @@ function startup() {
 document.addEventListener("deviceready", startup, false);
 document.addEventListener("resume", startup, false);
 
+var offline_elts = ['offlinething', 'offlinething0', 'offlinething1', 'offlinething2'];
+var offline = false;
+
 function toOffline() {
-    $("#offlinething")[0].style.display = 'block';
+    offline = true;
+    offline_elts.forEach(function(id) {
+        $('#'+id)[0].style.display = 'block';
+    });
+    clearInterval(interval);
 }
 
 function toOnline() {
-    $("#offlinething")[0].style.display = 'none';
+    offline = false;
+    offline_elts.forEach(function(id) {
+        $('#'+id)[0].style.display = 'none';
+    });
+    startInterval();
 }
-
+toOnline();
+toOffline();
 document.addEventListener("offline", toOffline, false);
 document.addEventListener("online", toOnline, false);
 
@@ -71,6 +83,10 @@ function myAlert(s) {
 
 //Changes the link to KKhome using the key in localStorage
 function changeLink() {
+    if (offline) {
+        myAlert("Offline - cannot reach servers. Try again when you have established Internet connection.");
+        return;
+    }
     var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
     if (key == undefined || (key.length != 6 && true/*key.length != 9)*/)) {
         myAlert('That doesn\'t look like a real key! Please try again.');
@@ -119,7 +135,7 @@ function navig8() {
     var connection_error = true;
     setTimeout(function() {
         if (connection_error) {//aka we never got back the server response
-            $('#makeroomtext')[0].innerHTML = '<p style="color:orange">Looks like there was a connection error!<br>If you are sure your Internet is working and you keep getting redirected here, email our <a href="mailto:popcorncolonel@gmail.com>debugging team</a></p><br><br>Enter info for your Knoknok room <br>(You can change these later in settings)';
+            $('#makeroomtext')[0].innerHTML = '<p style="color:red">Couldn\'t connect to server D:</p><br>Enter info for your Knoknok room <br>(you can change these later in settings)'
             $.mobile.changePage('#makeroom', {transition:'slide',reverse:true});
         }
     }, 6000);
@@ -127,7 +143,6 @@ function navig8() {
         if (data != "") {
             localStorage['userkey'] = Number(data);
             connection_error = false;
-            $('#makeroomtext')[0].innerHTML = 'Enter info for your Knoknok room <br>(you can change these later in settings)'
             setTimeout(function() {
                 makeKey();
                 afterkeygen();
@@ -287,10 +302,12 @@ var deli = delay;
 function reset_interval(dly) {
     if (interval) 
         clearInterval(interval);
+    /*
     else {
-        console.log("INTERVAL DOES NOT EXIST");
+        alert("INTERVAL DOES NOT EXIST");
         return;
     }
+    */
     if (getKey()) {
         interval = setInterval(refresh_info, dly);
     }
@@ -384,6 +401,14 @@ function hideControls() {
     $('#statusinput')[0].style.display = 'none';
 }
 
+function startInterval() {
+    depth = 1;
+    deli = delay;
+    reset_interval(deli);
+    setTimeout(refresh, 6000);
+    setTimeout(refresh, 12000);
+}
+
 //makes the status something
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
@@ -416,11 +441,7 @@ function setStatus(msg, update) {
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     saveText(msg);
     //they are active -> refresh frequently
-    depth = 1;
-    deli = delay;
-    reset_interval(deli);
-    setTimeout(refresh, 6000);
-    setTimeout(refresh, 12000);
+    startInterval();
 }
 
 //SLATED FOR REMOVAL?
