@@ -376,9 +376,10 @@ function showControls() {
     $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
+    $('#statusinput')[0].value = '';
     //$('#statusinput').select();
-    select_input();
-    $('#statusinput')[0].setSelectionRange(0, 100);
+    //select_input();
+    //$('#statusinput')[0].setSelectionRange(0, 100);
 }
 
 function hideControls() {
