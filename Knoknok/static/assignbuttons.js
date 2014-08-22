@@ -147,7 +147,19 @@ $('#searchcontactssms').fastClick(function(e) {
     }
 });
 
-$('#refresher').fastClick(refresh);
+var disable_refresh = false;
+$('#refresher').fastClick(function() {
+    if (offline) return;
+    $('#refresher')[0].innerHTML = 'Refreshing...';
+    setTimeout(function() {
+        $('#refresher')[0].innerHTML = 'Refreshed!';
+        setTimeout(function() {
+            $('#refresher')[0].innerHTML = 'Refresh';
+        }, 2000);
+        if (disable_refresh) return;
+        refresh();
+    }, 500);
+});
 
 $('#forgetroomconfirm').fastClick(function(e) {
     forgetRoom();
