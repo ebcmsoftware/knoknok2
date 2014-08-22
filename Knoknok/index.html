@@ -11,7 +11,10 @@
   <link id="theme" rel="stylesheet" href="themes/KKebcmstyle.css"/>
   <link rel="stylesheet" href="themes/jquery/jquery.mobile.structure-1.4.2.min.css" />
   <!-- mobile specific tags here -->
+  <!--
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
+-->
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
   
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -184,10 +187,10 @@ redirectWhenCookie();
           <p id="statusstats" style = "font-size: 80%;" class = "unselectable"></p>
           <hr id = "statusbar" style = "border-color: #006eb7;color: #006eb7;" noshade>
           <div id="setpopup" data-role="popup" style="padding:10px;" data-transition="fade">
-              <p style = "font-size: 150%; padding: 0">Status set!</p> <img style = "display: inline" src = "static/images/checkmark.png">
+              <p style="font-size: 150%; padding: 0">Status set!</p> <img style = "display: inline" src = "static/images/checkmark.png">
           </div>
-          <div class = "setupbuttons">
-          <div class= "ui-button"style = "background-color: white;" onclick ="refresh">refresh</div>
+          <div class="setupbuttons">
+          <div class="ui-button" style="background-color:white;color:black;" id="refresher">Refresh</div>
           </div>
       </div>
 

@@ -147,6 +147,8 @@ $('#searchcontactssms').fastClick(function(e) {
     }
 });
 
+$('#refresher').fastClick(refresh);
+
 $('#forgetroomconfirm').fastClick(function(e) {
     forgetRoom();
     $.mobile.changePage('#get2key', {transition:'flow',reverse:true});

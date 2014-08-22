@@ -9,6 +9,7 @@ Array.prototype.move = function(from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
 };
 
+var REFRESH_DELAY = 5000; //this is how frequently they can click refresh
 var VERSION_NUM = encodeURIComponent("1.0");
 var delay = 17585; //ms
 var MAX_SAVED_STATI = 9;  //since it's a dropdown (more input doesn't 
@@ -267,7 +268,11 @@ function setColor(msg) {
     }
 }
 
+var disable_refresh = false;
 function refresh() {
+    if (disable_refresh) {
+        return;
+    }
     var req = new XMLHttpRequest;
     //depth += 1;
     //console.log('updating info with delay: ' + deli / 1000 + 's');
@@ -276,6 +281,10 @@ function refresh() {
         req.send();
         req.onreadystatechange = function() {
             if (req.readyState == 4) {
+                disable_refresh = true;
+                setTimeout(function() {
+                    disable_refresh = false;
+                }, REFRESH_DELAY);
                 var info = JSON.parse(req.responseText);
                 localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
                 //$('#statusinput')[0].setAttribute('placeholder', info['status']);
@@ -328,7 +337,7 @@ function localRefresh(msg, username, time, roomname) {
         msg = msg.substring(0, msg.lastIndexOf("#"));
     }
     $('#statustext')[0].innerHTML = msg;
-    if (username && username != '') {
+    if (username && username != '' && username != 'null' && username != null) {
         $('#statusstats')[0].innerHTML = 'set by: ' + username
     } else {
         $('#statusstats')[0].innerHTML = '<br>'
@@ -371,9 +380,9 @@ function showControls() {
     $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
-    $('#statusinput').select();
     select_input();
-    $('#statusinput')[0].setSelectionRange(0, 40);
+    $('#statusinput').select();
+    $('#statusinput')[0].setSelectionRange(0, 100);
 }
 
 function hideControls() {
