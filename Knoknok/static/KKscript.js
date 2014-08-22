@@ -520,7 +520,7 @@ function saveText(text) {
     }
     console.log(statuslist)
     localStorage.setItem("statuslist", JSON.stringify(statuslist));
-    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Recent Statuses </option>';
+    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Quick Statuses </option>';
     addExtraButtons();
     //addExtraButton(text, statuslist.length - 1);
     //document.getElementById("statusinput").value = '';
@@ -531,7 +531,7 @@ function forgetRoom(){
     //clearInterval(interval);
     localStorage.removeItem("userkey");
     localStorage['statuslist'] = default_stati;
-    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Recent Statuses </option>';
+    $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Quick Statuses </option>';
     addExtraButtons();
     hideControls();
     //localStorage.removeItem("statuslist");
@@ -547,7 +547,7 @@ function changeUserName() {
     localStorage.setItem('username', username);
     //maybe have it update the previously updated status? it still shows the older status
     var stats = $('#statusstats')[0].innerHTML;
-    //if they set the most recent status
+    //if they set the most quick status
     if (stats.split(',')[0] == 'set by: ' + oldname || 
         (oldname == '' && stats.split(',')[0] == stats)) {//if they didn't set a name
             setStatus($('#statustext')[0].innerHTML, true); //reset the status
