@@ -268,16 +268,7 @@ function setColor(msg) {
     }
 }
 
-var disable_refresh = false;
 function refresh() {
-    if (offline) return;
-    $('#refresher')[0].innerHTML = 'Refreshed!';
-    setTimeout(function() {
-        $('#refresher')[0].innerHTML = 'Refresh';
-    }, 500);
-    if (disable_refresh) {
-        return;
-    }
     var req = new XMLHttpRequest;
     //depth += 1;
     //console.log('updating info with delay: ' + deli / 1000 + 's');
