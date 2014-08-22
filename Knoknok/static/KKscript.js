@@ -81,7 +81,10 @@ function changeLink() {
             }
             localStorage.setItem("username", $('#username')[0].value);
             localStorage['userkey'] = Number(key);
-            afterkeygen();
+            var info = JSON.parse(req.responseText);
+            localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
+            makeKey();
+            populateFields();
             $.mobile.changePage('#KKhome', {transition : 'slide'});
         }
     }
@@ -126,7 +129,7 @@ function navig8() {
             localStorage['userkey'] = Number(data);
             connection_error = false;
             setTimeout(function() {
-                afterkeygen();
+                afterkeygen();//afterkeygen refreshes
                 $.mobile.changePage('#createroom', {transition : 'slide'});
             },3000);
         }
@@ -198,6 +201,7 @@ function sendsms() {
     post_params['roomkey'] = getKey();
     post_params['sendnum'] = encodeURIComponent(numberArray);
     $.post('http://ebcmdev.appspot.com/sendsms', post_params, function(){
+        refresh();
         $.mobile.changePage('#KKhome', {transition:"pop"});
     });
 }
@@ -533,7 +537,8 @@ function saveText(text) {
 
 //deletes the cookie
 function forgetRoom(){
-    //clearInterval(interval);
+    $('#abouttoget2key')[0].style.display = 'block';
+    $('#abouttosettings')[0].style.display = 'none';
     localStorage.removeItem("userkey");
     localStorage['statuslist'] = default_stati;
     $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Quick Statuses </option>';

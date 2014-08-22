@@ -51,12 +51,13 @@ redirectWhenCookie();
 
   <div data-role = "page" data-theme="a" id = "explainknoknok">
       <div class="centeredapparea">
-      <h1>About Knoknok</h1>
-      <p style = "text-align: left;">Knoknok is a mini social network for you and your roommates, meant to make living together more convenient and seamless.<br><br> Make a Knoknok room and invite your roommates, and once you're all set up you can view the status of your room and set it. For instance, if you're going to sleep, set your Knoknok status to "asleep" to let your roommate know they should be quiet when they enter your room.</p>
-
+          <h1>About Knoknok</h1>
+          <p style = "text-align: left;">Knoknok is a mini social network for you and your roommates, meant to make living together more convenient and seamless.<br><br> Make a Knoknok room and invite your roommates, and once you're all set up you can view the status of your room and set it. For instance, if you're going to sleep, set your Knoknok status to "asleep" to let your roommate know they should be quiet when they enter your room.</p>
       </div> 
-      <div class = "setupbuttons">
-      <a href="javascript:;" class="ui-btn" id="abouttoget2key" style = "margin: 0 auto;">&lt;- Back</a>
+      <br>
+      <div class = "setupbuttons" style="bottom:10px !important;">
+          <a href="javascript:;" class="ui-btn" id="abouttosettings" style="margin: 0 auto;display:none;">&lt;</a>
+          <a href="javascript:;" class="ui-btn" id="abouttoget2key" style="margin: 0 auto;">&lt;</a>
       </div>
 
   </div>
@@ -65,14 +66,14 @@ redirectWhenCookie();
   <div data-role= "page" data-theme = "a" id = "makeroom">
       <div id = "offlinething0" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
       <div class="centeredapparea">
-      <p style  = "text-align: left" id="makeroomtext">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
-          <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname" maxlength="12">
-          <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name">
-          
+          <p style  = "text-align: left" id="makeroomtext">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
+          <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname (optional)" maxlength="12">
+          <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name (optional)">
+
       </div>
       <div class = "setupbuttons">
-          <a href="javascript:;" class="ui-btn" id="keygenbtn" style = "float: right;">Next -&gt;</a>
-          <a href="javascript:;" id="makeroomtog2k" class="ui-btn" style = "float: left;">&lt;- Go Back</a>
+          <a href="javascript:;" id="makeroomtog2k" class="ui-btn" style = "float: left;width:35%;">&lt;</a>
+          <a href="javascript:;" class="ui-btn" id="keygenbtn" style = "float: right;width:35%;">&gt;</a>
       </div>
   </div>
 
@@ -95,12 +96,12 @@ redirectWhenCookie();
               <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
           </div>
           <div style ="clear: both;">
-          <input type="text" name="username" id="username" placeholder="Enter your name...">
+          <input type="text" name="username" id="username" placeholder="Your first name (optional)">
           </div>
       </div>
       <div class = "setupbuttons" style = "clear: both">
-              <a href="javascript:;" id="enterkeytokkhome" class="ui-btn" style = "float: right;">Go to Room</a>
-              <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "float: left;">&lt;- Go Back</a>
+              <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "float: left;width:35%;">&lt;</a>
+              <a href="javascript:;" id="enterkeytokkhome" class="ui-btn" style = "float: right;width:35%;">&gt;</a>
       </div>
   </div>
 
@@ -121,11 +122,10 @@ redirectWhenCookie();
       <p style = "text-align: left">This key identifies your room! Give it to your roommate(s) to let them access your new Knoknok room</p>
       <p id="key" style = "text-align: left">Key : couldn't load key :(</p>
           <a href="javascript:;" id="sendthiskey" class="ui-btn">Invite your roommate!</a>
-          
       </div> 
       <div class = "setupbuttons">
-          <a href="javascript:;" class="ui-btn" id="keybacktoroominfo" style = "float: left;">&lt;- Go Back</a>
-          <a href="javascript:;" class="ui-btn" id="createroomtoroom" style="float: right;">Go to room</a>
+          <a href="javascript:;" class="ui-btn" id="keybacktoroominfo" style = "float: left;width:35%;">&lt;</a>
+          <a href="javascript:;" class="ui-btn" id="createroomtoroom" style="float: right;width:35%;">&gt;</a>
       </div>
   </div>
 
@@ -143,11 +143,8 @@ redirectWhenCookie();
           -->
           <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
           <br>
-          <!--
-          <a href="javascript:;" class="ui-btn" id="smstoroom">Skip this step</a>
-          -->
-          <a href="javascript:;" id="smstokkhome" class="ui-btn" style="display:none;">&lt;- Go Back</a>
-          <a href="javascript:;" id="smstocreateroom" class="ui-btn">&lt;- Go Back</a>
+          <a href="javascript:;" id="smstocreateroom" class="ui-btn" style="float:left; width:35%;">&lt;</a>
+          <a href="javascript:;" id="smstokkhome" class="ui-btn" style="display:none;float:left; width:35%;">&lt;</a>
       </div>
   </div>
 
@@ -222,7 +219,10 @@ redirectWhenCookie();
               <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
           </div>
           <br>
-          <a href="javascript:;" class="ui-btn" id="settingsback">&lt;- Go Back</a>
+          <!--
+          <a href="javascript:;" class="ui-btn" id="settingsback">&lt;- Back</a>
+          -->
+          <a href="javascript:;" class="ui-btn" id="settingsback">&lt;</a>
       </div>
   </div>
 
@@ -230,8 +230,9 @@ redirectWhenCookie();
       <div data-role="main" class="ui-content">
           <p>This is your key.</p>
           <p id="showkey"></p>
-          <a href="javascript:;" class="ui-btn" id="showkeysms">Text this key again</a>
-          <a href="javascript:;" class="ui-btn" id="showkeyback">&lt;- Go Back</a>
+          <a href="javascript:;" class="ui-btn" id="showkeysms">Resend this key</a>
+          <a href="javascript:;" id="settingstoabout">About Knoknok</a>
+          <a href="javascript:;" class="ui-btn" id="showkeyback" style="float:left; width:35%;">&lt;</a>
       </div>
   </div>
 
@@ -245,7 +246,7 @@ redirectWhenCookie();
               <input type="text" name="username" id="usernameinput">
               <br>
               <a href="javascript:;" id="changeusernamebtn" class="ui-btn">Submit!</a>
-              <a href="javascript:;" id="changeunback" class="ui-btn">&lt;- Go Back</a>
+              <a href="javascript:;" id="changeunback" class="ui-btn" style="float:left; width:35%;">&lt;</a>
           </div>
       </div>
   </div>

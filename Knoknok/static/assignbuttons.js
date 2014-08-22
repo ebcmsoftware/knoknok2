@@ -42,12 +42,14 @@ $('#pastekeybtn').fastClick(function(e) {
     }
 });
 
+/*
+$('#createroomtoroom').fastClick(changeLink);
+*/
 $('#createroomtoroom').fastClick(function(e) {
+    populateFields();
     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 });
-$('#smstoroom').fastClick(function(e) {
-    $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
-});
+
 // $('#emailtoroom').fastClick(function(e) {
 //     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
 // });
@@ -68,6 +70,11 @@ $('#smstocreateroom').fastClick(function(e) {
 */
 
 go('settingsbutton', 'settingsmenu', 'pop');
+$('#settingstoabout').fastClick(function(e) {
+    $('#abouttoget2key')[0].style.display = 'none';
+    $('#abouttosettings')[0].style.display = 'block';
+    $.mobile.changePage('#explainknoknok');
+});
 
 //$('#setnosave').fastClick(leave_custom);
 //$.mobile.changePage('#KKhome', {transition : 'pop', reverse : true});
@@ -77,10 +84,6 @@ $('#KKstatusbuttons').fastClick(function(e) {
 });
 
 $('#customback').fastClick(hideControls);
-
-$('#errorbtn').fastClick(function(e) {
-    $.mobile.changePage('/templates/index.html', {transition : 'slide', reverse : true});
-});
 
 $('#changeinfobtn').fastClick(function(e) {
     $('#newroomname')[0].value = $('#roomname')[0].innerHTML;
@@ -92,11 +95,13 @@ go('forgetroombtn', 'forgetroom', 'slide');
 
 go('deleteroombtn', 'deleteroom', 'slide');
 
-go('settingsback', 'KKhome', 'pop', true);
+$('#settingsback').fastClick(function(e) {
+    refresh();
+    $.mobile.changePage('#KKhome', {transition:'pop',reverse:true});
+});
 
 go('changeunback', 'settingsmenu', 'slide', true);
 
-//go('showkeysms','sendkey', 'pop')
 $('#showkeysms').fastClick(function(e) {
     $('#phonenumbers')[0].innerHTML = '<input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">';
     num_phone_numbers = 1;
@@ -115,6 +120,7 @@ function changeInfo() {
     changeroomname();
     changeUserName();
     populateFields()
+    refresh();
     $.mobile.changePage('#KKhome', {transition : 'flow', reverse : true});
 }
 
@@ -164,7 +170,7 @@ $('#refresher').fastClick(function() {
         setTimeout(function() {
             $('#refresher')[0].innerHTML = 'Refresh';
         }, 2000);
-    }, 500);
+    }, 750);
 });
 
 $('#forgetroomconfirm').fastClick(function(e) {
