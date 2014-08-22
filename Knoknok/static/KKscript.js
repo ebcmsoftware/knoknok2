@@ -85,7 +85,7 @@ function changeLink() {
             localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
             makeKey();
             populateFields();
-            $.mobile.changePage('#KKhome', {transition : 'slide'});
+            $.mobile.changePage('#KKhome', {transition : 'flow'});
         }
     }
 }
@@ -120,7 +120,7 @@ function navig8() {
     var connection_error = true;
     setTimeout(function() {
         if (connection_error) {//aka we never got back the server response
-            $('#makeroomtext')[0].innerHTML = '<p style="color:red">Couldn\'t connect to server D:</p><br>Enter info for your Knoknok room <br>(you can change these later in settings)'
+            $('#makeroomtext')[0].innerHTML = '<p style="color:red">Couldn\'t connect to server :(</p>Enter info for your Knoknok room <br>(you can change these later in settings)'
             $.mobile.changePage('#makeroom', {transition:'slide',reverse:true});
         }
     }, 6000);
