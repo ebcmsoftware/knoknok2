@@ -11,8 +11,9 @@ Array.prototype.move = function(from, to) {
 
 var VERSION_NUM = encodeURIComponent("1.0");
 var delay = 17585; //ms
-var MAX_SAVED_STATI = 10; //since it's a dropdown (more input doesn't 
+var MAX_SAVED_STATI = 9;  //since it's a dropdown (more input doesn't 
                           //take up more space), i see no reason to cap it at 5 
+                          //this is 1 fewer (9 -> 10 stati saved) is that bad
 
 function startup() {
     try {
@@ -242,10 +243,17 @@ function get_coloring(msg, default_color) {
     if (split_msg[split_msg.length - 1].isColor()) {
         color = '#' + split_msg[split_msg.length - 1];
     }
-    else if (msg == 'Open') {
+    //["Come on in!#00FF00", "Asleep#FFBE00", "Studying#FFBE00", "Do not enter#FF0000"]
+    else if (msg == 'Come on in!') {
         color = '#00FF00';
     }
-    else if (msg == 'Closed') {
+    else if (msg == 'Asleep') {
+        color = '#FFBE00';
+    }
+    else if (msg == 'Studying') {
+        color = '#FFBE00';
+    }
+    else if (msg == 'Do not enter') {
         color = '#FF0000';
     }
     return color;
@@ -477,18 +485,17 @@ function leave_custom(msg) {
             setStatus(s); //setStatus hides the controls if good input.
         }
         else hideControls();
+    } else {
+        console.log("presed button, not closing.");
     }
 }
 
 //remembers the custom status in memory
 function saveText(text) {
-    console.log(text);
     text = text || document.getElementById("statusinput").value;
-    console.log(text);
     if (!text.slice(-7).isColor()) {
         text += get_coloring(text);
     }
-    console.log(text);
     var statuslist = localStorage.getItem("statuslist");
     if (!statuslist || statuslist == null) {
         statuslist = [text];
@@ -499,7 +506,13 @@ function saveText(text) {
         statuslist.unshift(text); //move it to the front always.
         if (i < 0) { //if the element is NOT there
             if (statuslist.length >= MAX_SAVED_STATI) {
-                statuslist.pop();
+                for (var j=MAX_SAVED_STATI; j > -1; j++) { //walk backwards - destroy oldest
+                    if (default_stati.indexOf(statuslist[j]) < 0) { //not a default status
+                        statuslist.splice(j, 1);
+                        break;
+                    }
+                }
+                //statuslist.pop();
             }
         } else { //if the elt is in there, move it to the front
             statuslist.splice(i+1, 1);
@@ -517,7 +530,7 @@ function saveText(text) {
 function forgetRoom(){
     //clearInterval(interval);
     localStorage.removeItem("userkey");
-    localStorage['statuslist'] = '["Open#00FF00", "Closed#FF0000"]';
+    localStorage['statuslist'] = default_stati;
     $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Recent Statuses </option>';
     addExtraButtons();
     hideControls();

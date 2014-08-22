@@ -6,9 +6,11 @@ if (getKey()) {
     refresh();
 }
 
+default_stati = '["Come on in!#00FF00", "Asleep#FFBE00", "Studying#FFBE00", "Do not enter#FF0000"]';
+
 //don't want to make it if !localStorage[''] because if it's an empty list it will be true and set these buttons.
 if (localStorage['statuslist'] == undefined || localStorage['statuslist'] == null) {
-    localStorage['statuslist'] = '["Open#00FF00", "Closed#FF0000"]';
+    localStorage['statuslist'] = default_stati;
 }
 
 addExtraButtons();
@@ -33,7 +35,7 @@ $("#roomkey0").keyup(function () {
 
 //puts the key in its full form into the proper text areas and submits
 function insertKey(k) {
-    if (k.length >= 3)
+    if (k.length == 6 || k.length == 7)
         $("#roomkey0")[0].value = k.substring(0,3);
     if (k.length == 7)
         $("#roomkey1")[0].value = k.substring(4,7);
