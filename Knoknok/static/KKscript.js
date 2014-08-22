@@ -367,16 +367,15 @@ $("#statusinput").focus(select_input);
 
 function showControls() {
     var s = $('#statustext')[0].innerHTML; 
-    if (s && s != '')
-        $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    //if (s && s != '')
+    //    $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    //    $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statusinput')[0].style.display = 'block';
-    if (s && s != '')
-        $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
     $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
-    $('#statusinput').focus();
     $('#statusinput')[0].value = '';
+    $('#statusinput').focus();
     //$('#statusinput').select();
     //select_input();
     //$('#statusinput')[0].setSelectionRange(0, 100);
@@ -530,7 +529,7 @@ function saveText(text) {
     $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Quick Statuses </option>';
     addExtraButtons();
     //addExtraButton(text, statuslist.length - 1);
-    //document.getElementById("statusinput").value = '';
+    document.getElementById("statusinput").value = '';
 }
 
 //deletes the cookie

@@ -127,11 +127,15 @@ class API(webapp.RequestHandler):
         return
     else:
         room = response[0]
-        self.response.out.write(
-        '{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'%(room.status if room.status != '' else '.', 
-                                                                       room.most_recent_username, 
-                                                                       room.roomname, 
-                                                                       pretty_date(room.time)))
+        if room.alive:
+            self.response.out.write(
+            '{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'%(room.status if room.status != '' else '.', 
+                                                                           room.most_recent_username, 
+                                                                           room.roomname, 
+                                                                           pretty_date(room.time)))
+        else:
+            self.response.out.write('null')
+            
 
 
 class KKError(webapp.RequestHandler):
@@ -436,10 +440,12 @@ def pretty_date(time=False):
     if day_diff < 0:
         return ''
     if day_diff == 0:
-        if second_diff < 5:
-            return "just now"
+        #if second_diff < 5:
+        #    return "just now"
+        #if second_diff < 60:
+        #    return str(second_diff) + " seconds ago"
         if second_diff < 60:
-            return str(second_diff) + " seconds ago"
+            return "just now"
         if second_diff < 120:
             return  "a minute ago"
         if second_diff < 3600:
