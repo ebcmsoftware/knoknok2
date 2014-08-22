@@ -270,6 +270,11 @@ function setColor(msg) {
 
 var disable_refresh = false;
 function refresh() {
+    if (offline) return;
+    $('#refresher')[0].innerHTML = 'Refreshed!';
+    setTimeout(function() {
+        $('#refresher')[0].innerHTML = 'Refresh';
+    }, 500);
     if (disable_refresh) {
         return;
     }
@@ -343,7 +348,7 @@ function localRefresh(msg, username, time, roomname) {
         $('#statusstats')[0].innerHTML = '<br>'
     }
     if (time) {
-        if (username && username != '') $('#statusstats')[0].innerHTML += ',';
+        if (username && username != '' && username != 'null' && username != null) $('#statusstats')[0].innerHTML += ',';
         else $('#statusstats')[0].innerHTML = 'set';
         $('#statusstats')[0].innerHTML += ' ' + time;
     }
@@ -380,8 +385,8 @@ function showControls() {
     $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
     $('#statusinput').focus();
+    //$('#statusinput').select();
     select_input();
-    $('#statusinput').select();
     $('#statusinput')[0].setSelectionRange(0, 100);
 }
 
@@ -477,6 +482,7 @@ var pressed_button = false;
 
 $(document).on('popupafteropen', '.ui-popup', function() {
  setTimeout(function () {
+  $('#refreshpopup').popup('close', {transition:'fade'});
   $('#setpopup').popup('close', {transition:'fade'});
  }, 1000);
 });

@@ -69,7 +69,7 @@ function toOffline() {
     offline_elts.forEach(function(id) {
         $('#'+id)[0].style.display = 'block';
     });
-    //clearInterval(interval);
+    $('#refresher')[0].innerHTML = 'Waiting for Internet connection...';
 }
 
 function toOnline() {
@@ -78,7 +78,7 @@ function toOnline() {
         console.lo
         $('#'+id)[0].style.display = 'none';
     });
-    //startInterval();
+    $('#refresher')[0].innerHTML = 'Refresh';
 }
 
 document.addEventListener("offline", toOffline, false);
