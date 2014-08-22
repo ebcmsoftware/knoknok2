@@ -1,2 +1,7 @@
-The roomkey is {{roomkey}} and the username is {{username}}
+The roomkey is {{roomkey}} and the username is <span id="username">{{username}}</span>
+
+<script>
+var username = document.getElementById('username')
+username.innerHTML = decodeURLComponent(username.innerHTML); //gae stores usernames, roomnames, and stati as urlencoded vals
+</script>
 
