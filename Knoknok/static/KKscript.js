@@ -33,29 +33,6 @@ function startup() {
 document.addEventListener("deviceready", startup, false);
 document.addEventListener("resume", startup, false);
 
-var offline_elts = ['offlinething', 'offlinething0', 'offlinething1', 'offlinething2'];
-var offline = false;
-
-function toOffline() {
-    offline = true;
-    offline_elts.forEach(function(id) {
-        $('#'+id)[0].style.display = 'block';
-    });
-    clearInterval(interval);
-}
-
-function toOnline() {
-    offline = false;
-    offline_elts.forEach(function(id) {
-        $('#'+id)[0].style.display = 'none';
-    });
-    startInterval();
-}
-toOnline();
-toOffline();
-document.addEventListener("offline", toOffline, false);
-document.addEventListener("online", toOnline, false);
-
 //clears the cookies for while we're testing
 function clearCookies(debug) {
     if (debug) {
@@ -110,11 +87,15 @@ function changeLink() {
 }
 
 function afterkeygen() {
+    refresh();
     makeKey();
+    populateFields();
+    /*
     refresh_info();
     depth = 1;
     if (!interval)
         var interval = setInterval(refresh_info, delay);
+        */
 }
 
 function populateFields() {
@@ -144,7 +125,6 @@ function navig8() {
             localStorage['userkey'] = Number(data);
             connection_error = false;
             setTimeout(function() {
-                makeKey();
                 afterkeygen();
                 $.mobile.changePage('#createroom', {transition : 'slide'});
             },3000);
@@ -282,7 +262,7 @@ function setColor(msg) {
 function refresh() {
     var req = new XMLHttpRequest;
     //depth += 1;
-    console.log('updating info with delay: ' + deli / 1000 + 's');
+    //console.log('updating info with delay: ' + deli / 1000 + 's');
     if (getKey() && getKey() != null && getKey() != "null") {
         req.open('GET', 'http://ebcmdev.appspot.com/api?roomkey='+getKey()+'&vers='+VERSION_NUM);
         req.send();
@@ -296,18 +276,13 @@ function refresh() {
     }
 }
 
+/*
 var depth = 1;
 var deli = delay;
 
 function reset_interval(dly) {
     if (interval) 
         clearInterval(interval);
-    /*
-    else {
-        alert("INTERVAL DOES NOT EXIST");
-        return;
-    }
-    */
     if (getKey()) {
         interval = setInterval(refresh_info, dly);
     }
@@ -334,6 +309,7 @@ if (getKey() && getKey() != null && getKey() != "null") {
     setTimeout(refresh, 12000);
 }
 else console.log("No roomkey loaded yet.");
+*/
 
 //just updates the status locally, doesn't send/get any info from the server
 function localRefresh(msg, username, time, roomname) {
@@ -372,6 +348,7 @@ function select_input() {
         });
     }, 100);
 }
+
 $("#statustext").click(select_input);
 $("#statusinput").focus(select_input);
 
@@ -401,6 +378,7 @@ function hideControls() {
     $('#statusinput')[0].style.display = 'none';
 }
 
+/*
 function startInterval() {
     depth = 1;
     deli = delay;
@@ -408,17 +386,17 @@ function startInterval() {
     setTimeout(refresh, 6000);
     setTimeout(refresh, 12000);
 }
+*/
 
 //makes the status something
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
-    if (msg == '') {
+    if (msg == '' || offline) {
         //hideControls();
         return;
     }
     hideControls();
-    //if i have time/willpower/reason to do this, make a spinner popup thing that will keep going if they don't have internet. this should work instantly though if they do have internet
     //we want this to feel immediate
     var post_params = new Object();
     var username = getUserName();
@@ -441,31 +419,7 @@ function setStatus(msg, update) {
     $.post('http://ebcmdev.appspot.com/sign', post_params, function() {});
     saveText(msg);
     //they are active -> refresh frequently
-    startInterval();
-}
-
-//SLATED FOR REMOVAL?
-function destroyButton(i) {
-    pressed_button=true;
-    var statuslist = localStorage.getItem("statuslist");
-    if (statuslist === null) return;
-    statuslist = JSON.parse(statuslist);
-    var currButton = $('#KKstatusbuttons')[0].firstChild.nextSibling.nextSibling.nextSibling;
-    statuslist.splice(i, 1);
-    if (statuslist.length > 0) {
-        localStorage.setItem("statuslist", JSON.stringify(statuslist));
-    }
-    else {
-        localStorage.setItem('statuslist', JSON.stringify([]));
-        //localStorage.removeItem("statuslist");
-    }
-    var nextButton;
-    while (currButton) {
-      nextButton = currButton.nextSibling;
-      currButton.parentNode.removeChild(currButton);
-      currButton = nextButton;
-    }
-    addExtraButtons();
+    //startInterval();
 }
 
 function addExtraButton(msg, i) {
@@ -561,7 +515,7 @@ function saveText(text) {
 
 //deletes the cookie
 function forgetRoom(){
-    clearInterval(interval);
+    //clearInterval(interval);
     localStorage.removeItem("userkey");
     localStorage['statuslist'] = '["Open#00FF00", "Closed#FF0000"]';
     $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Recent Statuses </option>';

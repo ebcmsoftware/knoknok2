@@ -236,11 +236,11 @@ class SendSMS(webapp.RequestHandler):
     phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
-        try:
-          int(s)
-        except ValueError:
-          return ''
-        s = s.replace('.','').replace('-','').replace('(','').replace(')','').replace('+','').replace('[','').replace(']','').replace(' ','').replace('{','').replace('}','')
+        #try:
+        #  int(s)
+        #except ValueError:
+        #  pass
+        s = filter(lambda x:x.isdigit(), s)
         if len(s) == 10:
             return s
         if len(s) == 11:

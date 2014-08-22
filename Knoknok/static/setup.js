@@ -1,12 +1,5 @@
 //This file is for setting up the page (cuz we can't template locally)
 
-/* SLATED FOR REMOVAL - I think that refresh_info (found in Kkscript.js) does what this does.
-var s = $('#statusstats')[0].innerHTML;
-if (s.slice(0,9) == "set by: ,") //aka if username is nothing
-$('#statusstats')[0].innerHTML = s.slice(0,3) + s.slice(9);
-else console.log(s);
-*/
-
 makeKey(getKey());
 if (getKey()) {
     $('#showkey')[0].innerHTML = formatKeyOutput();
@@ -65,4 +58,27 @@ $("#roomkey1").on('paste', pastef);
    }
    });
  */
+
+var offline_elts = ['offlinething', 'offlinething0', 'offlinething1', 'offlinething2'];
+var offline = false;
+
+function toOffline() {
+    offline = true;
+    offline_elts.forEach(function(id) {
+        $('#'+id)[0].style.display = 'block';
+    });
+    //clearInterval(interval);
+}
+
+function toOnline() {
+    offline = false;
+    offline_elts.forEach(function(id) {
+        console.lo
+        $('#'+id)[0].style.display = 'none';
+    });
+    //startInterval();
+}
+
+document.addEventListener("offline", toOffline, false);
+document.addEventListener("online", toOnline, false);
 
