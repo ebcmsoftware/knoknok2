@@ -56,7 +56,7 @@ redirectWhenCookie();
 
       </div> 
       <div class = "setupbuttons">
-      <a href="javascript:;" class="ui-btn" id="abouttoget2key" style = "margin: 0 auto;">&lt;- Back</a>
+      <a href="javascript:;" class="ui-btn" id="abouttoget2key" style = "bottom: 25px">Close</a>
       </div>
 
   </div>
@@ -71,8 +71,8 @@ redirectWhenCookie();
           
       </div>
       <div class = "setupbuttons">
-          <a href="javascript:;" class="ui-btn" id="keygenbtn" style = "float: right;">Next -&gt;</a>
-          <a href="javascript:;" id="makeroomtog2k" class="ui-btn" style = "float: left;">&lt;- Go Back</a>
+          <a href="javascript:;" class="ui-btn" id="keygenbtn" style = "float: right;">Next</a>
+          <a href="javascript:;" id="makeroomtog2k" class="ui-btn" style = "float: left;">&lt;</a>
       </div>
   </div>
 
@@ -100,7 +100,7 @@ redirectWhenCookie();
       </div>
       <div class = "setupbuttons" style = "clear: both">
               <a href="javascript:;" id="enterkeytokkhome" class="ui-btn" style = "float: right;">Go to Room</a>
-              <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "float: left;">&lt;- Go Back</a>
+              <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "float: left;">&lt;</a>
       </div>
   </div>
 
@@ -124,15 +124,16 @@ redirectWhenCookie();
           
       </div> 
       <div class = "setupbuttons">
-          <a href="javascript:;" class="ui-btn" id="keybacktoroominfo" style = "float: left;">&lt;- Go Back</a>
+          <a href="javascript:;" class="ui-btn" id="keybacktoroominfo" style = "float: left;">&lt;</a>
           <a href="javascript:;" class="ui-btn" id="createroomtoroom" style="float: right;">Go to room</a>
       </div>
   </div>
 
   <!-- the page for generating a key the key to the roommate -->
   <div data-role= "page" data-theme = "a" id = "sendkey">
-      <p id = "keytosendsms">Key: couldn't load key :(</p>
+      
       <div class="centeredapparea">
+      <p id = "keytosendsms">Key: couldn't load key :(</p>
           <div id="phonenumbers" class="ui-field-contain">
               <input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">
           </div>
@@ -146,8 +147,8 @@ redirectWhenCookie();
           <!--
           <a href="javascript:;" class="ui-btn" id="smstoroom">Skip this step</a>
           -->
-          <a href="javascript:;" id="smstokkhome" class="ui-btn" style="display:none;">&lt;- Go Back</a>
-          <a href="javascript:;" id="smstocreateroom" class="ui-btn">&lt;- Go Back</a>
+          <a href="javascript:;" id="smstokkhome" class="ui-btn" style="display:none;">Cancel</a>
+          <a href="javascript:;" id="smstocreateroom" class="ui-btn">Cancel</a>
       </div>
   </div>
 
@@ -171,7 +172,7 @@ redirectWhenCookie();
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header">
-          <a href = ""  class = "toplinks"> KNOKNOK </a>
+          <a href = ""  class = "toplinks"> Knoknok </a>
           <h1 id = "roomname">_</h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
@@ -222,7 +223,7 @@ redirectWhenCookie();
               <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
           </div>
           <br>
-          <a href="javascript:;" class="ui-btn" id="settingsback">&lt;- Go Back</a>
+          <a href="javascript:;" class="ui-btn" id="settingsback">Close</a>
       </div>
   </div>
 
@@ -231,7 +232,7 @@ redirectWhenCookie();
           <p>This is your key.</p>
           <p id="showkey"></p>
           <a href="javascript:;" class="ui-btn" id="showkeysms">Text this key again</a>
-          <a href="javascript:;" class="ui-btn" id="showkeyback">&lt;- Go Back</a>
+          <a href="javascript:;" class="ui-btn" id="showkeyback">Close</a>
       </div>
   </div>
 
@@ -245,7 +246,7 @@ redirectWhenCookie();
               <input type="text" name="username" id="usernameinput">
               <br>
               <a href="javascript:;" id="changeusernamebtn" class="ui-btn">Submit!</a>
-              <a href="javascript:;" id="changeunback" class="ui-btn">&lt;- Go Back</a>
+              <a href="javascript:;" id="changeunback" class="ui-btn">Cancel</a>
           </div>
       </div>
   </div>
