@@ -236,7 +236,7 @@ def formatKeyOutput(keystr):
 class SendSMS(webapp.RequestHandler):
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    phone_number = (self.request.get('sendnum').strip())
+    phone_number = self.request.get('sendnum').strip()
     phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
@@ -244,6 +244,7 @@ class SendSMS(webapp.RequestHandler):
         #  int(s)
         #except ValueError:
         #  pass
+        s = urllib.unquote(s)
         s = filter(lambda x:x.isdigit(), s)
         if len(s) == 10:
             return s
@@ -255,7 +256,8 @@ class SendSMS(webapp.RequestHandler):
         roomkey = int(self.request.get('roomkey', DEFAULT_ROOMKEY))
     except ValueError:
         return #I can't imagine a scenario in which this would happen.
-    username = (self.request.get('username', DEFAULT_ROOMKEY))
+    username = self.request.get('username', DEFAULT_ROOMKEY)
+    logging.info(phone_numberlist)
     phone_numberlist = map(format_phone, phone_numberlist)
     logging.info(phone_numberlist)
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"

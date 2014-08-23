@@ -181,7 +181,7 @@ var numberArray = "";
 function setNumberList() {
     numberArray = '';
     for (var i = 1; i < num_phone_numbers + 1; i++) {
-        numberArray += $("#sendnum" + i).val();
+        numberArray += encodeURIComponent($("#sendnum" + i).val());
         numberArray += " ";
     }
 }
