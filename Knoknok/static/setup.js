@@ -79,7 +79,11 @@ function toOnline() {
         $('#'+id)[0].style.display = 'none';
     });
     $('#refresher')[0].innerHTML = 'Refresh';
-    $('#makeroomtext')[0].innerHTML = 'Enter info for your Knoknok room <br>(you can change these later in settings)'
+    $('#makeroomtext')[0].innerHTML = 'Enter info for your Knoknok room <br>(you can change these later in settings)';
+    s = $('#statusinput').val();
+    if (s != $('#statustext')[0].innerHTML) {
+        setStatus(s); //setStatus hides the controls if good input.
+    }
 }
 
 document.addEventListener("offline", toOffline, false);
