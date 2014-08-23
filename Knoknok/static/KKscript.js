@@ -245,7 +245,9 @@ function get_coloring(msg, default_color) {
     var split_msg = msg.split('#');
     // if it's a valid color
     if (split_msg[split_msg.length - 1].isColor()) {
-        color = '#' + split_msg[split_msg.length - 1];
+        colorString = '#' + split_msg[split_msg.length - 1];
+        if (colorString != '#000000')
+            color = colorString;
     }
     //["Come on in!#00FF00", "Asleep#FFBE00", "Studying#FFBE00", "Do not enter#FF0000"]
     else if (msg == 'Come on in!') {
@@ -429,9 +431,9 @@ function setStatus(msg, update) {
         localRefresh(msg, username);
     }
     else {
-        $("#setpopup").popup("open", {history:false}, {transition:'fade'});
-        pressed_button = false;
         localRefresh(msg, username, 'just now');
+        pressed_button = false;
+        $("#setpopup").popup("open", {history:false}, {transition:'fade'});
     }
     post_params['roomkey'] = getKey();
     post_params['username'] = encodeURIComponent(username);
