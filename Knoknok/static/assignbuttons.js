@@ -142,9 +142,11 @@ $('#searchcontactssms').fastClick(function(e) {
         },0);
     };
     var failedCallback = function(result) {
+        /*
         setTimeout(function(){
             myAlert('Error getting contact\'s phone! ' + result);
         },0);
+        */
     }
     try {
         window.plugins.contactNumberPicker.pick(successCallback,failedCallback);

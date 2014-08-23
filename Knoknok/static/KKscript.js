@@ -408,8 +408,11 @@ function startInterval() {
 //msg: string to be set at the status
 //update: bool, whether or not to update the time it was set at
 function setStatus(msg, update) {
-    if (msg == '' || offline) {
-        //hideControls();
+    if (msg == '') {
+        hideControls();
+        return;
+    }
+    if (offline) { 
         return;
     }
     hideControls();
