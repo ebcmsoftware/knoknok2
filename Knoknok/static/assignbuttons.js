@@ -58,6 +58,8 @@ $('#createroomtoroom').fastClick(function(e) {
 
 go('smstoemail', 'sendemail', 'slide', false);
 
+go('abouttosettings', 'settingsmenu', 'slide', true);
+
 go('emailtosendkey', 'sendkey', 'slide', true);
 
 go('smstocreateroom', 'createroom', 'slide', true);
@@ -181,7 +183,10 @@ $('#forgetroomconfirm').fastClick(function(e) {
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);
 
-go('errorbtn', 'get2key', 'flow', true);
+$('#errorbtn').fastClick(function(e) {
+    forgetRoom();
+    $.mobile.changePage('#get2key', {transition:'flow',reverse:true});
+});
 
 $('#deleteroomconfirm').fastClick(function(e) {
     deleteRoom();

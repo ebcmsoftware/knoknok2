@@ -288,7 +288,8 @@ function refresh() {
                 if (info != null && info != 'null') {
                     localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
                 } else {
-                    window.location.href = "#deletedroom";
+                    if (getKey())
+                        window.location.href = "#deletedroom";
                 }
                 //$('#statusinput')[0].setAttribute('placeholder', info['status']);
             }
