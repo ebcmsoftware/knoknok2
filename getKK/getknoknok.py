@@ -43,7 +43,7 @@ class Download(webapp.RequestHandler):
 #TODO: "download knoknok here: <sites>"
           self.response.out.write("An error occurred :-( lol sry but u can dl knoknok here: www.ios.com www.android.com")
           raise
-      params['username']= urllib.unquote(self.request.get('u', 'your roommate'))
+      params['username']= urllib.unquote(self.request.get('u', 'Your roommate'))
       self.response.out.write(template.render(path, params))
       
 
