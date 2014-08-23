@@ -51,24 +51,25 @@ redirectWhenCookie();
 
   <div data-role = "page" data-theme="a" id = "explainknoknok">
       <div class="centeredapparea">
-      <h1>About Knoknok</h1>
-      <p style = "text-align: left;">Knoknok is a mini social network for you and your roommates, meant to make living together more convenient and seamless.<br><br> Make a Knoknok room and invite your roommates, and once you're all set up you can view the status of your room and set it. For instance, if you're going to sleep, set your Knoknok status to "asleep" to let your roommate know they should be quiet when they enter your room.</p>
-
+          <h1>About Knoknok</h1>
+          <p style = "text-align: left;">Knoknok is a mini social network for you and your roommates, meant to make living together more convenient and seamless.<br><br> Make a Knoknok room and invite your roommates, and once you're all set up you can view the status of your room and set it. For instance, if you're going to sleep, set your Knoknok status to "asleep" to let your roommate know they should be quiet when they enter your room.</p>
       </div> 
-      <div class = "setupbuttons">
-      <a href="javascript:;" class="ui-btn" id="abouttoget2key" style = "bottom: 25px">Close</a>
+
+      <div class = "setupbuttons" style="bottom:25px !important;">
+          <a href="javascript:;" class="ui-btn" id="abouttosettings" style="margin: 0 auto;display:none;">&lt;</a>
+          <a href="javascript:;" class="ui-btn" id="abouttoget2key" style="margin: 0 auto;">&lt;</a>
       </div>
 
   </div>
 
   <!-- the page for entering initial info -->
   <div data-role= "page" data-theme = "a" id = "makeroom">
-      <div id = "offlinething0" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
+      <div id = "offlinething0" style = "background-color: red; width = 100%; display:none">No internet connection</div>
       <div class="centeredapparea">
-      <p style  = "text-align: left" id="makeroomtext">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
-          <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname" maxlength="12">
-          <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name">
-          
+          <p style  = "text-align: left" id="makeroomtext">Enter info for your Knoknok room <br>(you can change these later in settings)</p>
+          <input type="text" name="enterroomname" id="enterroomname" placeholder="Your room's nickname (optional)" maxlength="34">
+          <input type="text" name="enterfirstname" id="enterfirstname" placeholder="Your first name (optional)">
+
       </div>
       <div class = "setupbuttons">
           <a href="javascript:;" class="ui-btn" id="keygenbtn" style = "float: right;">Next</a>
@@ -78,7 +79,7 @@ redirectWhenCookie();
 
   <!-- the page for entering a key -->
   <div data-role= "page" data-theme = "a" id = "enterkey">
-      <div id = "offlinething1" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
+      <div id = "offlinething1" style = "background-color: red; width = 100%; display:none">No internet connection</div>
       <div class="centeredapparea">
           <div>
               <p style = "text-align: left;">Your key is a 6 digit number, given to you by someone with the app already</p>
@@ -95,7 +96,7 @@ redirectWhenCookie();
               <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
           </div>
           <div style ="clear: both;">
-          <input type="text" name="username" id="username" placeholder="Enter your name...">
+          <input type="text" name="username" id="username" placeholder="Your first name (optional)">
           </div>
       </div>
       <div class = "setupbuttons" style = "clear: both">
@@ -106,7 +107,7 @@ redirectWhenCookie();
 
   <!-- the key loading page -->
   <div data-role = "page" data-theme = "a" id="keyload">
-      <div id = "offlinething2" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
+      <div id = "offlinething2" style = "background-color: red; width = 100%; display:none">No internet connection</div>
       <div class = "centeredapparea">
           <div id = "bottombox">
           <p>Your key is being generated...</p>
@@ -121,7 +122,6 @@ redirectWhenCookie();
       <p style = "text-align: left">This key identifies your room! Give it to your roommate(s) to let them access your new Knoknok room</p>
       <p id="key" style = "text-align: left">Key : couldn't load key :(</p>
           <a href="javascript:;" id="sendthiskey" class="ui-btn">Invite your roommate!</a>
-          
       </div> 
       <div class = "setupbuttons">
           <a href="javascript:;" class="ui-btn" id="keybacktoroominfo" style = "float: left;">&lt;</a>
@@ -144,11 +144,10 @@ redirectWhenCookie();
           -->
           <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
           <br>
-          <!--
-          <a href="javascript:;" class="ui-btn" id="smstoroom">Skip this step</a>
-          -->
+          <div class="setupbuttons">
           <a href="javascript:;" id="smstokkhome" class="ui-btn" style="display:none;">Cancel</a>
           <a href="javascript:;" id="smstocreateroom" class="ui-btn">Cancel</a>
+          </div>
       </div>
   </div>
 
@@ -172,14 +171,14 @@ redirectWhenCookie();
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme = "a" id="KKhome">
       <div data-role = "header">
-          <a href = ""  class = "toplinks"> Knoknok </a>
-          <h1 id = "roomname">_</h1>
+          <a href = ""  class = "toplinks" id = "roomname"> _ </a>
+          <h1 ></h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
       </div>
       <div id = "offlinething" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "margin-top: 10%;">
           <div id="statustext" style = "font-size: 250%;">_</div>
-          <textarea cols="40" rows="1" type="text" name="status" onfocus="pressed_button=false;console.log('focusing the textarea');" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #0062A5; font-size: 250%; border: 0px" maxlength=40></textarea>
+          <textarea cols="40" rows="1" type="text" name="status" onfocus="pressed_button=false;" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #0062A5; font-size: 250%; border: 0px" maxlength=40></textarea>
           <div id = "pleasenodisplay" style="display:none;">
               <select id="KKstatusbuttons" onchange="pressed_button=false;leave_custom(this.value);">
                   <option value="-1">  Quick Statuses </option>
@@ -223,6 +222,8 @@ redirectWhenCookie();
               <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
           </div>
           <br>
+          <a href="javascript:;" id="settingstoabout">About Knoknok</a>
+          <br>
           <a href="javascript:;" class="ui-btn" id="settingsback">Close</a>
       </div>
   </div>
@@ -241,7 +242,7 @@ redirectWhenCookie();
       <div data-role="main" class="ui-content">
           <div class="ui-field-contain">
               <p>Change room name to what?</p>
-              <input type="text" name="roomname" id="newroomname" maxlength="12">
+              <input type="text" name="roomname" id="newroomname" maxlength="34">
               <p>Change your name to what?</p>
               <input type="text" name="username" id="usernameinput">
               <br>

@@ -17,6 +17,9 @@ handlers:
 - url: ../stylesheets
   static_dir: ../Knoknok/stylesheets
 
+- url: /twilio
+  static_dir: /
+
 - url: /.*
   script: knoknok.py
 

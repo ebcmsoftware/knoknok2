@@ -16,7 +16,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
 #from twilio import twiml
-#from twilio.rest import TwilioRestClient
+from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -127,11 +127,15 @@ class API(webapp.RequestHandler):
         return
     else:
         room = response[0]
-        self.response.out.write(
-        '{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'%(room.status if room.status != '' else '.', 
-                                                                       room.most_recent_username, 
-                                                                       room.roomname, 
-                                                                       pretty_date(room.time)))
+        if room.alive:
+            self.response.out.write(
+            '{"status":"%s","username":"%s","roomname":"%s","time":"%s"}'%(room.status if room.status != '' else '.', 
+                                                                           room.most_recent_username, 
+                                                                           room.roomname, 
+                                                                           pretty_date(room.time)))
+        else:
+            self.response.out.write('null')
+            
 
 
 class KKError(webapp.RequestHandler):
@@ -256,19 +260,21 @@ class SendSMS(webapp.RequestHandler):
     logging.info(phone_numberlist)
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-    client = None #XXX XXX XXX XXX XXX XXX  
-    #client = TwilioRestClient(account_sid, auth_token)
-    if username and username != '':
-        body = username
-    else:
-        body = 'Your roommate'
-    def getShortURL(body, roomkey):
-        longUrl = urllib.quote("http://getknoknok.appspot.com/dl?r=" + str(roomkey) + "&u=" + urllib.quote(body))
+    #client = None #XXX XXX XXX XXX XXX XXX  
+    client = TwilioRestClient(account_sid, auth_token)
+
+    def getShortURL(username, roomkey):
+        longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u="+username)
         domain = 'j.mp'
-        s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain=" + domain
+        s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain="+domain
         data = json.load(urllib2.urlopen(s))
-        return 'http://' + domain + '/' + data['global_hash']
-    body += " invited you to join Knoknok! It's free! Get started here: " + getShortURL(body, roomkey)
+        return 'http://' + domain + '/' + data[u'data'][u'global_hash']
+
+    if username and username != '':
+        username = urllib.unquote(username)
+    else:
+        username = 'Your roommate'
+    body = username+" invited you to join Knoknok! It's free! Get started here: " + getShortURL(username, roomkey)
     for phone_number in phone_numberlist:
         if phone_number != '':
             rv = client.sms.messages.create(to="+1" + str(phone_number),
@@ -436,10 +442,12 @@ def pretty_date(time=False):
     if day_diff < 0:
         return ''
     if day_diff == 0:
-        if second_diff < 5:
-            return "just now"
+        #if second_diff < 5:
+        #    return "just now"
+        #if second_diff < 60:
+        #    return str(second_diff) + " seconds ago"
         if second_diff < 60:
-            return str(second_diff) + " seconds ago"
+            return "just now"
         if second_diff < 120:
             return  "a minute ago"
         if second_diff < 3600:

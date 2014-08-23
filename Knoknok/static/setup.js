@@ -69,7 +69,7 @@ function toOffline() {
     offline_elts.forEach(function(id) {
         $('#'+id)[0].style.display = 'block';
     });
-    $('#refresher')[0].innerHTML = 'Waiting for Internet connection...';
+    $('#refresher')[0].innerHTML = 'No Internet...';
 }
 
 function toOnline() {
@@ -79,6 +79,7 @@ function toOnline() {
         $('#'+id)[0].style.display = 'none';
     });
     $('#refresher')[0].innerHTML = 'Refresh';
+    $('#makeroomtext')[0].innerHTML = 'Enter info for your Knoknok room <br>(you can change these later in settings)'
 }
 
 document.addEventListener("offline", toOffline, false);

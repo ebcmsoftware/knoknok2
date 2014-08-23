@@ -17,23 +17,22 @@ var MAX_SAVED_STATI = 9;  //since it's a dropdown (more input doesn't
                           //this is 1 fewer (9 -> 10 stati saved) is that bad
 
 function startup() {
-    try {
+    setTimeout(function() {
+        if (getKey()) {
+            refresh();
+        }
         navigator.splashscreen.hide()
         StatusBar.overlaysWebView(false); //ios7 junk
-    } catch (e) {
-        alert(e.message);
-    }
-    if (getKey()) {
-        //window.location.href = '#KKhome';
-    }
-    if (getKey()) {
-        refresh();
-    }
-    populateFields();
+        populateFields();
+    }, 0);
 }
 
+//happens when opening on background
 document.addEventListener("deviceready", startup, false);
-document.addEventListener("resume", startup, false);
+//This doesn't work (ios) but doesnt batter.
+document.addEventListener("resume", startup, false); 
+//ios thing wooooooooooooo
+document.addEventListener("active", startup, false);
 
 //clears the cookies for while we're testing
 function clearCookies(debug) {
@@ -82,8 +81,11 @@ function changeLink() {
             }
             localStorage.setItem("username", $('#username')[0].value);
             localStorage['userkey'] = Number(key);
-            afterkeygen();
-            $.mobile.changePage('#KKhome', {transition : 'slide'});
+            var info = JSON.parse(req.responseText);
+            localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
+            makeKey();
+            populateFields();
+            $.mobile.changePage('#KKhome', {transition : 'flow'});
         }
     }
 }
@@ -118,7 +120,7 @@ function navig8() {
     var connection_error = true;
     setTimeout(function() {
         if (connection_error) {//aka we never got back the server response
-            $('#makeroomtext')[0].innerHTML = '<p style="color:red">Couldn\'t connect to server D:</p><br>Enter info for your Knoknok room <br>(you can change these later in settings)'
+            $('#makeroomtext')[0].innerHTML = '<p style="color:red">Couldn\'t connect to server :(</p>Enter info for your Knoknok room <br>(you can change these later in settings)'
             $.mobile.changePage('#makeroom', {transition:'slide',reverse:true});
         }
     }, 6000);
@@ -127,7 +129,7 @@ function navig8() {
             localStorage['userkey'] = Number(data);
             connection_error = false;
             setTimeout(function() {
-                afterkeygen();
+                afterkeygen();//afterkeygen refreshes
                 $.mobile.changePage('#createroom', {transition : 'slide'});
             },3000);
         }
@@ -199,6 +201,7 @@ function sendsms() {
     post_params['roomkey'] = getKey();
     post_params['sendnum'] = encodeURIComponent(numberArray);
     $.post('http://ebcmdev.appspot.com/sendsms', post_params, function(){
+        refresh();
         $.mobile.changePage('#KKhome', {transition:"pop"});
     });
 }
@@ -367,16 +370,15 @@ $("#statusinput").focus(select_input);
 
 function showControls() {
     var s = $('#statustext')[0].innerHTML; 
-    if (s && s != '')
-        $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    //if (s && s != '')
+    //    $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
+    //    $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statusinput')[0].style.display = 'block';
-    if (s && s != '')
-        $('#statusinput').height($('#statustext')[0].offsetHeight);
     $('#statustext')[0].style.display = 'none';
     $('#pleasenodisplay')[0].style.display = 'block';
     $('#KKstatusbuttons')[0].style.display = 'block';
-    $('#statusinput').focus();
     $('#statusinput')[0].value = '';
+    $('#statusinput').focus();
     //$('#statusinput').select();
     //select_input();
     //$('#statusinput')[0].setSelectionRange(0, 100);
@@ -420,7 +422,7 @@ function setStatus(msg, update) {
     }
     else {
         $("#setpopup").popup("open", {history:false}, {transition:'fade'});
-        pressed_button = true;
+        pressed_button = false;
         localRefresh(msg, username, 'just now');
     }
     post_params['roomkey'] = getKey();
@@ -530,12 +532,13 @@ function saveText(text) {
     $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Quick Statuses </option>';
     addExtraButtons();
     //addExtraButton(text, statuslist.length - 1);
-    //document.getElementById("statusinput").value = '';
+    document.getElementById("statusinput").value = '';
 }
 
 //deletes the cookie
 function forgetRoom(){
-    //clearInterval(interval);
+    $('#abouttoget2key')[0].style.display = 'block';
+    $('#abouttosettings')[0].style.display = 'none';
     localStorage.removeItem("userkey");
     localStorage['statuslist'] = default_stati;
     $('#KKstatusbuttons')[0].innerHTML = '<option value="-1"> Quick Statuses </option>';
