@@ -236,7 +236,7 @@ def formatKeyOutput(keystr):
 class SendSMS(webapp.RequestHandler):
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    phone_number = self.request.get('sendnum').strip()
+    phone_number = urllib.unquote(self.request.get('sendnum')).strip() #oops there are 2 levels of uri encoding o well
     phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
@@ -283,16 +283,16 @@ class SendSMS(webapp.RequestHandler):
     mail.send_mail(sender="Knoknok Notification <tuftswhistling@gmail.com>",
                        to="popcorncolonel@gmail.com",
                        subject="SMS Message(s) Sent",
-                       body="Phone numbers: " + phone_numbers + 
+                       body="Phone numbers: " + phone_number + 
                              "\nPhone_numberlist: " + str(phone_numberlist) + 
                              "\nBody: " + body)
 ###############################
-    #for phone_number in phone_numberlist:
-    #    if phone_number != '':
-    #        rv = client.sms.messages.create(to="+1" + str(phone_number),
-    #                                from_="+18646432174",
-    #                                body=body)
-    #self.response.write(str(rv))
+    for phone_number in phone_numberlist:
+        if phone_number != '':
+            rv = client.sms.messages.create(to="+1" + str(phone_number),
+                                    from_="+18646432174",
+                                    body=body)
+    self.response.write(str(rv))
 
 
 def keygen(depth=0):
