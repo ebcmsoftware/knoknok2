@@ -170,7 +170,7 @@ redirectWhenCookie();
       <div data-role = "header">
           <a href = ""  class = "toplinks"> KNOKNOK </a>
           <h1 id = "roomname">_</h1>
-          <a href="javascript:;" id="settingsbutton" class = "toplinks">Settings</a>
+          <a href="javascript:;" id="settingsbutton" class = "toplinks"><img src='icons/settings.png'></a>
       </div>
       <div id = "offlinething" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "margin-top: 10%;">
@@ -197,7 +197,7 @@ redirectWhenCookie();
   <div data-role = "page" data-theme = "a" data-dialog = "true" id="deletedroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
-              <p>This room was deleted :(</p>
+              <p>This room was deleted!</p>
               <p>Click here to create a new room, or enter another one.</p>
               <a href='javascript:;' id="errorbtn" class='ui-btn'>Go back to home page</a>
           </div>
@@ -258,8 +258,8 @@ redirectWhenCookie();
               <p>Forget about this room?</p>
               <p>The room will still be available to be used by your roommates.</p>
               <p>(In case you press yes in error, this room's key is <span id="forget_key_display">-error-</span>)</p>
-              <a href="javascript:;" id="forgetroomconfirm" class="ui-btn">Yes</a>
-              <a href="javascript:;" id="forgetroomback" class="ui-btn">No</a>
+              <a href="javascript:;" id="forgetroomback" class="ui-btn" style="float:left; width:35%;">No</a>
+              <a href="javascript:;" id="forgetroomconfirm" class="ui-btn" style="float:right; width:35%;">Yes</a>
           </div>
       </div>
   </div>
@@ -270,8 +270,8 @@ redirectWhenCookie();
           <div class="ui-field-contain">
               <p>Delete this room from our database forever?</p>
               <p>(Everyone with the roomkey <span id="delete_key_display">-error-</span> will no longer be able to access the room!)</p>
-              <a href="javascript:;" id="deleteroomconfirm" class="ui-btn">Yes</a>
-              <a href="javascript:;" id="deleteroomback" class="ui-btn">No</a>
+              <a href="javascript:;" id="deleteroomback" class="ui-btn" style="float:left; width:35%;">No</a>
+              <a href="javascript:;" id="deleteroomconfirm" class="ui-btn" style="float:right; width:35%;">Yes</a>
           </div>
       </div>
   </div>
