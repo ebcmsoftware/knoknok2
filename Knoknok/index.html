@@ -56,8 +56,8 @@ redirectWhenCookie();
       </div> 
 
       <div class = "setupbuttons" style="bottom:25px !important;">
-          <a href="javascript:;" class="ui-btn" id="abouttosettings" style="margin: 0 auto;display:none;">&lt;</a>
-          <a href="javascript:;" class="ui-btn" id="abouttoget2key" style="margin: 0 auto;">&lt;</a>
+          <a href="javascript:;" class="ui-btn" id="abouttosettings" style="margin: 0 auto;display:none;">Close</a>
+          <a href="javascript:;" class="ui-btn" id="abouttoget2key" style="margin: 0 auto;">Close</a>
       </div>
 
   </div>
@@ -214,12 +214,12 @@ redirectWhenCookie();
           <hr>
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>General</p>
-              <a href="javascript:;" class="ui-btn" id="showkeybtn">Show Key</a>
+              <a href="javascript:;" class="ui-btn" id="showkeybtn">Show room key</a>
               <a href="javascript:;" class="ui-btn" id="changeinfobtn">Change info</a>
           </div>
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>Get rid of room</p>
-              <a href="javascript:;" class="ui-btn" id="forgetroombtn">Forget about this room</a>
+              <a href="javascript:;" class="ui-btn" id="forgetroombtn">Reset app</a>
               <a href="javascript:;" class="ui-btn" id="deleteroombtn" style="color:#FF0000; border: 2px solid #FF0000;">Delete this room</a>
           </div>
           <br>
@@ -257,11 +257,11 @@ redirectWhenCookie();
   <div data-role = "page" data-theme = "a" data-dialog="true" id="forgetroom">
       <div data-role = "main" class = "ui-content">
           <div class="ui-field-contain">
-              <p>Forget about this room?</p>
+              <p>Reset your app?</p>
               <p>The room will still be available to be used by your roommates.</p>
-              <p>(In case you press yes in error, this room's key is <span id="forget_key_display">-error-</span>)</p>
+              <p>This room's key is <span id="forget_key_display">-error-</span></p>
               <a href="javascript:;" id="forgetroomback" class="ui-btn" style="float:left; width:35%;">No</a>
-              <a href="javascript:;" id="forgetroomconfirm" class="ui-btn" style="float:right; width:35%;">Yes</a>
+              <a href="javascript:;" id="forgetroomconfirm" class="ui-btn" style="float:right; width:35%; color: red">Yes</a>
           </div>
       </div>
   </div>
@@ -273,7 +273,7 @@ redirectWhenCookie();
               <p>Delete this room from our database forever?</p>
               <p>(Everyone with the roomkey <span id="delete_key_display">-error-</span> will no longer be able to access the room!)</p>
               <a href="javascript:;" id="deleteroomback" class="ui-btn" style="float:left; width:35%;">No</a>
-              <a href="javascript:;" id="deleteroomconfirm" class="ui-btn" style="float:right; width:35%;">Yes</a>
+              <a href="javascript:;" id="deleteroomconfirm" class="ui-btn" style="float:right; width:35%; color: red">Yes</a>
           </div>
       </div>
   </div>
