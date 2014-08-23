@@ -181,6 +181,8 @@ $('#forgetroomconfirm').fastClick(function(e) {
 });
 go('forgetroomback', 'settingsmenu', 'slide', true);
 
+go('errorbtn', 'get2key', 'flow', true);
+
 $('#deleteroomconfirm').fastClick(function(e) {
     deleteRoom();
     $.mobile.changePage('#get2key', {transition : 'flow', reverse : true});

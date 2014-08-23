@@ -271,7 +271,6 @@ function setColor(msg) {
     }
 }
 
-var deleted_room = false;
 function refresh() {
     var req = new XMLHttpRequest;
     //depth += 1;
@@ -288,10 +287,8 @@ function refresh() {
                 var info = JSON.parse(req.responseText);
                 if (info != null && info != 'null') {
                     localRefresh(decodeURIComponent(info['status']), decodeURIComponent(info['username']), decodeURIComponent(info['time']), decodeURIComponent(info['roomname']));
-                    deleted_room = false;
                 } else {
-                    deleted_room = true;
-                    localRefresh('This room has been deleted!#FF0000', 'The Knoknok Team', 'just now', '');
+                    window.location.href = "#deletedroom";
                 }
                 //$('#statusinput')[0].setAttribute('placeholder', info['status']);
             }
@@ -376,7 +373,6 @@ $("#statustext").click(select_input);
 $("#statusinput").focus(select_input);
 
 function showControls() {
-    if (deleted_room) return;
     var s = $('#statustext')[0].innerHTML; 
     if (s && s != '')
         $('#statusinput')[0].value = $('#statustext')[0].innerHTML;
