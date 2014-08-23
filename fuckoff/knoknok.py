@@ -16,7 +16,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import mail
 
 #from twilio import twiml
-#from twilio.rest import TwilioRestClient
+from twilio.rest import TwilioRestClient
 
 DEFAULT_ROOMKEY = 1
 DEFAULT_NAME = ''
@@ -260,8 +260,8 @@ class SendSMS(webapp.RequestHandler):
     logging.info(phone_numberlist)
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
-    client = None #XXX XXX XXX XXX XXX XXX  
-    #client = TwilioRestClient(account_sid, auth_token)
+    #client = None #XXX XXX XXX XXX XXX XXX  
+    client = TwilioRestClient(account_sid, auth_token)
 
     def getShortURL(username, roomkey):
         longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u="+username)
