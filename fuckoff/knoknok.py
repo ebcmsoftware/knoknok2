@@ -236,7 +236,7 @@ def formatKeyOutput(keystr):
 class SendSMS(webapp.RequestHandler):
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    phone_number = self.request.get('sendnum').strip()
+    phone_number = urllib.unquote(self.request.get('sendnum')).strip() #oops there are 2 levels of uri encoding o well
     phone_numberlist = phone_number.split(' ')
     phone_numberlist = list(set(phone_numberlist)) #remove duplicates
     def format_phone(s):
@@ -257,9 +257,11 @@ class SendSMS(webapp.RequestHandler):
     except ValueError:
         return #I can't imagine a scenario in which this would happen.
     username = self.request.get('username', DEFAULT_ROOMKEY)
-    logging.info(phone_numberlist)
+    logging.warning(phone_numberlist)
+    old_numberlist = phone_number
     phone_numberlist = map(format_phone, phone_numberlist)
-    logging.info(phone_numberlist)
+    logging.warning(phone_numberlist)
+
     account_sid = "AC51e421b3711979e266183c094ec5ebe2"
     auth_token  = "fb5fbc4048013c21dc1881fa69015fb6"
     #client = None #XXX XXX XXX XXX XXX XXX  
@@ -277,13 +279,20 @@ class SendSMS(webapp.RequestHandler):
     else:
         username = 'Your roommate'
     body = username+" invited you to join Knoknok! It's free! Get started here: " + getShortURL(username, roomkey)
+###############################
+    mail.send_mail(sender="Knoknok Notification <tuftswhistling@gmail.com>",
+                       to="popcorncolonel@gmail.com",
+                       subject="SMS Message(s) Sent",
+                       body="Phone numbers: " + phone_number + 
+                             "\nPhone_numberlist: " + str(phone_numberlist) + 
+                             "\nBody: " + body)
+###############################
     for phone_number in phone_numberlist:
         if phone_number != '':
             rv = client.sms.messages.create(to="+1" + str(phone_number),
                                     from_="+18646432174",
                                     body=body)
-    self.response.write(str(rv))
-    #self.redirect('/?roomkey=' + str(roomkey)+'#KKhome') #SLATED FOR REMOVAL
+            self.response.write(str(rv))
 
 
 def keygen(depth=0):

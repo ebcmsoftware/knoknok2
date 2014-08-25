@@ -1,7 +1,42 @@
-The roomkey is {{roomkey}} and the username is <span id="username">{{username}}</span>
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Get Knoknok, the app for roomates!</title>
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link href='http://fonts.googleapis.com/css?family=Raleway:600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="static/style.css" type="text/css">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable = 0;" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+
+<style>
+.comma {
+    font-family:Arial;
+    font-size:1.25em;
+}
+</style>
+
+<div id = "icons" style = "margin: 20% auto; width: 90%;font-size:1.1em;">
+    <h2 style = "text-align: center">Knoknok is the app for roommates!</h2>
+    <p style = "clear: both;">
+    <span id="username">{{username}}</span> invited you to join Knoknok!
+    <br>
+    <br>
+    To join in on the fun, copy this roomkey: <span style="font-weight:bold;">{{roomkey}}</span><span class="comma">,</span> then download the app below<span class="comma">,</span> and paste it when you load up the app!
+    </p>
+    <hr>
+    <a href = "http://ebcmsoftware.com/knoknok"><img src = "images/gp2.png" style = "float: left; width:200px;"></a>
+    <a href = "http://ebcmsoftware.com/knoknok"><img src = "images/as2.png" style = "float: right;width:200px;"></a>
+</div>
+
+</body>
+</html>
 
 <script>
 var username = document.getElementById('username')
-username.innerHTML = decodeURLComponent(username.innerHTML); //gae stores usernames, roomnames, and stati as urlencoded vals
+username.innerHTML = decodeURIComponent(username.innerHTML); //gae stores usernames, roomnames, and stati as urlencoded vals
 </script>
 
