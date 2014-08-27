@@ -16,10 +16,17 @@ var MAX_SAVED_STATI = 9;  //since it's a dropdown (more input doesn't
                           //take up more space), i see no reason to cap it at 5 
                           //this is 1 fewer (9 -> 10 stati saved) is that bad
 
+var disable_refresh = false;
 function startup() {
     setTimeout(function() {
         if (getKey()) {
             refresh();
+            disable_refresh = true;
+            $('#refresher')[0].innerHTML = 'Refreshed!';
+            setTimeout(function() {
+                $('#refresher')[0].innerHTML = 'Refresh';
+                disable_refresh = false;
+            }, 2000);
         }
         navigator.splashscreen.hide()
         StatusBar.overlaysWebView(false); //ios7 junk
