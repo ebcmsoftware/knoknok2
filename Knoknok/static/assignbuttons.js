@@ -31,8 +31,7 @@ go('sendthiskey', 'sendkey', 'slide');
 
 $('#pastekeybtn').fastClick(function(e) {
   try{
-    //window.plugins.clipboard.paste(function (text) {
-    clipboard.paste(function (text) {
+    window.plugins.clipboard.paste(function (text) {
         insertKey(text);
     },
     function(text) {
