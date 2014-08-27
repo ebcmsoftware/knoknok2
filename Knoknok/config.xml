@@ -67,7 +67,10 @@
 
         <gap:splash src="splash/Default@2x.png" /> <!-- default -->
 
+        <!--
         <gap:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
+        -->
+        <gap:plugin name="com.saatcioglu.phonegap.ClipboardManagerPlugin" version="1.0" />
         <gap:plugin name="hu.dpal.phonegap.plugins.contactnumberpicker" version="0.1.1" />
         <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
         <gap:plugin name="org.apache.cordova.SplashScreen"/>
