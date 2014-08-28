@@ -36,8 +36,13 @@ function startup() {
 
 //happens when opening on background
 document.addEventListener("deviceready", startup, false);
-//This doesn't work (ios) but doesnt batter.
+//
+//This doesn't work (ios) but doesnt matter.
+document.addEventListener("deviceready", function() {
+    document.addEventListener("resume", startup, false); 
+}, false);
 document.addEventListener("resume", startup, false); 
+
 //ios thing wooooooooooooo
 document.addEventListener("active", startup, false);
 
