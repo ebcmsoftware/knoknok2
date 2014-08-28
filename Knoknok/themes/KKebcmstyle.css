@@ -25,6 +25,12 @@
 	 border-color: #1095EA !important; 
    text-shadow: none !important;
 }
+#settingsbutton{
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
 
 .keyload{
     -webkit-animation: glow 0.6s infinite alternate;
