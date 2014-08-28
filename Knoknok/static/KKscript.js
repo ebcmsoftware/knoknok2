@@ -41,7 +41,7 @@ document.addEventListener("deviceready", startup, false);
 document.addEventListener("deviceready", function() {
     document.addEventListener("resume", startup, false); 
 }, false);
-document.addEventListener("resume", startup, false); 
+//document.addEventListener("resume", startup, false); 
 
 //ios thing wooooooooooooo
 document.addEventListener("active", startup, false);
