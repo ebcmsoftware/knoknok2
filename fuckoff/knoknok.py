@@ -30,6 +30,7 @@ class Room(ndb.Model):
   alive = ndb.BooleanProperty(default=False)
   most_recent_username = ndb.StringProperty()
   time = ndb.DateTimeProperty()
+  yo_list = ndb.StringProperty(repeated=True)
 
   @classmethod
   def query_book(self, ancestor_key):
@@ -37,7 +38,7 @@ class Room(ndb.Model):
 
 
 def guestbook_key(roomkey=DEFAULT_ROOMKEY):
-  """Constructs a Datastore key for a Guestbook entity with guestbook_name."""
+  #Constructs a Datastore key for a Guestbook entity with guestbook_name.
   return ndb.Key('New Room', roomkey)
 
 default_room = Room(parent=guestbook_key(DEFAULT_ROOMKEY))
@@ -52,11 +53,9 @@ class MainPage(webapp.RequestHandler):
 
   def get(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
-    path = os.path.join(os.path.dirname(__file__), '../knoknok/index.html')
+    path = os.path.join(os.path.dirname(__file__), '../Knoknok/index.html')
     self.response.out.write(template.render(path, {}))
     return
-    #self.response.out.write("/templates/index.html")
-    #return
 #this function actually has no more purpose (other than testing on localhost rather than file:// which is pointless. it's all API now that phonegap exists.
 #SLATED FOR REMOVAL
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -136,6 +135,30 @@ class API(webapp.RequestHandler):
         else:
             self.response.out.write('null')
             
+
+class AddYoser(webapp.RequestHandler):
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+
+  def post(self):
+      self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+      roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
+      old_yosername = self.request.get('oldyosername', '')
+      yosername = self.request.get('yosername', '')
+      if roomkey != DEFAULT_ROOMKEY:
+          roomkey = int(roomkey)
+      greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
+      room = greetings_query.fetch(1)[0]
+      try:
+          room.yo_list.remove(old_yosername)
+      except ValueError:
+          console.debug('"' + old_yosername + '" not in the list of yosernames')
+          pass
+      room.yo_list.append(yosername)
+      room.put()
+      
 
 
 class KKError(webapp.RequestHandler):
@@ -378,7 +401,6 @@ class ChangeRoomName(webapp.RequestHandler):
         logging.info(str(response) + "__" + roomkey + "__")
         raise KeyError #key not found - exit
     room.put()
-    #self.redirect('/?roomkey=' + str(roomkey)+ '#KKhome')
 
 
 class DeleteRoom(webapp.RequestHandler):
@@ -397,8 +419,8 @@ class DeleteRoom(webapp.RequestHandler):
     if response != []:
         room = response[0]
         room.alive = False
+        room.yo_list = []
         room.put()
-    #self.redirect('/')
 
 
 class UpdateStatus(webapp.RequestHandler):
@@ -410,7 +432,7 @@ class UpdateStatus(webapp.RequestHandler):
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
     #boolean - whether or not we are just updating the info and not making a new status 
-    update = self.request.get('update', DEFAULT_ROOMKEY) 
+    update = self.request.get('update', 0) 
     update = update == '1' #booleanize it
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
     if roomkey != DEFAULT_ROOMKEY:
@@ -418,6 +440,7 @@ class UpdateStatus(webapp.RequestHandler):
     logging.info("got roomkey in /sign " + str(roomkey))
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
+
     if response == []:
         logging.info("wait waht")
         room = Room(parent=guestbook_key(roomkey))
@@ -425,13 +448,25 @@ class UpdateStatus(webapp.RequestHandler):
     else:
         room = response[0]
     room.most_recent_username = self.request.get('username')
+    yo_list = room.yo_list
     s = self.request.get('status')
     if s and s != '':
         room.status = s
     if not update:
         room.time = datetime.now()
     room.put()
-    #self.redirect('/?roomkey=' + str(room.roomkey)+'#KKhome')
+
+    #TODO
+    def sendYo(yosername):
+        pass
+    def sendYosButExclude(yosername):
+        for name in yo_list:
+            if name != yosername:
+                sendYo(name)
+        pass
+
+    yosername = self.request.get('yosername', DEFAULT_ROOMKEY) 
+    sendYosButExclude(yosername)
 
 
 def pretty_date(time=False):
@@ -482,6 +517,7 @@ application = webapp.WSGIApplication([('/', MainPage),
                                       ('/sendsms', SendSMS),
                                       ('/sendemail', SendEmail),
                                       ('/api', API),
+                                      ('/addyoser', AddYoser),
                                       ('/changeroomname', ChangeRoomName),
                                       ('/createroom', CreateRoom),
                                       ('/deleteroom', DeleteRoom),
