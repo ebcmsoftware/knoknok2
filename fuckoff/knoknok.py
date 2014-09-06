@@ -256,6 +256,29 @@ def formatKeyOutput(keystr):
         keyoutput += keystr[i]
     return keyoutput
 
+
+class GetBitly(webapp.RequestHandler): 
+  def options(self):      
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+
+  def get(self):
+      self.response.headers['Access-Control-Allow-Origin'] = '*'
+      self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept'
+      self.response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE'
+      try:
+          roomkey = int(self.request.get('roomkey', DEFAULT_ROOMKEY))
+      except ValueError:
+          return #I can't imagine a scenario in which this would happen.
+      username = self.request.get('username', DEFAULT_ROOMKEY)
+      longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u="+username)
+      domain = 'j.mp'
+      s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain="+domain
+      data = json.load(urllib2.urlopen(s))
+      self.response.out.write('http://' + domain + '/' + data[u'data'][u'global_hash'])
+      
+
 class SendSMS(webapp.RequestHandler):
   def post(self):
     self.response.headers.add_header("Access-Control-Allow-Origin", "*")
@@ -518,6 +541,7 @@ application = webapp.WSGIApplication([('/', MainPage),
                                       ('/sendemail', SendEmail),
                                       ('/api', API),
                                       ('/addyoser', AddYoser),
+                                      ('/getbitly', GetBitly),
                                       ('/changeroomname', ChangeRoomName),
                                       ('/createroom', CreateRoom),
                                       ('/deleteroom', DeleteRoom),

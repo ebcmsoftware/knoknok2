@@ -29,22 +29,51 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 
 go('sendthiskey', 'sendkey', 'slide');
 
+$('#sendsmsbtn').fastClick(function(e) {
+    try {
+        var intent = "INTENT"; //leave empty for sending sms using default intent
+        var success = function () { alert('Message sent successfully'); };
+        var error = function (e) { alert('Message Failed:' + e); };
+        //get j.mp from server
+        var req = new XMLHttpRequest;
+        req.open('GET', 'http://ebcmdev.appspot.com/getbitly?roomkey='+getKey()+'&username='+getUserName());
+        req.send();
+        var link = "http://getknoknok.appspot.com";
+        req.onreadystatechange = function() {
+            if (req.readyState == 4) {
+                if (req.responseText && (req.responseText == '' || req.responseText == "null")) {
+                    link = "http://getknoknok.appspot.com";
+                } else {
+                    link = req.responseText;
+                }
+            }
+        }
+        message = "I downloaded a roommate app called Knoknok! Download it here: " + link;
+
+        setNumberList();
+        numberArray = decodeURIComponent(numberArray.substring(0, numberArray.length - 1));
+        sms.send(numberArray, message, intent, success, error);
+    } catch(e) {
+        myAlert("Could not send text: " + e.message);
+    }
+});
+
 $('#pastekeybtn').fastClick(function(e) {
-  try{
-    window.plugins.clipboard.paste(function (text) {
-        insertKey(text);
-    },
-    function(text) {
-        myAlert("You haven't copied the key yet!");
-    });
+    try{
+        window.plugins.clipboard.paste(function (text) {
+            insertKey(text);
+        },
+        function(text) {
+            myAlert("You haven't copied the key yet!");
+        });
     }catch(e) {
         myAlert("Error! Please report this to eric.bailey@tufts.edu: " + e.message);
     }
 });
 
 /*
-$('#createroomtoroom').fastClick(changeLink);
-*/
+   $('#createroomtoroom').fastClick(changeLink);
+   */
 $('#createroomtoroom').fastClick(function(e) {
     populateFields();
     $.mobile.changePage('#KKhome', { transition : 'pop', reverse : false});
