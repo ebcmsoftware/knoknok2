@@ -72,8 +72,18 @@
         <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
         <gap:plugin name="org.apache.cordova.SplashScreen"/>
         <gap:plugin name="org.apache.cordova.network-information"/>
-        <preference name="permissions" value="none"/>
+
+        <gap:plugin name="tr.bel.mamak.sms_plagin" version="0.1.0" />
+
+        <!-- both -->
         <preference name="orientation" value="portrait" />
+
+        <!-- ios -->
+        <preference name="UIWebViewBounce" value="false" />
+        <preference name="DisallowOverscroll" value="true" />
+
+        <!-- android -->
+        <preference name="permissions" value="none"/>
         <preference name="android-windowSoftInputMode" value="adjustNothing" />
 
         <access origin="*"/>

@@ -30,13 +30,15 @@ function startup() {
         }
         navigator.splashscreen.hide()
         StatusBar.overlaysWebView(false); //ios7 junk
+        //StatusBar.backgroundColorByHexString("#1095EA");
+        StatusBar.hide();
         populateFields();
     }, 0);
 }
 
 //happens when opening on background
 document.addEventListener("deviceready", startup, false);
-//
+
 //This doesn't work (ios) but doesnt matter.
 document.addEventListener("deviceready", function() {
     document.addEventListener("resume", startup, false); 
@@ -194,7 +196,8 @@ function setNumberList() {
     numberArray = '';
     for (var i = 1; i < num_phone_numbers + 1; i++) {
         numberArray += encodeURIComponent($("#sendnum" + i).val());
-        numberArray += " ";
+        if (i != num_phone_numbers)
+            numberArray += ",";
     }
 }
 
@@ -517,7 +520,7 @@ function leave_custom(msg) {
         }
         else hideControls();
     } else {
-        console.log("presed button, not closing.");
+        alert("presed button, not closing.");
     }
 }
 

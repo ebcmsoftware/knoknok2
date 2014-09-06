@@ -17,6 +17,9 @@
     background:#006eb7 !important; 
     background-color:#006eb7 !important; 
 }
+#KKhomeheader {
+    border-top: none !important;
+}
 
 .toplinks{
 	text-decoration: none !important;

@@ -13,12 +13,12 @@
   <!-- mobile specific tags here -->
 
   <!-- IOS -->
-<!--
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
--->
   
   <!-- DROID -->
+<!--
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+-->
   
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -87,7 +87,7 @@ redirectWhenCookie();
       <div class="centeredapparea">
           <div>
               <p style = "text-align: left;">Your key is a 6 digit number, given to you by someone with the app already</p>
-              <div id = "keynums" style = "width: 60%; float: left">
+              <div id = "keynums" style = "width: 50%; float: left">
                   <div style="width: 40%;float:left;">
                       <input type="tel" name="roomkey" id="roomkey0" placeholder="123">
                   </div>
@@ -97,6 +97,8 @@ redirectWhenCookie();
                       </div>
                   <br>
               </div>
+              <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
+              
           </div>
           <div style ="clear: both;">
           <input type="text" name="username" id="username" placeholder="Your first name (optional)">
@@ -144,8 +146,9 @@ redirectWhenCookie();
           <a href="javascript:;" id="searchcontactssms" class="ui-btn">Select from contacts</a>
           <!--
           <a href="javascript:;" id="addroommatephone" class="ui-btn">+Roommate</a>
+          <a href="#annoyingpopup" id="sendsmsbtn" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
           -->
-          <a href="#annoyingpopup" data-rel="popup" onclick="setTimeout(sendsms, 1000);" class="ui-btn">Send!</a>
+          <a href="javascript:;" id="sendsmsbtn" class="ui-btn">Send!</a>
           <br>
           <div class="setupbuttons">
           <a href="javascript:;" id="smstokkhome" class="ui-btn" style="display:none;">Cancel</a>
@@ -172,8 +175,8 @@ redirectWhenCookie();
   </div> -->
 
   <!-- the main page, with status settings -->
-  <div data-role= "page" data-theme = "a" id="KKhome">
-      <div data-role = "header">
+  <div data-role= "page" data-theme="a" id="KKhome">
+      <div id="KKhomeheader" data-role="header">
           <a href = ""  class = "toplinks" id = "roomname"> _ </a>
           <h1></h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks"><img src = "static/images/die.png" height="30" width="30" style="padding: 0px !important"></a>
