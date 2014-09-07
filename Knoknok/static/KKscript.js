@@ -146,7 +146,7 @@ function navig8() {
             setTimeout(function() {
                 afterkeygen();//afterkeygen refreshes
                 $.mobile.changePage('#createroom', {transition : 'slide'});
-            },3000);
+            },2500);
         }
     });
 }
@@ -380,6 +380,7 @@ function localRefresh(msg, username, time, roomname) {
 function select_input() {
     //window.document.execCommand('SelectAll', true);
     setTimeout(function() {
+        pressed_button = false;
         var $this = $("#statusinput");
         $this.select();
 

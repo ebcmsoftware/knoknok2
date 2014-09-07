@@ -26,12 +26,15 @@ function addEnterListener(inputId, f) {
     });
 }
 
+var lastPressedIndexRoomkey = 0;
+
 //initializing the enterkey textboxes.
 $("#roomkey0").keyup(function () {
-    if($(this).val().length == 3) {
+    if($(this).val().length == 3 && lastPressedIndexRoomkey == 2) {
         //$('#roomkey1').focus();
         $(this)[0].value += '-';
     }
+    lastPressedIndexRoomkey = $(this).val().length;
 });
 
 //puts the key in its full form into the proper text areas and submits

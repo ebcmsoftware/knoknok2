@@ -212,6 +212,9 @@ $('#searchcontactssms').fastClick(function(e) {
 var disable_refresh = false;
 $('#refresher').fastClick(function() {
     if (offline) return;
+    if ($('#statusinput')[0].style.display != 'none') {
+       setStatus($('#statusinput')[0].value);
+    }
     $('#refresher')[0].innerHTML = 'Refreshing...';
     setTimeout(function() {
         if (disable_refresh) {
@@ -249,10 +252,10 @@ go('deleteroomback', 'settingsmenu', 'slide', true);
 
 addEnterListener('enterroomname', navig8); //makeroom
 addEnterListener('enterfirstname', navig8); //makeroom
-addEnterListener('roomkey1', changeLink); //enterkey
+//addEnterListener('roomkey1', changeLink); //enterkey
 addEnterListener('username', changeLink); //enterkey
 //addEnterListener('sendnum1', addPhoneInput); //sendsms
-addEnterListener('sendnum1', sendTheSMS); //sendsms
+//addEnterListener('sendnum1', sendTheSMS); //sendsms
 addEnterListener('newroomname', changeInfo); //changeinfo
 addEnterListener('usernameinput', changeInfo); //changeinfo
 addEnterListener('statusinput', function(){ //KKhome

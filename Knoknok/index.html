@@ -85,12 +85,11 @@ redirectWhenCookie();
   <div data-role= "page" data-theme = "a" id = "enterkey">
       <div id = "offlinething1" style = "background-color: red; width = 100%; display:none">No internet connection</div>
       <div class="centeredapparea">
-          <div>
               <p style = "text-align: left;">Your key is a 6 digit number, given to you by someone with the app already</p>
-              <div id = "keynums" style = "width: 50%; float: left">
-                  <div>
-                      <input type="tel" name="roomkey" id="roomkey0" placeholder="123-456" maxlength=7>
-                  </div>
+              <div>
+              <div id = "keynums" style = "width: 32%; float: left">
+                <input type="tel" name="roomkey" id="roomkey0" placeholder="123-456" maxlength=7>
+              </div>
                   <!--
                   <div style="width: 40%;float:left;">
                       <input type="tel" name="roomkey" id="roomkey0" placeholder="123-456" maxlength=3>
@@ -100,15 +99,15 @@ redirectWhenCookie();
                       <input type="tel" name="roomkey" id="roomkey1" placeholder="456" maxlength=3>
                    </div>
                    -->
-                  <br>
-              </div>
+              <!--
               <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
-              
+              -->
+                <div style ="float: right; width: 63%;">
+            		<input type="text" name="username" id="username" placeholder="Your first name">
+          		</div>
+          	</div>
+        
           </div>
-          <div style ="clear: both;">
-          <input type="text" name="username" id="username" placeholder="Your first name (optional)">
-          </div>
-      </div>
       <!--
       <div class = "setupbuttons" style = "clear: both">
       -->
@@ -185,14 +184,14 @@ redirectWhenCookie();
   <!-- the main page, with status settings -->
   <div data-role= "page" data-theme="a" id="KKhome">
       <div id="KKhomeheader" data-role="header">
-          <a href = ""  class = "toplinks" id = "roomname"> _ </a>
+          <a href = ""  class = "toplinks" id = "roomname"> </a>
           <h1></h1>
           <a href="javascript:;" id="settingsbutton" class = "toplinks"><img src = "static/images/die.png" height="30" width="30" style="padding: 0px !important"></a>
       </div>
       <div id = "offlinething" style = "background-color: red; width = 100%; display:none">Error: No internet connection</div>
       <div data-role="controlgroup" class = "centeredapparea" id="KKhomebody" style = "margin-top: 10%;">
-          <div id="statustext" style = "font-size: 250%;">_</div>
-          <textarea cols="40" rows="1" type="text" name="status" onfocus="pressed_button=false;" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #0062A5; font-size: 250%; border: 0px" maxlength=40></textarea>
+          <div id="statustext" style = "font-size: 250%;">Loading... </div>
+          <textarea cols="40" rows="1" type="text" name="status" onfocus="pressed_button=false;" onblur="setTimeout(leave_custom, 325);" id="statusinput" value="status" data-corners="false" style="display:none; color: white; background-color: #0062A5; font-size: 250%; border: 0px" maxlength=24></textarea>
           <div id = "pleasenodisplay" style="display:none;">
               <select id="KKstatusbuttons" onchange="pressed_button=false;leave_custom(this.value);">
                   <option value="-1">  Quick Statuses </option>

@@ -272,7 +272,7 @@ class GetBitly(webapp.RequestHandler):
       except ValueError:
           return #I can't imagine a scenario in which this would happen.
       username = self.request.get('username', DEFAULT_ROOMKEY)
-      logging.debug(username + ' ' + roomkey)
+      logging.debug(username + ' ' + str(roomkey))
       longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u="+username)
       domain = 'j.mp'
       s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain="+domain
@@ -480,7 +480,11 @@ class UpdateStatus(webapp.RequestHandler):
         room.status = s
     if not update:
         room.time = datetime.now()
-    logging.debug('rn:'room.roomname + ', s:' + room.status + ', un:' + room.most_recent_username)
+    try:
+        logging.debug('rn:' + urllib.unquote(room.roomname) + ', s:' + urllib.unquote(room.status) + ', un:' + room.most_recent_username)
+    except ValueError:
+        logging.debug('rn:' + (room.roomname) + ', s:' + (room.status) + ', un:' + room.most_recent_username)
+        logging.debug('they have weird chars or sm sht')
     room.put()
 
     #TODO
@@ -534,6 +538,8 @@ def pretty_date(time=False):
     if day_diff < 7:
         return str(day_diff) + " days ago"
     if day_diff < 31:
+        if day_diff/7 == 1:
+            return "1 week ago"
         return str(day_diff/7) + " weeks ago"
     if day_diff < 365:
         return str(day_diff/30) + " months ago"
