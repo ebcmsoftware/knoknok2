@@ -29,18 +29,24 @@ function addEnterListener(inputId, f) {
 //initializing the enterkey textboxes.
 $("#roomkey0").keyup(function () {
     if($(this).val().length == 3) {
-        $('#roomkey1').focus();
+        //$('#roomkey1').focus();
+        $(this)[0].value += '-';
     }
 });
 
 //puts the key in its full form into the proper text areas and submits
 function insertKey(k) {
+    if (k.length == 6 || k.length == 7) {
+        $('#roomkey0')[0].value = k;
+    }
+    /*
     if (k.length == 6 || k.length == 7)
         $("#roomkey0")[0].value = k.substring(0,3);
     if (k.length == 7)
         $("#roomkey1")[0].value = k.substring(4,7);
     else if (k.length == 6)
         $("#roomkey1")[0].value = k.substring(3,6); 
+    */
 }
 
 var pastef = function() {
@@ -51,7 +57,7 @@ var pastef = function() {
     }, 10);
 }
 $("#roomkey0").on('paste', pastef);
-$("#roomkey1").on('paste', pastef);
+//$("#roomkey1").on('paste', pastef);
 /* Maybe. This auto submits when they key is fully entered.
    $("#roomkey1").keyup(function () {
    console.log($(this).val().length);

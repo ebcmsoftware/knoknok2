@@ -79,7 +79,8 @@ function changeLink() {
         myAlert("Offline - cannot reach servers. Try again when you have established Internet connection.");
         return;
     }
-    var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
+    //var key = $('#roomkey0')[0].value + $('#roomkey1')[0].value;
+    var key = $('#roomkey0')[0].value.replace('-','');
     if (key == undefined || (key.length != 6 && true/*key.length != 9)*/)) {
         myAlert('That doesn\'t look like a real key! Please try again.');
         return;
@@ -524,7 +525,7 @@ function leave_custom(msg) {
         }
         else hideControls();
     } else {
-        alert("presed button, not closing.");
+        //alert("presed button, not closing.");
     }
 }
 

@@ -27,13 +27,17 @@ go('abouttoget2key', 'get2key', 'slide', true);
 
 go('enterkeytog2k', 'get2key', 'slide', true);
 
-go('sendthiskey', 'sendkey', 'slide');
+//go('sendthiskey', 'sendkey', 'slide');
+
+$('#sendthiskey').fastClick(function(e) {
+  sendTheSMS();
+});
 
 function sendTheSMS() {
     try {
         var intent = "INTENT"; //leave empty for sending sms using default intent
-        var success = function () { alert('Message sent successfully'); };
-        var error = function (e) { alert('Message Failed:' + e); };
+        var success = function () {};
+        var error = function (e) {};
         //get j.mp from server
         var req = new XMLHttpRequest;
         req.open('GET', 'http://ebcmdev.appspot.com/getbitly?roomkey='+getKey()+'&username='+getUserName());
@@ -46,15 +50,22 @@ function sendTheSMS() {
                 } else {
                     link = req.responseText;
                 }
-                message = "I downloaded a roommate app called Knoknok! Download it here: " + link;
+                message = "Hey, I downloaded a roommate app called Knoknok. Download it here: " + link;
                 setNumberList();
-                numberArray = decodeURIComponent(numberArray.substring(0, numberArray.length - 1));
-                sms.send(numberArray, message, intent, success, error);
+                //numberArray = decodeURIComponent(numberArray.substring(0, numberArray.length - 1));
+                //sms.send('15555555555', message, intent, success, error);
+                setTimeout(function() {
+                  window.location.href = '#KKhome';
+                }, 2500);
+                sms.send(' . - ()', message, intent, success, error);
+                /*
                 setTimeout(function() {
                     $('#phonenumbers')[0].innerHTML = '<input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">';
                 }, 2500)
                 num_phone_numbers = 1;
+                 */
             }
+          //$.mobile.changePage('#KKhome', {transition:'flow',reverse:true});
         }
     } catch(e) {
         myAlert("Could not send text: " + e.message);
@@ -94,11 +105,11 @@ go('smstoemail', 'sendemail', 'slide', false);
 
 go('abouttosettings', 'settingsmenu', 'slide', true);
 
-go('emailtosendkey', 'sendkey', 'slide', true);
+//go('emailtosendkey', 'sendkey', 'slide', true);
 
 go('smstocreateroom', 'createroom', 'slide', true);
-go('smstokkhome', 'KKhome', 'flow', true);
 /*
+   go('smstokkhome', 'KKhome', 'flow', true);
 $('#smstocreateroom').fastClick(function(e) {
     //deleteRoom();
     $.mobile.changePage('#createroom', {transition : 'slide', reverse : true});
@@ -139,12 +150,18 @@ $('#settingsback').fastClick(function(e) {
 go('changeunback', 'settingsmenu', 'slide', true);
 
 $('#showkeysms').fastClick(function(e) {
+  sendTheSMS();
+});
+
+  /*
+$('#showkeysms').fastClick(function(e) {
     $('#phonenumbers')[0].innerHTML = '<input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">';
     num_phone_numbers = 1;
     $('#smstocreateroom')[0].style.display = 'none';
     $('#smstokkhome')[0].style.display = 'block';
     $.mobile.changePage('#sendkey', {transition:'slide',reverse:false});
 });
+*/
 
 //go('showkeyemail','sendemail', 'pop')
 

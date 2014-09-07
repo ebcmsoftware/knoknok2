@@ -272,11 +272,14 @@ class GetBitly(webapp.RequestHandler):
       except ValueError:
           return #I can't imagine a scenario in which this would happen.
       username = self.request.get('username', DEFAULT_ROOMKEY)
+      logging.debug(username + ' ' + roomkey)
       longUrl = "http://getknoknok.appspot.com/dl?r=" + str(roomkey) + urllib.quote("&u="+username)
       domain = 'j.mp'
       s = "https://api-ssl.bitly.com/v3/shorten?access_token=ec777330de81e373955aeb4597352f4e55766f42&longUrl="+longUrl+"&domain="+domain
       data = json.load(urllib2.urlopen(s))
-      self.response.out.write('http://' + domain + '/' + data[u'data'][u'global_hash'])
+      output = 'http://' + domain + '/' + data[u'data'][u'global_hash'] 
+      logging.debug(output)
+      self.response.out.write(output)
       
 
 class SendSMS(webapp.RequestHandler):
@@ -439,6 +442,7 @@ class DeleteRoom(webapp.RequestHandler):
         roomkey = int(roomkey)
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
+    logging.debug('DELETE ROOM: ' + str(roomkey))
     if response != []:
         room = response[0]
         room.alive = False
@@ -460,7 +464,6 @@ class UpdateStatus(webapp.RequestHandler):
     roomkey = self.request.get('roomkey', DEFAULT_ROOMKEY) 
     if roomkey != DEFAULT_ROOMKEY:
         roomkey = int(roomkey)
-    logging.info("got roomkey in /sign " + str(roomkey))
     greetings_query = Room.query_book(ancestor_key=guestbook_key(roomkey))
     response = greetings_query.fetch(1)
 
@@ -477,19 +480,20 @@ class UpdateStatus(webapp.RequestHandler):
         room.status = s
     if not update:
         room.time = datetime.now()
+    logging.debug('rn:'room.roomname + ', s:' + room.status + ', un:' + room.most_recent_username)
     room.put()
 
     #TODO
-    def sendYo(yosername):
-        pass
-    def sendYosButExclude(yosername):
-        for name in yo_list:
-            if name != yosername:
-                sendYo(name)
-        pass
-
-    yosername = self.request.get('yosername', DEFAULT_ROOMKEY) 
-    sendYosButExclude(yosername)
+    ##def sendYo(yosername):
+    #    pass
+    #def sendYosButExclude(yosername):
+    #    for name in yo_list:
+    #        if name != yosername:
+    #            sendYo(name)
+    #    pass
+#
+#    yosername = self.request.get('yosername', DEFAULT_ROOMKEY) 
+#    sendYosButExclude(yosername)
 
 
 def pretty_date(time=False):

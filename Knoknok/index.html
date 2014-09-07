@@ -88,13 +88,18 @@ redirectWhenCookie();
           <div>
               <p style = "text-align: left;">Your key is a 6 digit number, given to you by someone with the app already</p>
               <div id = "keynums" style = "width: 50%; float: left">
+                  <div>
+                      <input type="tel" name="roomkey" id="roomkey0" placeholder="123-456" maxlength=7>
+                  </div>
+                  <!--
                   <div style="width: 40%;float:left;">
-                      <input type="tel" name="roomkey" id="roomkey0" placeholder="123">
+                      <input type="tel" name="roomkey" id="roomkey0" placeholder="123-456" maxlength=3>
                   </div>
                   <span>_</span>
                   <div style="width: 40%;float:right;">
-                      <input type="tel" name="roomkey" id="roomkey1" placeholder="456">
-                      </div>
+                      <input type="tel" name="roomkey" id="roomkey1" placeholder="456" maxlength=3>
+                   </div>
+                   -->
                   <br>
               </div>
               <a class="ui-btn" style="float: right" id="pastekeybtn">Paste Key</a>
@@ -104,7 +109,10 @@ redirectWhenCookie();
           <input type="text" name="username" id="username" placeholder="Your first name (optional)">
           </div>
       </div>
+      <!--
       <div class = "setupbuttons" style = "clear: both">
+      -->
+      <div class = "setupbuttons">
               <a href="javascript:;" id="enterkeytokkhome" class="ui-btn" style = "float: right;width:35%">&gt;</a>
               <a href="javascript:;" id="enterkeytog2k" class="ui-btn" style = "float: left;width:35%">&lt;</a>
       </div>
@@ -216,8 +224,10 @@ redirectWhenCookie();
   <!-- settings menu -->
   <div data-role="page" data-theme="a" data-dialog="true" id="settingsmenu">
       <div data-role="main" class="ui-content" style="margin: 0 auto">
+          <!--
           <h3>Settings</h3>
           <hr>
+          -->
           <div data-role="controlgroup" style="margin: 0 auto">
               <p>General</p>
               <a href="javascript:;" class="ui-btn" id="showkeybtn">Show room key</a>
