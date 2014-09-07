@@ -29,7 +29,7 @@ go('enterkeytog2k', 'get2key', 'slide', true);
 
 go('sendthiskey', 'sendkey', 'slide');
 
-$('#sendsmsbtn').fastClick(function(e) {
+function sendTheSMS() {
     try {
         var intent = "INTENT"; //leave empty for sending sms using default intent
         var success = function () { alert('Message sent successfully'); };
@@ -46,17 +46,22 @@ $('#sendsmsbtn').fastClick(function(e) {
                 } else {
                     link = req.responseText;
                 }
+                message = "I downloaded a roommate app called Knoknok! Download it here: " + link;
+                setNumberList();
+                numberArray = decodeURIComponent(numberArray.substring(0, numberArray.length - 1));
+                sms.send(numberArray, message, intent, success, error);
+                setTimeout(function() {
+                    $('#phonenumbers')[0].innerHTML = '<input type="tel" name="sendnum1" id="sendnum1" placeholder="Cell Number...">';
+                }, 2500)
+                num_phone_numbers = 1;
             }
         }
-        message = "I downloaded a roommate app called Knoknok! Download it here: " + link;
-
-        setNumberList();
-        numberArray = decodeURIComponent(numberArray.substring(0, numberArray.length - 1));
-        sms.send(numberArray, message, intent, success, error);
     } catch(e) {
         myAlert("Could not send text: " + e.message);
     }
-});
+    
+}
+$('#sendsmsbtn').fastClick(sendTheSMS);
 
 $('#pastekeybtn').fastClick(function(e) {
     try{
@@ -168,8 +173,9 @@ $('#statustext:first-child').fastClick(showControls);
 $('#searchcontactssms').fastClick(function(e) {
     var successCallback = function(result) {
         setTimeout(function(){
-            $('#sendnum'+num_phone_numbers)[0].value = result.phoneNumber;
-            addPhoneInput();
+            $('#sendnum1')[0].value += result.phoneNumber+',';
+            //$('#sendnum'+num_phone_numbers)[0].value = result.phoneNumber;
+            //addPhoneInput();
         },0);
     };
     var failedCallback = function(result) {
@@ -228,7 +234,8 @@ addEnterListener('enterroomname', navig8); //makeroom
 addEnterListener('enterfirstname', navig8); //makeroom
 addEnterListener('roomkey1', changeLink); //enterkey
 addEnterListener('username', changeLink); //enterkey
-addEnterListener('sendnum1', addPhoneInput); //sendsms
+//addEnterListener('sendnum1', addPhoneInput); //sendsms
+addEnterListener('sendnum1', sendTheSMS); //sendsms
 addEnterListener('newroomname', changeInfo); //changeinfo
 addEnterListener('usernameinput', changeInfo); //changeinfo
 addEnterListener('statusinput', function(){ //KKhome

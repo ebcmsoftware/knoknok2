@@ -182,6 +182,9 @@ function displayKeyToSend(){
 var num_phone_numbers = 1;
 //adds a new phone input slot for sendsms
 function addPhoneInput() {
+    //append ","+phone number to the input
+
+    /*
     num_phone_numbers++;
     var i = num_phone_numbers;
     $('#phonenumbers input:last').after('<input type="tel" name="sendnum'+i+'" id="sendnum'+i+'" placeholder="Cell Number...">');
@@ -189,6 +192,7 @@ function addPhoneInput() {
         addEnterListener('sendnum'+i, addPhoneInput);
         $('#sendnum'+i).focus();
     }, 100);
+    */
 }
 
 var numberArray = "";
